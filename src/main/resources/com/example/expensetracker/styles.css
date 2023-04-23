@@ -15,3 +15,10 @@
     -fx-text-fill: #FFFFFF;
     -fx-background-radius: 0 0 0 0;
 }
+
+.toggle-button
+{
+    -fx-background-color:  #FFFFFF;
+    -fx-text-fill: #3EB489;
+    -fx-background-radius: 0 0 0 0;
+}

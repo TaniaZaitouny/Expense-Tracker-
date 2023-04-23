@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.TransactionController">
+    <children>
+        <HBox prefHeight="400.0" prefWidth="600.0">
+            <children>
+                <AnchorPane prefHeight="400.0" prefWidth="112.0" style="-fx-background-color: #3EB489;">
+                    <children>
+                        <VBox alignment="CENTER" prefHeight="127.0" prefWidth="112.0" spacing="13.0" style="-fx-background-color: #3EB489;">
+                            <children>
+                                <ImageView fitHeight="39.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../../../../../../Downloads/user.png" />
+                                    </image>
+                                </ImageView>
+                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello user" textAlignment="CENTER" wrappingWidth="66.310546875">
+                                    <font>
+                                        <Font name="Candra" size="13.0" />
+                                    </font>
+                                </Text>
+                                <Accordion />
+                            </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" layoutX="-2.0" layoutY="120.0" prefHeight="280.0" prefWidth="120.0" spacing="7.0">
+                            <children>
+                                <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" stylesheets="@styles.css" text="Home" />
+                                <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" stylesheets="@styles.css" text="Categories" />
+                                <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" stylesheets="@styles.css" text="Transactions" />
+                                <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" stylesheets="@styles.css" text="Reports" />
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+                <AnchorPane prefHeight="400.0" prefWidth="488.0">
+                    <children>
+                        <VBox alignment="CENTER" prefHeight="400.0" prefWidth="488.0">
+                            <children>
+                                <HBox>
+                                    <Text fill="#3EB489" strokeType="OUTSIDE" strokeWidth="0.0" text="Create a new category">
+                                        <font>
+                                            <Font name="Candra" size="20.0" />
+                                        </font>
+                                    </Text>
+                                    <Button mnemonicParsing="false" stylesheets="@styles.css" text="Add New Category" />
+                                </HBox>
+
+                                <VBox maxHeight="250" maxWidth="420.0" prefHeight="250.0" prefWidth="350.0" style="-fx-padding: 20px;">
+                                    <children>
+                                        <TableView prefHeight="200.0" prefWidth="420.0">
+                                            <columns>
+                                                <TableColumn prefWidth="150.0" text="Category" />
+                                                <TableColumn prefWidth="75.0" text="Date" />
+                                                <TableColumn prefWidth="75.0" text="Type" />
+                                                <TableColumn prefWidth="75.0" text="Actions" />
+                                            </columns>
+                                        </TableView>
+                                        <Pagination prefHeight="200.0" prefWidth="200.0" />
+                                    </children></VBox>
+                            </children></VBox>
+                    </children></AnchorPane>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>
+
