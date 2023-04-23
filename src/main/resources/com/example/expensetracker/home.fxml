@@ -36,39 +36,6 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="400.0" prefWidth="488.0">
-               <children>
-                  <VBox alignment="CENTER" prefHeight="400.0" prefWidth="488.0">
-                     <children>
-                        <Text fill="#3EB489" strokeType="OUTSIDE" strokeWidth="0.0" text="Create a new transaction">
-                           <font>
-                              <Font name="Candra" size="20.0" />
-                           </font>
-                        </Text>
-                        <VBox alignment="CENTER_LEFT" maxHeight="250" maxWidth="350.0" prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #3EB489;">
-                           <children>
-                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Date">
-                                 <font>
-                                    <Font name="Candra" size="13.0" />
-                                 </font>
-                              </Text>
-                              <DatePicker />
-                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Category">
-                                 <font>
-                                    <Font name="Candra" size="13.0" />
-                                 </font>
-                              </Text>
-                              <ChoiceBox prefWidth="150.0" />
-                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount">
-                                 <font>
-                                    <Font name="Candra" size="13.0" />
-                                 </font>
-                              </Text>
-                              <TextField />
-                              <Button mnemonicParsing="false" text="Submit" />
-                           </children></VBox>
-                     </children></VBox>
-               </children></AnchorPane>
          </children>
       </HBox>
    </children>
