@@ -8,10 +8,13 @@
 .button:hover
 {
     -fx-background-color:  #FFFFFF;
+    -fx-border-radius: 40;
     -fx-text-fill: #3EB489;
+
 }
 .button:pressed
 {
     -fx-background-color:  #3EB489;
     -fx-text-fill: #FFFFFF;
+    -fx-border-radius: 15;
 }
