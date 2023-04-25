@@ -10,7 +10,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class TransactionController {
+public class ReportsController
+{
     @FXML
     Button homeButton;
     @FXML
@@ -56,5 +57,4 @@ public class TransactionController {
         stage.setScene(scene);
         stage.show();
     }
-
 }
