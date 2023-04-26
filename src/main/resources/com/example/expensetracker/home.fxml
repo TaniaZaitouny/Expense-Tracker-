@@ -1,46 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<<<<<<< HEAD
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.HelloController">
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.HelloController">
-
-=======
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.HelloController">
->>>>>>> 780f47c7c8a8074ee2b0649dc401b09a43a836e4
    <children>
       <HBox prefHeight="400.0" prefWidth="600.0">
          <children>
-            <AnchorPane prefHeight="400.0" prefWidth="112.0" style="-fx-background-color: #3EB489;">
+            <AnchorPane id="Menu" prefHeight="400.0" prefWidth="111.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="127.0" prefWidth="112.0" spacing="13.0" style="-fx-background-color: #3EB489;">
+                  <VBox layoutX="-1.0" layoutY="98.0" prefHeight="311.0" prefWidth="127.0" spacing="10.0">
                      <children>
-                        <ImageView fitHeight="39.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
-<!--                           <image>-->
-<!--                              <Image url="@../../../../../../../../Downloads/user.png" />-->
-<!--                           </image>-->
-                        </ImageView>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello user" textAlignment="CENTER" wrappingWidth="66.310546875">
+                        <Button fx:id="homeButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#homePage" prefHeight="28.0" prefWidth="103.0" stylesheets="@styles.css" text="Home">
                            <font>
-                              <Font name="Candra" size="13.0" />
+                              <Font size="13.0" />
                            </font>
-                        </Text>
-                        <Accordion />
+                           <graphic>
+                              <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@home.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="categoriesButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#categoriesPage" prefHeight="27.0" prefWidth="119.0" stylesheets="@styles.css" text="Categories">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@category.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="transactionsButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#transactionsPage" prefHeight="27.0" prefWidth="123.0" stylesheets="@styles.css" text="Transactions">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@transaction.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="reportsButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#reportsPage" prefHeight="27.0" prefWidth="123.0" stylesheets="@styles.css" text="Reports">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@report.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children>
-                  </VBox>
-                  <VBox alignment="TOP_CENTER" layoutX="-2.0" layoutY="120.0" prefHeight="280.0" prefWidth="120.0" spacing="7.0">
-                     <children>
-                        <Button onAction="#homePage" fx:id="homeButton" mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" stylesheets="@styles.css" text="Home" />
-                        <Button onAction="#categoriesPage" fx:id="categoriesButton" mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" stylesheets="@styles.css" text="Categories" />
-                        <Button onAction="#transactionsPage" fx:id="transactionsButton" mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" stylesheets="@styles.css" text="Transactions" />
-                        <Button onAction="#reportsPage" fx:id="reportsButton" mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" stylesheets="@styles.css" text="Reports" />
-                     </children>
+                     <padding>
+                        <Insets left="6.0" />
+                     </padding>
                   </VBox>
                </children>
             </AnchorPane>

@@ -1,33 +1,61 @@
+
+#Menu
+{
+    -fx-background-color:  #3A4D8F;
+}
+#content {
+    -fx-background-color:  #E1E5F2;
+}
 .button
 {
-    -fx-background-color: #3EB489;
+    -fx-background-color:  #3A4D8F;
     -fx-text-fill: #FFFFFF;
 }
 .button:hover
 {
-    -fx-background-color:  #FFFFFF;
-    -fx-border-radius: 40;
-    -fx-text-fill: #3EB489;
-<<<<<<< HEAD
-
-=======
+    -fx-background-color:   #FFFFFF;
     -fx-background-radius: 0 0 0 0;
->>>>>>> 780f47c7c8a8074ee2b0649dc401b09a43a836e4
+    -fx-text-fill: #3A4D8F;
+
+
+
 }
+
+
 .button:pressed
 {
-    -fx-background-color:  #3EB489;
+    -fx-background-color:  #3A4D8F;
     -fx-text-fill: #FFFFFF;
-<<<<<<< HEAD
-    -fx-border-radius: 15;
-=======
+
     -fx-background-radius: 0 0 0 0;
 }
 
 .toggle-button
 {
-    -fx-background-color:  #FFFFFF;
-    -fx-text-fill: #3EB489;
+    -fx-background-color:  #3A4D8F;
+    -fx-text-fill: #FFFFFF;
     -fx-background-radius: 0 0 0 0;
->>>>>>> 780f47c7c8a8074ee2b0649dc401b09a43a836e4
+
 }
+.table-view .column-header-background {
+    -fx-background-color: #FFFFFF;
+    -fx-border-radius: 15px;
+
+}
+.table-view .column-header {
+    -fx-background-color: transparent;
+
+}
+.table-view .column-header .label {
+    -fx-alignment: left;
+    -fx-font-size: 14px;
+    -fx-text-fill: #6C756B;
+}
+
+}
+.table-view{
+    -fx-background-radius: 15px;
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 10px;
+}
+
