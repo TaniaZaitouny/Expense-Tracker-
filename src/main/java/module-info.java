@@ -1,6 +1,7 @@
 module com.example.expensetracker {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
 
     opens com.example.expensetracker to javafx.fxml;

@@ -5,13 +5,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.sql.*;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class HelloApplication extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+
+    public void start(Stage stage) throws IOException, SQLException {
 
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("home.fxml")));
 
@@ -19,6 +21,9 @@ public class HelloApplication extends Application {
         stage.setTitle("home");
         stage.setScene(scene);
         stage.show();
+
+        DatabaseConnection db = DatabaseConnection.getInstance();
+        Connection connection = db.getConnection();
     }
 
     public static void main(String[] args) {
