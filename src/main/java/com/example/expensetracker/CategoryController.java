@@ -21,6 +21,8 @@ public class CategoryController
     Button transactionsButton;
     @FXML
     Button reportsButton;
+    @FXML
+    Button addCategoryButton;
 
     @FXML
     protected void homePage() throws IOException {
@@ -59,9 +61,14 @@ public class CategoryController
         stage.show();
     }
 
-    public void addCategory()
-    {
-        System.out.println("test");
+    @FXML
+    protected void addCategoryPage() throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("addcategory.fxml")));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage)addCategoryButton.getScene().getWindow();
+        stage.setTitle("addCategory");
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

@@ -19,6 +19,8 @@ public class TransactionController {
     Button transactionsButton;
     @FXML
     Button reportsButton;
+    @FXML
+    Button addTransactionButton;
 
     @FXML
     protected void homePage() throws IOException {
@@ -53,6 +55,15 @@ public class TransactionController {
         Scene scene = new Scene(root);
         Stage stage = (Stage)reportsButton.getScene().getWindow();
         stage.setTitle("reports");
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    protected void addTransactionPage() throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("addtransaction.fxml")));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage)addTransactionButton.getScene().getWindow();
+        stage.setTitle("addTransaction");
         stage.setScene(scene);
         stage.show();
     }
