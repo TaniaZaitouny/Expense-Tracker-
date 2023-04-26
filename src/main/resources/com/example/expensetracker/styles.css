@@ -1,20 +1,33 @@
 .button
 {
-    -fx-background-color:  #3EB489;
+    -fx-background-color: #3EB489;
     -fx-text-fill: #FFFFFF;
-    -fx-border-radius: 15;
-    -fx-border-color: #FFFFFF;
 }
 .button:hover
 {
     -fx-background-color:  #FFFFFF;
     -fx-border-radius: 40;
     -fx-text-fill: #3EB489;
+<<<<<<< HEAD
 
+=======
+    -fx-background-radius: 0 0 0 0;
+>>>>>>> 780f47c7c8a8074ee2b0649dc401b09a43a836e4
 }
 .button:pressed
 {
     -fx-background-color:  #3EB489;
     -fx-text-fill: #FFFFFF;
+<<<<<<< HEAD
     -fx-border-radius: 15;
+=======
+    -fx-background-radius: 0 0 0 0;
+}
+
+.toggle-button
+{
+    -fx-background-color:  #FFFFFF;
+    -fx-text-fill: #3EB489;
+    -fx-background-radius: 0 0 0 0;
+>>>>>>> 780f47c7c8a8074ee2b0649dc401b09a43a836e4
 }
