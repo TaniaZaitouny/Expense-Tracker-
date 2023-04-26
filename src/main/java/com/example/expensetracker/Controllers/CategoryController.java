@@ -1,4 +1,4 @@
-package com.example.expensetracker;
+package com.example.expensetracker.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

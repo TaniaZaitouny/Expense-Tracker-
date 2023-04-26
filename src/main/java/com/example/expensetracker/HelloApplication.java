@@ -1,5 +1,6 @@
 package com.example.expensetracker;
 
+import com.example.expensetracker.Database.DatabaseConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
