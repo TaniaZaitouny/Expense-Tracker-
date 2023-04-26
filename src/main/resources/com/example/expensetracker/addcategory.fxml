@@ -80,8 +80,8 @@
                     <children>
                         <VBox prefHeight="400.0" prefWidth="488.0" spacing="10.0">
                             <children>
-                        <Label alignment="CENTER" prefHeight="37.0" prefWidth="468.0" style="-fx-font-size: 19px; -fx-font-weight: bold; -fx-background-color: #FFFFFF; -fx-background-radius: 15px;" text="Create a new category" textFill="#0d0d0d" />
-                                <VBox maxHeight="338.0" maxWidth="467.0" prefHeight="329.0" prefWidth="467.0" spacing="10.0" style="-fx-background-color: #FFFFFF; -fx-padding: 20px; -fx-background-radius: 15px;">
+                        <Label alignment="CENTER" prefHeight="37.0" prefWidth="468.0" style="-fx-font-size: 19px; -fx-font-weight: bold; -fx-background-color: #E1E5F2; -fx-background-radius: 15px;" text="Create a new category" textFill="#0d0d0d" />
+                                <VBox maxHeight="338.0" maxWidth="467.0" prefHeight="329.0" prefWidth="467.0" spacing="10.0" style="-fx-background-color: #E1E5F2; -fx-padding: 20px; -fx-background-radius: 15px;">
                                     <children>
                                         <HBox prefHeight="27.0" prefWidth="363.0" spacing="4.0">
                                             <ToggleButton mnemonicParsing="false" prefHeight="27.0" prefWidth="129.0" style="-fx-background-radius: 10px;" stylesheets="@styles.css" text="Expense" textFill="#6c756b">
