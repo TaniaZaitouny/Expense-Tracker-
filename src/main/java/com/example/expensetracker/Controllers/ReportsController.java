@@ -1,51 +1,61 @@
 package com.example.expensetracker.Controllers;
 
-import com.example.expensetracker.Models.Transaction;
-import javafx.collections.FXCollections;
+import com.example.expensetracker.HelloApplication;
 import javafx.fxml.FXML;
-import javafx.scene.chart.*;
-import javafx.util.Pair;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.util.Objects;
 
 public class ReportsController
 {
     @FXML
-    BarChart<String, Number> barChart;
+    Button homeButton;
     @FXML
-    CategoryAxis categoryAxis;
+    Button categoriesButton;
     @FXML
-    PieChart pieChart;
+    Button transactionsButton;
+    @FXML
+    Button reportsButton;
 
-    private void initializeBarChart() {
-        Transaction transaction = new Transaction();
-
-        List<Pair<String, Number>> results = transaction.getTopCategories();
-
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-
-        List<String> categoryNames = new ArrayList<String>(5);
-        for(Pair<String, Number> result : results) {
-            categoryNames.add(result.getKey());
-            series.getData().add(new XYChart.Data<>(result.getKey(), result.getValue()));
-        }
-        categoryAxis.setCategories(FXCollections.observableArrayList(categoryNames));
-        barChart.getData().add(series);
+    @FXML
+    protected void homePage() throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/home.fxml")));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage)homeButton.getScene().getWindow();
+        stage.setTitle("home");
+        stage.setScene(scene);
+        stage.show();
     }
-
-    private void initializePieChart() {
-        Transaction transaction = new Transaction();
-
-        List<Pair<String, Number>> results = transaction.getTopCategories();
-
-        List<PieChart.Data> data = new ArrayList<>(5);
-
-        for(Pair<String, Number> result : results) {
-            data.add(new PieChart.Data(result.getKey(), (double) result.getValue()));
-        }
-
-        pieChart.setData(FXCollections.observableArrayList(data));
+    @FXML
+    protected void categoriesPage() throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/categories.fxml")));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage)categoriesButton.getScene().getWindow();
+        stage.setTitle("categories");
+        stage.setScene(scene);
+        stage.show();
     }
-
+    @FXML
+    protected void transactionsPage() throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/transactions.fxml")));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage)transactionsButton.getScene().getWindow();
+        stage.setTitle("transactions");
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    protected void reportsPage() throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/reports.fxml")));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage)reportsButton.getScene().getWindow();
+        stage.setTitle("reports");
+        stage.setScene(scene);
+        stage.show();
+    }
 }

@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Category {
-
     DatabaseConnection db  = DatabaseConnection.getInstance();
     Connection connection = db.getConnection();
     public void addCategory(String name,String type) throws SQLException {
