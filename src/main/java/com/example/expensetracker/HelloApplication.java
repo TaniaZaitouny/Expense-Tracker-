@@ -20,10 +20,10 @@ public class HelloApplication extends Application {
 
     public void start(Stage stage) throws IOException, SQLException {
 
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Views/home.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Views/login.fxml")));
 
         Scene scene = new Scene(root);
-        stage.setTitle("home");
+        stage.setTitle("login");
         stage.setScene(scene);
         stage.show();
         DatabaseConnection db = DatabaseConnection.getInstance();

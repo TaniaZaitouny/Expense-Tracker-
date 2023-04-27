@@ -40,8 +40,9 @@ public class DatabaseConnection {
     private void createUsersTable() {
         String sql = "CREATE TABLE USERS " +
                 "(id INTEGER not NULL AUTO_INCREMENT, " +
-                " user_name VARCHAR(255), " +
+                " username VARCHAR(255), " +
                 " email VARCHAR(255), " +
+                " password VARCHAR(255), " +
                 " PRIMARY KEY (id))";
         try {
             Statement statement = this.connection.createStatement();
@@ -59,9 +60,11 @@ public class DatabaseConnection {
     private void createCategoriesTable() {
         String sql = "CREATE TABLE CATEGORIES " +
                 "(id INTEGER not NULL AUTO_INCREMENT, " +
-                " category_name VARCHAR(255), " +
+                " userId INTEGER not NULL, " +
+                " categoryName VARCHAR(255), " +
                 " type VARCHAR(255), " +
-                " PRIMARY KEY (id))";
+                " PRIMARY KEY (id), " +
+                " FOREIGN KEY (userId) REFERENCES users(id))";
         try {
             Statement statement = this.connection.createStatement();
             DatabaseMetaData meta = this.connection.getMetaData();
@@ -78,11 +81,13 @@ public class DatabaseConnection {
     private void createTransactionsTable() {
         String sql = "CREATE TABLE TRANSACTIONS " +
                 "(id INTEGER not NULL AUTO_INCREMENT, " +
+                " userId INTEGER not NULL, " +
                 " date DATE, " +
                 " amount DOUBLE, " +
                 " category INTEGER not null, " +
                 " PRIMARY KEY (id), " +
-                " FOREIGN KEY (category) REFERENCES CATEGORIES(id))";
+                " FOREIGN KEY (category) REFERENCES categories(id), " +
+                " FOREIGN KEY (userId) REFERENCES users(id))";
         try {
             Statement statement = this.connection.createStatement();
             DatabaseMetaData meta = this.connection.getMetaData();
@@ -96,11 +101,5 @@ public class DatabaseConnection {
         }
     }
 
-    public void addCategory(String name, String type) throws SQLException {
-        String sqlQuery = "INSERT INTO categories (category_name, type) " +
-                "VALUES ('" + name + "', '" + type + "')";
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(sqlQuery);
-    }
 
 }

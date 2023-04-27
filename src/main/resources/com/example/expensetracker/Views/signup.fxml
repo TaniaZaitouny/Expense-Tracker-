@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Button?>
+
+<AnchorPane prefHeight="408.0" prefWidth="608.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.LoginController">
+    <Label layoutX="67.0" layoutY="10.0" text="Email" />
+    <TextField fx:id="emailField" layoutX="67.0" layoutY="30" />
+    <Label layoutX="67.0" layoutY="54.0" text="Name" />
+    <TextField fx:id="usernameField" layoutX="67.0" layoutY="79.0" />
+    <Label layoutX="67.0" layoutY="119.0" text="Password" />
+    <PasswordField fx:id="passwordField" layoutX="67.0" layoutY="151.0" />
+    <Label layoutX="67.0" layoutY="180.0" text="Validate Password" />
+    <PasswordField fx:id="validatePasswordField" layoutX="67.0" layoutY="201.0" />
+    <Button fx:id="loginButton" layoutX="67.0" layoutY="231.0" mnemonicParsing="false" onAction="#loginPage" text="Login to existing account" />
+    <Button fx:id="signupButton" layoutX="215.0" layoutY="231.0" mnemonicParsing="false" onAction="#signup" text="Sign Up" />
+    <Label fx:id="messageText" layoutX="67.0" layoutY="269.0" prefWidth="266.0" textFill="RED" />
+</AnchorPane>
