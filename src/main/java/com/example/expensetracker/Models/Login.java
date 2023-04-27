@@ -33,7 +33,7 @@ public class Login {
 
     private boolean validateAccount(String email) throws SQLException {
         boolean valid= false;
-        String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
+        String sql = "SELECT * FROM users WHERE email = ?";
         PreparedStatement statement = connection.getConnection().prepareStatement(sql);
         statement.setString(1, email);
 
