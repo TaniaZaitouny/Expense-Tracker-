@@ -6,6 +6,11 @@
 #content {
     -fx-background-color:  #E1E5F2;
 }
+#upcoming_expense
+{
+    -fx-background-color:  #3A4D8F;
+    -fx-background-radius:  15 15 0 0;
+}
 .button
 {
     -fx-background-color:  #3A4D8F;
@@ -16,12 +21,7 @@
     -fx-background-color:   #FFFFFF;
     -fx-background-radius: 0 0 0 0;
     -fx-text-fill: #3A4D8F;
-
-
-
 }
-
-
 .button:pressed
 {
     -fx-background-color:  #3A4D8F;
@@ -29,29 +29,25 @@
 
     -fx-background-radius: 0 0 0 0;
 }
-
 .toggle-button
 {
+    -fx-background-radius: 0 0 0 0;
     -fx-background-color:  #3A4D8F;
     -fx-text-fill: #FFFFFF;
-    -fx-background-radius: 0 0 0 0;
-
 }
+
 .table-view .column-header-background {
     -fx-background-color: #FFFFFF;
     -fx-border-radius: 15px;
-
 }
 .table-view .column-header {
     -fx-background-color: transparent;
 
 }
-.table-view .column-header .label {
+.table-view .column-header.label {
     -fx-alignment: left;
     -fx-font-size: 14px;
     -fx-text-fill: #6C756B;
-}
-
 }
 .table-view{
     -fx-background-radius: 15px;

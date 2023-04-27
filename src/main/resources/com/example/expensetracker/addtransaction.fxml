@@ -11,18 +11,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.QuadCurve?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.TransactionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="608.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.TransactionController">
     <children>
         <HBox prefHeight="400.0" prefWidth="600.0">
             <children>
             <AnchorPane id="Menu" prefHeight="400.0" prefWidth="111.0">
                <children>
-                  <VBox layoutX="-1.0" layoutY="98.0" prefHeight="311.0" prefWidth="127.0" spacing="10.0">
+                  <VBox layoutX="-1.0" layoutY="98.0" prefHeight="159.0" prefWidth="127.0" spacing="10.0">
                      <children>
-                        <Button fx:id="homeButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#homePage" prefHeight="28.0" prefWidth="103.0" stylesheets="@styles.css" text="Home">
+                        <Button fx:id="homeButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#homePage" prefHeight="28.0" prefWidth="137.0" stylesheets="@styles.css" text="Home">
                            <font>
                               <Font size="13.0" />
                            </font>
@@ -39,7 +40,7 @@
                               <Font size="13.0" />
                            </font>
                            <graphic>
-                              <ImageView id="icon" fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@category.png" />
                                  </image>
@@ -71,18 +72,20 @@
                            </graphic>
                         </Button>
                      </children>
-                     <padding>
-                        <Insets left="6.0" />
-                     </padding>
                   </VBox>
+                  <QuadCurve controlX="92.0" controlY="-22.0" endX="-14.0" endY="-4.0" fill="#86b2b5ad" layoutX="-38.0" layoutY="104.0" startX="63.0" startY="-96.0" stroke="#d0e03d00" strokeType="INSIDE" />
+                  <QuadCurve controlX="19.0" controlY="-22.0" endX="-148.0" endY="75.0" fill="#85b2b6" layoutX="63.0" layoutY="57.0" startX="-47.0" startY="-113.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                  <QuadCurve controlX="26.0" controlY="-86.0" endX="-50.0" endY="8.0" fill="#86b2b5a6" layoutX="50.0" layoutY="400.0" startX="-71.0" startY="-145.0" stroke="#00000003" strokeType="INSIDE" />
+                  <QuadCurve controlX="19.0" controlY="-58.0" endX="-79.0" endY="39.0" fill="#85b2b6e8" layoutX="50.0" layoutY="368.0" startX="-79.0" startY="-107.0" stroke="#00000004" strokeType="INSIDE" />
+                  <QuadCurve controlX="6.0" controlY="-30.0" endX="40.0" endY="-77.0" fill="#85b2b6c4" layoutX="86.0" layoutY="400.0" startX="40.0" startY="8.0" stroke="TRANSPARENT" strokeType="INSIDE" />
                </children>
             </AnchorPane>
-                <AnchorPane prefHeight="400.0" prefWidth="488.0">
+                <AnchorPane prefHeight="400.0" prefWidth="488.0" style="-fx-background-color: DDDFE9;">
                     <children>
                         <VBox prefHeight="400.0" prefWidth="488.0" spacing="10.0">
                             <children>
-                        <Label alignment="CENTER" prefHeight="37.0" prefWidth="473.0" style="-fx-font-size: 19px; -fx-font-weight: bold; -fx-background-color: #E1E5F2; -fx-background-radius: 15px;" text="Create a new transaction" textFill="#0d0d0d" />
-                                <VBox maxHeight="335.0" maxWidth="465.0" prefHeight="327.0" prefWidth="465.0" spacing="5.0" style="-fx-background-color: #E1E5F2; -fx-padding: 20px; -fx-background-radius: 15px;">
+                        <Label alignment="CENTER" prefHeight="37.0" prefWidth="465.0" style="-fx-font-size: 19px; -fx-font-weight: bold; -fx-background-color: #ffffff; -fx-background-radius: 15px;" text="Create a new transaction" textFill="#0d0d0d" />
+                                <VBox maxHeight="335.0" maxWidth="465.0" prefHeight="327.0" prefWidth="465.0" spacing="5.0" style="-fx-background-color: #ffffff; -fx-padding: 20px; -fx-background-radius: 15px;">
                                     <children>
                                         <Text fill="#111010" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Date">
                                             <font>
