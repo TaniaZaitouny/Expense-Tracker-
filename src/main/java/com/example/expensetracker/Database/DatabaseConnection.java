@@ -40,7 +40,7 @@ public class DatabaseConnection {
     private void createUsersTable() {
         String sql = "CREATE TABLE USERS " +
                 "(id INTEGER not NULL AUTO_INCREMENT, " +
-                " user_name VARCHAR(255), " +
+                " username VARCHAR(255), " +
                 " email VARCHAR(255), " +
                 " PRIMARY KEY (id))";
         try {
@@ -59,7 +59,7 @@ public class DatabaseConnection {
     private void createCategoriesTable() {
         String sql = "CREATE TABLE CATEGORIES " +
                 "(id INTEGER not NULL AUTO_INCREMENT, " +
-                " category_name VARCHAR(255), " +
+                " categoryName VARCHAR(255), " +
                 " type VARCHAR(255), " +
                 " PRIMARY KEY (id))";
         try {
