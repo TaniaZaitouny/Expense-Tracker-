@@ -1,5 +1,6 @@
 package com.example.expensetracker.Controllers;
 
+import com.example.expensetracker.HelloApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,7 +25,7 @@ public class TransactionController {
 
     @FXML
     protected void homePage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("home.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("home.fxml")));
         Scene scene = new Scene(root);
         Stage stage = (Stage)homeButton.getScene().getWindow();
         stage.setTitle("home");
@@ -33,7 +34,7 @@ public class TransactionController {
     }
     @FXML
     protected void categoriesPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("categories.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("categories.fxml")));
         Scene scene = new Scene(root);
         Stage stage = (Stage)categoriesButton.getScene().getWindow();
         stage.setTitle("categories");
@@ -42,7 +43,7 @@ public class TransactionController {
     }
     @FXML
     protected void transactionsPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("transactions.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("transactions.fxml")));
         Scene scene = new Scene(root);
         Stage stage = (Stage)transactionsButton.getScene().getWindow();
         stage.setTitle("transactions");
@@ -51,7 +52,7 @@ public class TransactionController {
     }
     @FXML
     protected void reportsPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("reports.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("reports.fxml")));
         Scene scene = new Scene(root);
         Stage stage = (Stage)reportsButton.getScene().getWindow();
         stage.setTitle("reports");
@@ -60,7 +61,7 @@ public class TransactionController {
     }
     @FXML
     protected void addTransactionPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("addtransaction.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("addtransaction.fxml")));
         Scene scene = new Scene(root);
         Stage stage = (Stage)addTransactionButton.getScene().getWindow();
         stage.setTitle("addTransaction");
