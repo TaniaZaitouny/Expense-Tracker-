@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.QuadCurve?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.CategoryController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.CategoryController">
     <children>
         <HBox prefHeight="400.0" prefWidth="600.0">
             <children>
@@ -22,50 +22,50 @@
                <children>
                   <VBox layoutX="-1.0" layoutY="98.0" prefHeight="159.0" prefWidth="127.0" spacing="10.0">
                      <children>
-                        <Button fx:id="homeButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#homePage" prefHeight="28.0" prefWidth="144.0" stylesheets="@styles.css" text="Home">
+                        <Button fx:id="homeButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#homePage" prefHeight="28.0" prefWidth="144.0" stylesheets="@../Styles/styles.css" text="Home">
                            <font>
                               <Font size="13.0" />
                            </font>
                            <graphic>
                               <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@home.png" />
+                                    <Image url="@../Media/home.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="categoriesButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#categoriesPage" prefHeight="27.0" prefWidth="139.0" stylesheets="@styles.css" text="Categories">
+                        <Button fx:id="categoriesButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#categoriesPage" prefHeight="27.0" prefWidth="139.0" stylesheets="@../Styles/styles.css" text="Categories">
                            <font>
                               <Font size="13.0" />
                            </font>
                            <graphic>
                               <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@category.png" />
+                                    <Image url="@../Media/category.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="transactionsButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#transactionsPage" prefHeight="27.0" prefWidth="139.0" stylesheets="@styles.css" text="Transactions">
+                        <Button fx:id="transactionsButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#transactionsPage" prefHeight="27.0" prefWidth="139.0" stylesheets="@../Styles/styles.css" text="Transactions">
                            <font>
                               <Font size="13.0" />
                            </font>
                            <graphic>
                               <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@transaction.png" />
+                                    <Image url="@../Media/transaction.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="reportsButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#reportsPage" prefHeight="27.0" prefWidth="143.0" stylesheets="@styles.css" text="Reports">
+                        <Button fx:id="reportsButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#reportsPage" prefHeight="27.0" prefWidth="143.0" stylesheets="@../Styles/styles.css" text="Reports">
                            <font>
                               <Font size="13.0" />
                            </font>
                            <graphic>
                               <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@report.png" />
+                                    <Image url="@../Media/report.png" />
                                  </image>
                               </ImageView>
                            </graphic>
