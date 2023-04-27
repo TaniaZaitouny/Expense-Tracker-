@@ -15,6 +15,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class CategoryController
@@ -38,8 +39,8 @@ public class CategoryController
     Button submitButton;
     @FXML
     TextField categoryName;
-    @FXML
-    Label messageText;
+//    @FXML
+//    Label messageText;
 
     @FXML
     protected void homePage() throws IOException {
@@ -88,17 +89,16 @@ public class CategoryController
         stage.show();
     }
 
-    public void addCategory(ActionEvent actionEvent)
-    {
+    public void addCategory(ActionEvent actionEvent) throws SQLException {
         String name=categoryName.getText();
         String type;
         if(!incomeChoiceButton.isSelected() && !expenseChoiceButton.isSelected()){
-            messageText.setText("PLease choose a type for category");
+           // messageText.setText("PLease choose a type for category");
             return;
         }
         if(name.equals(""))
         {
-            messageText.setText("PLease choose a name for category");
+           // messageText.setText("PLease choose a name for category");
             return;
         }
         if(incomeChoiceButton.isSelected())
@@ -110,9 +110,10 @@ public class CategoryController
             type="expense";
             expenseChoiceButton.setSelected(false);
         }
+
         Category category = new Category();
         category.addCategory(name,type);
         categoryName.setText("");
-        messageText.setText("Category added successfully");
+     //   messageText.setText("Category added successfully");
     }
 }

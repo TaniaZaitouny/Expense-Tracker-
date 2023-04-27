@@ -39,7 +39,7 @@ public class DatabaseConnection {
 
     private void createUsersTable() {
         String sql = "CREATE TABLE USERS " +
-                "(id INTEGER not NULL, " +
+                "(id INTEGER not NULL AUTO_INCREMENT, " +
                 " user_name VARCHAR(255), " +
                 " email VARCHAR(255), " +
                 " PRIMARY KEY (id))";
@@ -58,7 +58,7 @@ public class DatabaseConnection {
 
     private void createCategoriesTable() {
         String sql = "CREATE TABLE CATEGORIES " +
-                "(id INTEGER not NULL, " +
+                "(id INTEGER not NULL AUTO_INCREMENT, " +
                 " category_name VARCHAR(255), " +
                 " type VARCHAR(255), " +
                 " PRIMARY KEY (id))";
@@ -77,7 +77,7 @@ public class DatabaseConnection {
 
     private void createTransactionsTable() {
         String sql = "CREATE TABLE TRANSACTIONS " +
-                "(id INTEGER not NULL, " +
+                "(id INTEGER not NULL AUTO_INCREMENT, " +
                 " date DATE, " +
                 " amount DOUBLE, " +
                 " category INTEGER not null, " +
@@ -94,6 +94,13 @@ public class DatabaseConnection {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void addCategory(String name, String type) throws SQLException {
+        String sqlQuery = "INSERT INTO categories (category_name, type) " +
+                "VALUES ('" + name + "', '" + type + "')";
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(sqlQuery);
     }
 
 }
