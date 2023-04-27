@@ -1,4 +1,4 @@
-package com.example.expensetracker;
+package com.example.expensetracker.Database;
 
 import java.sql.*;
 
@@ -14,7 +14,7 @@ public class DatabaseConnection {
 
         try {
             connection = DriverManager.getConnection(dbURL, user, password);
-            createTables();
+            this.createTables();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -32,9 +32,9 @@ public class DatabaseConnection {
     }
 
     private void createTables() {
-        createUsersTable();
-        createCategoriesTable();
-        createTransactionsTable();
+        this.createUsersTable();
+        this.createCategoriesTable();
+        this.createTransactionsTable();
     }
 
     private void createUsersTable() {
@@ -46,7 +46,7 @@ public class DatabaseConnection {
         try {
             Statement statement = this.connection.createStatement();
             DatabaseMetaData meta = this.connection.getMetaData();
-            ResultSet resultSet = meta.getTables(null, null, "USERS", new String[] {"TABLE"});
+            ResultSet resultSet = meta.getTables("expense-tracker", null, "USERS", new String[] {"TABLE"});
             if(!resultSet.next()) {
                 statement.executeUpdate(sql);
                 System.out.println("Created users table in given database...");
@@ -65,7 +65,7 @@ public class DatabaseConnection {
         try {
             Statement statement = this.connection.createStatement();
             DatabaseMetaData meta = this.connection.getMetaData();
-            ResultSet resultSet = meta.getTables(null, null, "CATEGORIES", new String[] {"TABLE"});
+            ResultSet resultSet = meta.getTables("expense-tracker", null, "CATEGORIES", new String[] {"TABLE"});
             if(!resultSet.next()) {
                 statement.executeUpdate(sql);
                 System.out.println("Created categories table in given database...");
@@ -75,7 +75,7 @@ public class DatabaseConnection {
         }
     }
 
-    public void createTransactionsTable() {
+    private void createTransactionsTable() {
         String sql = "CREATE TABLE TRANSACTIONS " +
                 "(id INTEGER not NULL, " +
                 " date DATE, " +
@@ -86,7 +86,7 @@ public class DatabaseConnection {
         try {
             Statement statement = this.connection.createStatement();
             DatabaseMetaData meta = this.connection.getMetaData();
-            ResultSet resultSet = meta.getTables(null, null, "TRANSACTIONS", new String[] {"TABLE"});
+            ResultSet resultSet = meta.getTables("expense-tracker", null, "transactions", new String[] {"TABLE"});
             if(!resultSet.next()) {
                 statement.executeUpdate(sql);
                 System.out.println("Created table transactions in given database...");
@@ -95,6 +95,5 @@ public class DatabaseConnection {
             throw new RuntimeException(e);
         }
     }
-
 
 }

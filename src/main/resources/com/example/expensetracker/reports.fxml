@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.QuadCurve?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="408.0" prefWidth="608.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="608.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.ReportsController">
    <children>
       <HBox prefHeight="400.0" prefWidth="600.0">
          <children>
@@ -82,7 +82,6 @@
                <children>
                   <VBox prefHeight="400.0" prefWidth="480.0">
                      <children>
-
                         <HBox maxWidth="-Infinity" prefHeight="100.0" prefWidth="464.0">
                            <children>
                               <HBox prefHeight="100.0" prefWidth="200.0">
