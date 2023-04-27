@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.shape.QuadCurve?>
+
+<AnchorPane id="Menu" prefHeight="400.0" prefWidth="111.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.MenuController">
+    <children>
+        <VBox layoutX="-1.0" layoutY="98.0" prefHeight="159.0" prefWidth="127.0" spacing="10.0">
+            <children>
+                <Button fx:id="homeButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#homePage" prefHeight="28.0" prefWidth="150.0" stylesheets="@../Styles/styles.css" text="Home">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Media/home.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="categoriesButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#categoriesPage" prefHeight="27.0" prefWidth="140.0" stylesheets="@../Styles/styles.css" text="Categories">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Media/category.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="transactionsButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#transactionsPage" prefHeight="27.0" prefWidth="134.0" stylesheets="@../Styles/styles.css" text="Transactions">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Media/transaction.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="reportsButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#reportsPage" prefHeight="27.0" prefWidth="146.0" stylesheets="@../Styles/styles.css" text="Reports">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Media/report.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </children>
+        </VBox>
+        <QuadCurve controlX="92.0" controlY="-22.0" endX="-14.0" endY="-4.0" fill="#86b2b5ad" layoutX="-38.0" layoutY="104.0" startX="63.0" startY="-96.0" stroke="#d0e03d00" strokeType="INSIDE" />
+        <QuadCurve controlX="19.0" controlY="-22.0" endX="-148.0" endY="75.0" fill="#85b2b6" layoutX="63.0" layoutY="57.0" startX="-47.0" startY="-113.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+        <QuadCurve controlX="26.0" controlY="-86.0" endX="-50.0" endY="8.0" fill="#86b2b5a6" layoutX="50.0" layoutY="400.0" startX="-71.0" startY="-145.0" stroke="#00000003" strokeType="INSIDE" />
+        <QuadCurve controlX="19.0" controlY="-58.0" endX="-79.0" endY="39.0" fill="#85b2b6e8" layoutX="50.0" layoutY="368.0" startX="-79.0" startY="-107.0" stroke="#00000004" strokeType="INSIDE" />
+        <QuadCurve controlX="6.0" controlY="-30.0" endX="40.0" endY="-77.0" fill="#85b2b6c4" layoutX="86.0" layoutY="400.0" startX="40.0" startY="8.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+    </children>
+</AnchorPane>
