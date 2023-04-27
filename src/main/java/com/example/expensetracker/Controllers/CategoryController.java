@@ -42,46 +42,10 @@ public class CategoryController
 //    @FXML
 //    Label messageText;
 
-    @FXML
-    protected void homePage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/home.fxml")));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage)homeButton.getScene().getWindow();
-        stage.setTitle("home");
-        stage.setScene(scene);
-        stage.show();
-    }
-    @FXML
-    protected void categoriesPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/categories.fxml")));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage)categoriesButton.getScene().getWindow();
-        stage.setTitle("categories");
-        stage.setScene(scene);
-        stage.show();
-    }
-    @FXML
-    protected void transactionsPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/transactions.fxml")));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage)transactionsButton.getScene().getWindow();
-        stage.setTitle("transactions");
-        stage.setScene(scene);
-        stage.show();
-    }
-    @FXML
-    protected void reportsPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/reports.fxml")));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage)reportsButton.getScene().getWindow();
-        stage.setTitle("reports");
-        stage.setScene(scene);
-        stage.show();
-    }
 
     @FXML
     protected void addCategoryPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/addcategory.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/addCategory.fxml")));
         Scene scene = new Scene(root);
         Stage stage = (Stage)addCategoryButton.getScene().getWindow();
         stage.setTitle("addCategory");
