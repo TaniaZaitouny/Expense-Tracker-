@@ -39,6 +39,7 @@ public class CategoryController
     Button submitButton;
     @FXML
     TextField categoryName;
+
 //    @FXML
 //    Label messageText;
 
@@ -116,4 +117,6 @@ public class CategoryController
         categoryName.setText("");
      //   messageText.setText("Category added successfully");
     }
+
+
 }

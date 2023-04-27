@@ -96,11 +96,6 @@ public class DatabaseConnection {
         }
     }
 
-    public void addCategory(String name, String type) throws SQLException {
-        String sqlQuery = "INSERT INTO categories (category_name, type) " +
-                "VALUES ('" + name + "', '" + type + "')";
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(sqlQuery);
-    }
+
 
 }
