@@ -1,18 +1,20 @@
 package com.example.expensetracker.Models;
 
 import com.example.expensetracker.Database.DatabaseConnection;
+import javafx.fxml.FXML;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.util.Pair;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
 
 public class Transaction {
+
     Connection connection;
     private int userId;
     public Transaction() {
@@ -58,4 +60,23 @@ public class Transaction {
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
     }
+
+    public ArrayList<String[]> getTransactions() throws SQLException
+    {
+        ArrayList<String[]> transactions = new ArrayList<String[]>();
+        Statement statement = connection.createStatement();
+        String query = "SELECT id, category, date, amount FROM transactions WHERE userId = " + userId;
+//        System.out.println("Executing query: " + query);
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
+            String[] singleTransaction = new String[4];
+            singleTransaction[0] = resultSet.getString(1);
+            singleTransaction[1] = resultSet.getString(2);
+            singleTransaction[2] = resultSet.getString(3);
+            singleTransaction[3] = resultSet.getString(4);
+            transactions.add(singleTransaction);
+        }
+        return transactions;
+    }
+
 }
