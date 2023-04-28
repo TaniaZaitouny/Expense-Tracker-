@@ -25,9 +25,6 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, SQLException {
-
-        stage.initStyle(StageStyle.UNDECORATED);
-
         int userId=prefs.getInt("userId", 0);
         if(userId==0)
         {
@@ -37,6 +34,7 @@ public class HelloApplication extends Application {
         {
             HelloApplication.loadPage("Views/home.fxml",stage);
         }
+
 
         DatabaseConnection db = DatabaseConnection.getInstance();
         Connection connection = db.getConnection();
