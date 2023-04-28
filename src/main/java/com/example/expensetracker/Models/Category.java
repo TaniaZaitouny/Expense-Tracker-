@@ -3,6 +3,7 @@ package com.example.expensetracker.Models;
 import com.example.expensetracker.Database.DatabaseConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Pair;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -37,13 +38,14 @@ public class Category {
         statement.executeUpdate(sqlQuery);
     }
 
-    public ArrayList<String> getCategories() throws SQLException{
-        ArrayList<String> categories = new ArrayList<>();
+    public ArrayList<Pair<String,String>> getCategories() throws SQLException{
+        ArrayList<Pair<String,String>> categories = new ArrayList<>();
         Statement statement = connection.createStatement();
-        String query = "SELECT categoryName FROM categories";
+        String query = "SELECT categoryName,type FROM categories WHERE userId = '"+userId+"';";
         ResultSet resultSet = statement.executeQuery(query);
         while (resultSet.next()) {
-            categories.add(resultSet.getString("categoryName"));
+            Pair result = new Pair<>(resultSet.getString(1),resultSet.getString(2));
+            categories.add(result);
         }
 
         return categories;

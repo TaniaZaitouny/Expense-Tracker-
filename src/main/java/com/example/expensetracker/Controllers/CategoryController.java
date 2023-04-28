@@ -1,22 +1,17 @@
 package com.example.expensetracker.Controllers;
 
-import com.example.expensetracker.HelloApplication;
 import com.example.expensetracker.Models.Category;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.text.Text;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Objects;
+import java.util.ArrayList;
 
 public class CategoryController
 {
@@ -39,10 +34,19 @@ public class CategoryController
     Button submitButton;
     @FXML
     TextField categoryName;
+    @FXML private TableView<Pair<String,String>> categoriesTable;
+    @FXML private TableColumn<Pair<String,String>, String> categoryColumn;
+    @FXML private TableColumn<Pair<String,String>,String> typeColumn;
+    @FXML private TableColumn<Pair<String,String>, String> actionsColumn;
 
 //    @FXML
 //    Label messageText;
 
+    Category category = new Category();
+
+    public void initialize() throws SQLException {
+        getCategories();
+    }
 
     @FXML
     protected void addCategoryPage() throws IOException {
@@ -72,10 +76,17 @@ public class CategoryController
             expenseChoiceButton.setSelected(false);
         }
 
-        Category category = new Category();
         category.addCategory(name,type);
         categoryName.setText("");
      //   messageText.setText("Category added successfully");
+    }
+
+    private void getCategories() throws SQLException {
+        ArrayList<Pair<String,String>> categories = category.getCategories();
+        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("key"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+        categoriesTable.setItems(FXCollections.observableArrayList(categories));
+
     }
 
 
