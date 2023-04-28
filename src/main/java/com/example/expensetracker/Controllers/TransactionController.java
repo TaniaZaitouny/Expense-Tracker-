@@ -53,7 +53,7 @@ public class TransactionController {
         Category category = new Category();
 
         try {
-            ObservableList<String> categories = category.getCategories();
+            ArrayList<String> categories = category.getCategories();
             transactionCategory.setItems(FXCollections.observableList(categories));
         }
         catch (SQLException e) {
@@ -74,7 +74,7 @@ public class TransactionController {
             return;
         }
         try{
-                amount  = Double.parseDouble(transactionAmount.getText());
+            amount  = Double.parseDouble(transactionAmount.getText());
         }
         catch (NumberFormatException e){
             return;

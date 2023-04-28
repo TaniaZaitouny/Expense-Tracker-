@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -32,10 +33,10 @@ public class MenuController {
     public static Scene loadPage(String pageName,Stage stage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource(pageName)));
         Scene scene = new Scene(root);
+        stage.getIcons().add(new Image(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("Media/XPense.png"))));
         stage.setScene(scene);
         stage.show();
         return scene;
-
     }
 
     @FXML
