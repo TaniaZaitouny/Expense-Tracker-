@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.CategoryController">
+<AnchorPane prefHeight="408.0" prefWidth="608.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.CategoryController">
     <children>
         <HBox prefHeight="400.0" prefWidth="600.0">
             <children>
-                <fx:include source="layout.fxml"/>
+                <fx:include source="layout.fxml" />
                 <AnchorPane prefHeight="400.0" prefWidth="488.0" style="-fx-background-color: #E1E5F2;;">
                     <children>
                         <VBox alignment="CENTER" prefHeight="400.0" prefWidth="482.0" spacing="10.0">

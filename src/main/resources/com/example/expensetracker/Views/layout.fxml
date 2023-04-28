@@ -6,97 +6,98 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.CubicCurve?>
 <?import javafx.scene.shape.QuadCurve?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="Menu" prefHeight="408.0" prefWidth="136.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.MenuController">
-    <children>
-        <VBox layoutX="-1.0" layoutY="98.0" prefHeight="159.0" prefWidth="136.0" spacing="10.0">
-            <children>
-                <Button fx:id="homeButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#homePage" prefHeight="28.0" prefWidth="150.0" stylesheets="@../Styles/styles.css" text="Home">
-                    <font>
-                        <Font size="13.0" />
-                    </font>
-                    <graphic>
-                        <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../Media/home.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="133.0" style="-fx-background-color: #3A4D8F;" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.MenuController">
+   <children>
+      <VBox alignment="CENTER" layoutX="-1.0" layoutY="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="153.0" prefWidth="133.0" style="-fx-background-color: #3A4D8F;">
+         <children>
+            <Button fx:id="homeButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#homePage" prefHeight="28.0" prefWidth="150.0" stylesheets="@../Styles/styles.css" text="Home">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Media/home.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <padding>
                   <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
                </padding>
-                </Button>
-                <Button fx:id="categoriesButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#categoriesPage" prefHeight="27.0" prefWidth="140.0" stylesheets="@../Styles/styles.css" text="Categories">
-                    <font>
-                        <Font size="13.0" />
-                    </font>
-                    <graphic>
-                        <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../Media/category.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
+            </Button>
+            <Button fx:id="transactionsButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#transactionsPage" prefHeight="27.0" prefWidth="141.0" stylesheets="@../Styles/styles.css" text="Transactions">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Media/transaction.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
                <padding>
                   <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
                </padding>
-                </Button>
-                <Button fx:id="transactionsButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#transactionsPage" prefHeight="27.0" prefWidth="141.0" stylesheets="@../Styles/styles.css" text="Transactions">
-                    <font>
-                        <Font size="13.0" />
-                    </font>
-                    <graphic>
-                        <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../Media/transaction.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
+            </Button>
+            <Button fx:id="categoriesButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#categoriesPage" prefHeight="27.0" prefWidth="140.0" stylesheets="@../Styles/styles.css" text="Categories">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Media/category.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
                <padding>
                   <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
                </padding>
-                </Button>
-                <Button fx:id="reportsButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#reportsPage" prefHeight="27.0" prefWidth="146.0" stylesheets="@../Styles/styles.css" text="Reports">
-                    <font>
-                        <Font size="13.0" />
-                    </font>
-                    <graphic>
-                        <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../Media/report.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
+            </Button>
+            <Button fx:id="reportsButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#reportsPage" prefHeight="27.0" prefWidth="146.0" stylesheets="@../Styles/styles.css" text="Reports">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Media/report.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
                <padding>
                   <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
                </padding>
-                </Button>
-
-                <Button fx:id="logoutButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#logoutPage" prefHeight="28.0" prefWidth="150.0" stylesheets="@../Styles/styles.css" text="Logout">
-                    <font>
-                        <Font size="13.0" />
-                    </font>
-                    <graphic>
-                        <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../Media/home.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
-            </children>
-         <opaqueInsets>
-            <Insets left="5.0" />
-         </opaqueInsets>
-        </VBox>
-        <QuadCurve controlX="6.0" controlY="-30.0" endX="40.0" endY="-77.0" fill="#809bcec4" layoutX="96.0" layoutY="400.0" startX="40.0" startY="8.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-      <QuadCurve controlX="-1.0" controlY="-66.0" endX="-79.0" endY="14.0" fill="#ffffffe8" layoutX="70.0" layoutY="388.0" startX="-79.0" startY="-107.0" stroke="#00000004" strokeType="INSIDE" />
-      <QuadCurve controlX="18.0" controlY="-100.0" endX="-71.0" endY="8.0" fill="#e1e5f27a" layoutX="70.0" layoutY="420.0" startX="-71.0" startY="-145.0" stroke="#00000003" strokeType="INSIDE" />
-      <QuadCurve controlX="129.0" controlY="-91.0" endX="-30.0" endY="-8.0" fill="#ffffffba" layoutX="-18.0" layoutY="124.0" startX="40.0" startY="-196.0" stroke="#d0e03d00" strokeType="INSIDE" />
-    </children>
+            </Button>
+            <Button fx:id="logoutButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#logoutPage" prefHeight="28.0" prefWidth="150.0" stylesheets="@../Styles/styles.css" text="Logout">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Media/home.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
+               </padding>
+            </Button>
+         </children>
+      </VBox>
+      <QuadCurve controlX="18.0" controlY="-100.0" endX="-71.0" endY="8.0" fill="#809bce7a" layoutX="59.0" layoutY="410.0" startX="-71.0" startY="-145.0" stroke="#00000003" strokeType="INSIDE" />
+      <QuadCurve controlX="-1.0" controlY="-66.0" endX="-79.0" endY="14.0" fill="#ffffffe8" layoutX="59.0" layoutY="378.0" startX="-79.0" startY="-107.0" stroke="#00000004" strokeType="INSIDE" />
+      <QuadCurve controlX="153.0" controlY="-108.0" endX="-14.0" endY="-4.0" fill="#ffffff82" layoutX="-19.0" layoutY="124.0" startX="10.0" startY="-160.0" stroke="#d0e03d00" strokeType="INSIDE" />
+      <QuadCurve controlX="129.0" controlY="-91.0" endX="-14.0" endY="-4.0" fill="#ffffffab" layoutX="-29.0" layoutY="114.0" startX="15.0" startY="-150.0" stroke="#d0e03d00" strokeType="INSIDE" />
+      <CubicCurve controlX1="55.0" controlX2="135.0" controlY1="265.0" controlY2="272.0" endX="135.0" endY="156.0" fill="#ffffffac" layoutX="-1.0" layoutY="2.0" startX="135.0" startY="408.0" stroke="TRANSPARENT" />
+   </children>
 </AnchorPane>

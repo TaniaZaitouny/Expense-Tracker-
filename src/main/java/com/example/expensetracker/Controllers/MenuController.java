@@ -34,6 +34,7 @@ public class MenuController {
         Stage stage = (Stage)homeButton.getScene().getWindow();
         Scene scene = HelloApplication.loadPage("Views/home.fxml",stage);
          //Get a reference to the VBox element in the home.fxml file
+
         VBox vbox = (VBox)scene.lookup("#home_category");
 
         // Add the mouse entered event listener to make the VBox glow

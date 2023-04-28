@@ -29,7 +29,8 @@ public class TransactionController {
     DatePicker transactionDate;
     @FXML
     ChoiceBox<String> transactionCategory;
-
+    @FXML
+    TextField transactionAmount;
 
     @FXML
     protected void addTransactionPage() throws IOException {

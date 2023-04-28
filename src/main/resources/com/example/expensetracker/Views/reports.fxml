@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="428.0" prefWidth="608.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.ReportsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="615.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.ReportsController">
    <children>
-      <HBox prefHeight="400.0" prefWidth="600.0">
+      <HBox prefHeight="408.0" prefWidth="615.0">
          <children>
             <fx:include source="layout.fxml" />
             <AnchorPane id="content" prefHeight="400.0" prefWidth="488.0">
                <children>
-                  <VBox prefHeight="400.0" prefWidth="480.0">
+                  <VBox prefHeight="400.0" prefWidth="459.0">
                      <children>
                         <HBox maxWidth="-Infinity" prefHeight="100.0" prefWidth="464.0">
                            <children>

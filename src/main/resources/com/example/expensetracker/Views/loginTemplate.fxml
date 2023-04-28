@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.CubicCurve?>
+<?import javafx.scene.shape.QuadCurve?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="133.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.LoginController">
+   <children>
+      <VBox alignment="CENTER" layoutX="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="136.0" style="-fx-background-color: #3A4D8F;">
+         <children>
+            <ImageView fitHeight="135.0" fitWidth="138.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Media/XPense.png" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+      <QuadCurve controlX="18.0" controlY="-100.0" endX="-71.0" endY="8.0" fill="#809bce7a" layoutX="59.0" layoutY="410.0" startX="-71.0" startY="-145.0" stroke="#00000003" strokeType="INSIDE" />
+      <QuadCurve controlX="-1.0" controlY="-66.0" endX="-79.0" endY="14.0" fill="#ffffffe8" layoutX="59.0" layoutY="378.0" startX="-79.0" startY="-107.0" stroke="#00000004" strokeType="INSIDE" />
+      <QuadCurve controlX="153.0" controlY="-108.0" endX="-14.0" endY="-4.0" fill="#ffffff82" layoutX="-19.0" layoutY="124.0" startX="10.0" startY="-160.0" stroke="#d0e03d00" strokeType="INSIDE" />
+      <QuadCurve controlX="129.0" controlY="-91.0" endX="-14.0" endY="-4.0" fill="#ffffffab" layoutX="-29.0" layoutY="114.0" startX="15.0" startY="-150.0" stroke="#d0e03d00" strokeType="INSIDE" />
+      <CubicCurve controlX1="55.0" controlX2="135.0" controlY1="265.0" controlY2="272.0" endX="135.0" endY="156.0" fill="#ffffffac" layoutX="1.0" startX="135.0" startY="408.0" stroke="TRANSPARENT" />
+   </children>
+</AnchorPane>
