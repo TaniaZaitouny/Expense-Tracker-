@@ -38,14 +38,13 @@ public class Category {
         statement.executeUpdate(sqlQuery);
     }
 
-    public ArrayList<Pair<String,String>> getCategories() throws SQLException{
-        ArrayList<Pair<String,String>> categories = new ArrayList<>();
+    public ArrayList<Pair<String, String>> getCategories() throws SQLException{
+        ArrayList<Pair<String, String>> categories = new ArrayList<>();
         Statement statement = connection.createStatement();
-        String query = "SELECT categoryName,type FROM categories WHERE userId = '"+userId+"';";
+        String query = "SELECT categoryName, type FROM categories WHERE userId = " + userId;
         ResultSet resultSet = statement.executeQuery(query);
         while (resultSet.next()) {
-            Pair result = new Pair<>(resultSet.getString(1),resultSet.getString(2));
-            categories.add(result);
+            categories.add(new Pair<>(resultSet.getString(1), resultSet.getString(2)));
         }
 
         return categories;

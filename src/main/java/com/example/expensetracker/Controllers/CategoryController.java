@@ -45,7 +45,9 @@ public class CategoryController
     Category category = new Category();
 
     public void initialize() throws SQLException {
-        getCategories();
+        if(categoriesTable != null) {
+            getCategories();
+        }
     }
 
     @FXML
@@ -86,7 +88,6 @@ public class CategoryController
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("key"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
         categoriesTable.setItems(FXCollections.observableArrayList(categories));
-
     }
 
 

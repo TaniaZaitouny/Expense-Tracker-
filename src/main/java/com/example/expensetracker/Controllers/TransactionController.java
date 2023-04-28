@@ -60,7 +60,7 @@ public class TransactionController {
 
         try {
             ArrayList<Pair<String,String> > results = category.getCategories();
-            ArrayList<String> categories=new ArrayList<>();
+            ArrayList<String> categories = new ArrayList<>();
             results.forEach(pair -> categories.add(pair.getKey()));
             transactionCategory.setItems(FXCollections.observableList(categories));
         }
