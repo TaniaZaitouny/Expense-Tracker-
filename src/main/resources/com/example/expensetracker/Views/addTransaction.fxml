@@ -43,7 +43,7 @@
                                             </font>
                                         </Text>
                                         <TextField />
-                                        <Button mnemonicParsing="false" text="Submit" />
+                                        <Button onAction="#addTransaction" mnemonicParsing="false" text="Submit" />
 
                                     </children></VBox>
                             </children>

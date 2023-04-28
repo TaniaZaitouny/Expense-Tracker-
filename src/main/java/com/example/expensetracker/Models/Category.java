@@ -8,14 +8,18 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.prefs.Preferences;
 
 public class Category {
     DatabaseConnection db  = DatabaseConnection.getInstance();
     Connection connection = db.getConnection();
+    Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
+    private int userId = prefs.getInt("userId", 0);
+
     public void addCategory(String name,String type) throws SQLException {
 
-        String sqlQuery = "INSERT INTO categories (categoryName, type) " +
-                "VALUES ('" + name + "', '" + type + "')";
+        String sqlQuery = "INSERT INTO categories (userId,categoryName, type) " +
+                "VALUES ('"+userId+"','" + name + "', '" + type + "')";
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
 

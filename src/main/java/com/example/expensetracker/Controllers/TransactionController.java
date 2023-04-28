@@ -60,6 +60,7 @@ public class TransactionController {
             e.printStackTrace();
         }
     }
+    @FXML
     public void addTransaction() throws SQLException {
         LocalDate date = (LocalDate) transactionDate.getValue();
         String selectedCategory = transactionCategory.getValue();
