@@ -8,14 +8,18 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.prefs.Preferences;
 
 public class Category {
     DatabaseConnection db  = DatabaseConnection.getInstance();
     Connection connection = db.getConnection();
+    Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
+    private int userId = prefs.getInt("userId", 0);
+
     public void addCategory(String name,String type) throws SQLException {
 
-        String sqlQuery = "INSERT INTO categories (category_name, type) " +
-                "VALUES ('" + name + "', '" + type + "')";
+        String sqlQuery = "INSERT INTO categories (userId,categoryName, type) " +
+                "VALUES ('"+userId+"','" + name + "', '" + type + "')";
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
 
@@ -27,7 +31,7 @@ public class Category {
     }
 
     public void updateCategory(int categoryId, String newName, String newType) throws SQLException{
-        String sqlQuery = "UPDATE categories SET category_name = '" + newName + "', type = '" + newType + "' WHERE id = " + categoryId;
+        String sqlQuery = "UPDATE categories SET categoryName = '" + newName + "', type = '" + newType + "' WHERE id = " + categoryId;
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
     }
@@ -35,10 +39,10 @@ public class Category {
     public ObservableList<String> getCategories() throws SQLException{
         ObservableList<String> categories = FXCollections.observableArrayList();
         Statement statement = connection.createStatement();
-        String query = "SELECT category_name FROM categories";
+        String query = "SELECT categoryName FROM categories";
         ResultSet resultSet = statement.executeQuery(query);
         while (resultSet.next()) {
-            String category = resultSet.getString("category_name");
+            String category = resultSet.getString("categoryName");
             categories.add(category);
         }
 

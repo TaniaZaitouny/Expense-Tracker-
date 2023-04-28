@@ -10,13 +10,16 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 public class Transaction {
     Connection connection;
-
+    private int userId;
     public Transaction() {
         DatabaseConnection db = DatabaseConnection.getInstance();
         connection = db.getConnection();
+        Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
+        userId = prefs.getInt("userId", 0);
     }
 
     public List<Pair<String, Number>> getTopCategories() {
@@ -39,8 +42,8 @@ public class Transaction {
     }
 
     public void addTransaction(LocalDate date, String selectedCategory, Double amount) throws SQLException {
-        String sqlQuery = "INSERT INTO transactions(date,amount,category)" +
-                "VALUES('"+date+"','"+amount+"','"+selectedCategory+"')";
+        String sqlQuery = "INSERT INTO transactions(userId,date,amount,category)" +
+                "VALUES('"+userId+"','"+date+"','"+amount+"','"+selectedCategory+"')";
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
     }

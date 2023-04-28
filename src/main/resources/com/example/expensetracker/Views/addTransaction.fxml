@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="608.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.TransactionController">
+    <children>
+        <HBox prefHeight="400.0" prefWidth="600.0">
+            <children>
+                <fx:include source="layout.fxml" />
+                <AnchorPane prefHeight="400.0" prefWidth="488.0" style="-fx-background-color: DDDFE9;">
+                    <children>
+                        <VBox prefHeight="400.0" prefWidth="488.0" spacing="10.0">
+                            <children>
+                        <Label alignment="CENTER" prefHeight="37.0" prefWidth="465.0" style="-fx-font-size: 19px; -fx-font-weight: bold; -fx-background-color: #ffffff; -fx-background-radius: 15px;" text="Create a new transaction" textFill="#0d0d0d" />
+                                <VBox maxHeight="335.0" maxWidth="465.0" prefHeight="327.0" prefWidth="465.0" spacing="5.0" style="-fx-background-color: #ffffff; -fx-padding: 20px; -fx-background-radius: 15px;">
+                                    <children>
+                                        <Text fill="#111010" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Date">
+                                            <font>
+                                                <Font name="Candra" size="13.0" />
+                                            </font>
+                                        </Text>
+                                        <DatePicker />
+
+                                        <Text fill="#111111" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Category">
+                                            <font>
+                                                <Font name="Candra" size="13.0" />
+                                            </font>
+                                        </Text>
+                                        <ChoiceBox fx:id="transactionCategory" prefWidth="150.0" onShown="#initializeCategoryList"/>
+                                        <Text fill="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Amount">
+                                            <font>
+                                                <Font name="Candra" size="13.0" />
+                                            </font>
+                                        </Text>
+                                        <TextField />
+                                        <Button onAction="#addTransaction" mnemonicParsing="false" text="Submit" />
+
+                                    </children></VBox>
+                            </children>
+                     <padding>
+                        <Insets left="10.0" top="10.0" />
+                     </padding></VBox>
+                    </children></AnchorPane>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>
