@@ -5,14 +5,11 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxWidth="-Infinity" prefHeight="408.0" prefWidth="615.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.HomeController">
+<AnchorPane fx:id="root" maxWidth="-Infinity" prefHeight="408.0" prefWidth="615.0" stylesheets="@../Styles/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.HomeController">
    <children>
       <HBox prefHeight="400.0" prefWidth="600.0">
          <children>
@@ -21,28 +18,9 @@
                <children>
                   <VBox prefHeight="400.0" prefWidth="476.0">
                      <children>
-                        <HBox prefHeight="161.0" prefWidth="488.0" spacing="5.0">
-                           <children>
-                              <VBox fx:id="home_category" alignment="TOP_CENTER" maxHeight="-Infinity" prefHeight="118.0" prefWidth="79.0" style="-fx-background-color: #ffffff; -fx-background-radius: 20px;">
-                                 <children>
-                                    <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="42.0" prefWidth="42.0" style="-fx-background-color: #3A4D8F; -fx-background-radius: 50px;">
-                                       <children>
-                                          <ImageView fitHeight="29.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../Media/coffee.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
-                                    </VBox>
-                                    <Label prefHeight="17.0" prefWidth="37.0" text="Coffee" />
-                                 </children>
-                                 <padding>
-                                    <Insets top="10.0" />
-                                 </padding>
-                              </VBox>
-                           </children>
+                        <HBox fx:id="topCategoriesBox" prefHeight="161.0" prefWidth="488.0" spacing="10.0">
                            <padding>
-                              <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                            </padding></HBox>
                         <HBox prefHeight="201.0" prefWidth="488.0">
                            <children>
