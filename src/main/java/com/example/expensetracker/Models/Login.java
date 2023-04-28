@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.prefs.Preferences;
 
 public class Login {
 
@@ -47,6 +48,12 @@ public class Login {
         return valid;
     };
 
+    private void saveId(int id)
+    {
+        Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
+        prefs.putInt("userId", id);
+    }
+
     public boolean login(String email, String password) throws SQLException {
         int userId;
         if(!validateAccount(email))
@@ -62,7 +69,8 @@ public class Login {
             userId = result.getInt("id");
             result.close();
             statement.close();
-            System.out.println(userId);
+            saveId(userId);
+            System.out.println(userId);  ////////////////
             return true;
         }
         result.close();
@@ -90,7 +98,8 @@ public class Login {
                 userId = result.getInt(1);
                 result.close();
                 statement.close();
-                System.out.println(userId);
+                saveId(userId);
+                System.out.println(userId);//////
                 return true;
             }
         }

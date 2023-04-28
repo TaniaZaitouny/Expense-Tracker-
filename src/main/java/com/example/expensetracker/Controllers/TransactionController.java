@@ -29,12 +29,11 @@ public class TransactionController {
     DatePicker transactionDate;
     @FXML
     ChoiceBox<String> transactionCategory;
-    @FXML
-    TextField transactionAmount;
+
 
     @FXML
     protected void addTransactionPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/addTransaction.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/addtransaction.fxml")));
         Scene scene = new Scene(root);
         Stage stage = (Stage)addTransactionButton.getScene().getWindow();
         stage.setTitle("addTransaction");
