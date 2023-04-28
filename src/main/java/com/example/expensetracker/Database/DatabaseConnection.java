@@ -62,7 +62,7 @@ public class DatabaseConnection {
                 "(categoryName VARCHAR(255) not NULL, " +
                 " userId INTEGER not NULL, " +
                 " type VARCHAR(255), " +
-                " PRIMARY KEY (id), " +
+                " PRIMARY KEY (categoryName), " +
                 " FOREIGN KEY (userId) REFERENCES users(id))";
         try {
             Statement statement = this.connection.createStatement();
