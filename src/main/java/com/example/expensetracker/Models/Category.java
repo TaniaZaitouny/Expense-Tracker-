@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
 public class Category {
@@ -36,14 +37,13 @@ public class Category {
         statement.executeUpdate(sqlQuery);
     }
 
-    public ObservableList<String> getCategories() throws SQLException{
-        ObservableList<String> categories = FXCollections.observableArrayList();
+    public ArrayList<String> getCategories() throws SQLException{
+        ArrayList<String> categories = new ArrayList<>();
         Statement statement = connection.createStatement();
         String query = "SELECT categoryName FROM categories";
         ResultSet resultSet = statement.executeQuery(query);
         while (resultSet.next()) {
-            String category = resultSet.getString("categoryName");
-            categories.add(category);
+            categories.add(resultSet.getString("categoryName"));
         }
 
         return categories;
