@@ -43,7 +43,7 @@
 
                                         </TextField>
 
-                                        <Button fx:id="submitButton" mnemonicParsing="false" onAction="#addCategory" text="Submit">
+                                        <Button fx:id="submitButton" mnemonicParsing="false" onAction="#updateCategory" text="">
                                  <font>
                                     <Font size="13.0" />
                                  </font></Button>
