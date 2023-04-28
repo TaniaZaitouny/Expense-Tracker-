@@ -36,7 +36,7 @@
                                                 <Font name="Candra" size="13.0" />
                                             </font>
                                         </Text>
-                                        <ChoiceBox fx:id="transactionCategory" prefWidth="150.0" onShown="#initializeCategoryList"/>
+                                        <ChoiceBox fx:id="transactionCategory" prefWidth="150.0"/>
                                         <Text fill="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Amount">
                                             <font>
                                                 <Font name="Candra" size="13.0" />

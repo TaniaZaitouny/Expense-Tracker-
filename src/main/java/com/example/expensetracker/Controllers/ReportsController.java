@@ -6,10 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.util.Pair;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class ReportsController
 {
@@ -20,7 +18,7 @@ public class ReportsController
     @FXML
     PieChart pieChart;
 
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
         initializeBarChart();
         initializePieChart();
     }

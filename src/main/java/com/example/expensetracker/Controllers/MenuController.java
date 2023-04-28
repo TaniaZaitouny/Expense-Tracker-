@@ -30,7 +30,7 @@ public class MenuController {
     @FXML
     Button logoutButton;
 
-    public static Scene loadPage(String pageName,Stage stage) throws IOException {
+    public static Scene loadPage(String pageName, Stage stage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource(pageName)));
         Scene scene = new Scene(root);
         stage.getIcons().add(new Image(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("Media/XPense.png"))));

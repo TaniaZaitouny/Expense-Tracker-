@@ -36,6 +36,11 @@ public class TransactionController {
     @FXML
     TextField transactionAmount;
 
+    public void initialize() {
+        if(transactionCategory != null) {
+            initializeCategoryList();
+        }
+    }
     @FXML
     protected void addTransactionPage() throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/addTransaction.fxml")));
@@ -44,7 +49,6 @@ public class TransactionController {
         stage.setTitle("addTransaction");
         stage.setScene(scene);
         stage.show();
-        new TransactionController();
     }
 
     @FXML

@@ -23,9 +23,9 @@ public class Transaction {
     }
 
     public List<Pair<String, Number>> getTopCategories() {
-        String sql = "SELECT categoryName, amount " +
+        String sql = "SELECT category, amount " +
                 "FROM transactions " +
-                "GROUP BY categoryName " +
+                "GROUP BY category " +
                 "ORDER BY amount desc " +
                 "LIMIT 5";
         List<Pair<String, Number>> pairs = new ArrayList<>(5);
@@ -33,7 +33,7 @@ public class Transaction {
             Statement statement = this.connection.createStatement();
             ResultSet result = statement.executeQuery(sql);
             while(result.next()) {
-                pairs.add(new Pair<>(result.getString("columnName"), result.getDouble(2)));
+                pairs.add(new Pair<>(result.getString("category"), result.getDouble(2)));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
