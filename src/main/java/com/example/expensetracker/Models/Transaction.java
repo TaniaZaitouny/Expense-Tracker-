@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,4 +38,21 @@ public class Transaction {
         return pairs;
     }
 
+    public void addTransaction(LocalDate date, String selectedCategory, Double amount) throws SQLException {
+        String sqlQuery = "INSERT INTO transactions(date,amount,category)" +
+                "VALUES('"+date+"','"+amount+"','"+selectedCategory+"')";
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(sqlQuery);
+    }
+    public void deleteTransaction(int transactionId) throws SQLException{
+        String sqlQuery = "DELETE FROM transactions WHERE id =" + transactionId;
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(sqlQuery);
+    }
+
+    public void updateTransactions(int transactionId, LocalDate newDate, String newCategory, Double newAmount) throws SQLException{
+        String sqlQuery = "UPDATE transactions SET date = '" + newDate + "', amount = '" + newAmount + "', category = '" + newCategory +"' WHERE id = " + transactionId;
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(sqlQuery);
+    }
 }

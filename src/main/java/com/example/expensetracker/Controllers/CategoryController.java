@@ -47,7 +47,7 @@ public class CategoryController
     @FXML
     protected void addCategoryPage() throws IOException {
         Stage stage = (Stage)addCategoryButton.getScene().getWindow();
-        HelloApplication.loadPage("Views/addCategory.fxml",stage);
+        MenuController.loadPage("Views/addCategory.fxml",stage);
     }
 
     public void addCategory(ActionEvent actionEvent) throws SQLException {

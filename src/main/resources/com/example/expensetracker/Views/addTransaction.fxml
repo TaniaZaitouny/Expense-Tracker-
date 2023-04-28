@@ -16,7 +16,7 @@
     <children>
         <HBox prefHeight="400.0" prefWidth="600.0">
             <children>
-                <fx:include source="layout.fxml"/>
+                <fx:include source="layout.fxml" />
                 <AnchorPane prefHeight="400.0" prefWidth="488.0" style="-fx-background-color: DDDFE9;">
                     <children>
                         <VBox prefHeight="400.0" prefWidth="488.0" spacing="10.0">
@@ -36,7 +36,7 @@
                                                 <Font name="Candra" size="13.0" />
                                             </font>
                                         </Text>
-                                        <ChoiceBox prefWidth="150.0" />
+                                        <ChoiceBox fx:id="transactionCategory" prefWidth="150.0" onShown="#initializeCategoryList"/>
                                         <Text fill="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Amount">
                                             <font>
                                                 <Font name="Candra" size="13.0" />

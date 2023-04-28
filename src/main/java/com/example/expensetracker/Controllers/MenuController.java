@@ -29,10 +29,19 @@ public class MenuController {
     @FXML
     Button logoutButton;
 
+    public static Scene loadPage(String pageName,Stage stage) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource(pageName)));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        return scene;
+
+    }
+
     @FXML
     protected void homePage() throws IOException {
         Stage stage = (Stage)homeButton.getScene().getWindow();
-        Scene scene = HelloApplication.loadPage("Views/home.fxml",stage);
+        Scene scene = MenuController.loadPage("Views/home.fxml",stage);
          //Get a reference to the VBox element in the home.fxml file
         VBox vbox = (VBox)scene.lookup("#home_category");
 
@@ -57,17 +66,17 @@ public class MenuController {
     @FXML
     protected void categoriesPage() throws IOException {
         Stage stage = (Stage)categoriesButton.getScene().getWindow();
-        Scene scene = HelloApplication.loadPage("Views/categories.fxml",stage);
+        Scene scene = MenuController.loadPage("Views/categories.fxml",stage);
     }
     @FXML
     protected void transactionsPage() throws IOException {
         Stage stage = (Stage)transactionsButton.getScene().getWindow();
-        Scene scene = HelloApplication.loadPage("Views/transactions.fxml",stage);
+        Scene scene = MenuController.loadPage("Views/transactions.fxml",stage);
     }
     @FXML
     protected void reportsPage() throws IOException {
         Stage stage = (Stage)reportsButton.getScene().getWindow();
-        Scene scene = HelloApplication.loadPage("Views/reports.fxml",stage);
+        Scene scene = MenuController.loadPage("Views/reports.fxml",stage);
     }
 
     @FXML
@@ -75,6 +84,6 @@ public class MenuController {
         Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
         prefs.remove("userId");
         Stage stage = (Stage)logoutButton.getScene().getWindow();
-        Scene scene = HelloApplication.loadPage("Views/login.fxml",stage);
+        Scene scene = MenuController.loadPage("Views/login.fxml",stage);
     }
 }
