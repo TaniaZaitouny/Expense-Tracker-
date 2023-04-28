@@ -62,23 +62,20 @@ public class TransactionController {
     }
     @FXML
     public void addTransaction() throws SQLException {
-        LocalDate date = (LocalDate) transactionDate.getValue();
+        LocalDate date = transactionDate.getValue();
         String selectedCategory = transactionCategory.getValue();
-        Double amount;
-        if(date ==null)
+        double amount = Double.parseDouble(transactionAmount.getText());
+        if(date == null)
         {
+            System.out.println("date null");
             return;
         }
         if(selectedCategory.equals(""))
         {
+            System.out.println("date null");
             return;
         }
-        try{
-            amount  = Double.parseDouble(transactionAmount.getText());
-        }
-        catch (NumberFormatException e){
-            return;
-        }
+
         Transaction transaction = new Transaction();
         transaction.addTransaction(date, selectedCategory, amount);
     }

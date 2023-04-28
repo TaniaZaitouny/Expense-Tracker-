@@ -59,9 +59,8 @@ public class DatabaseConnection {
 
     private void createCategoriesTable() {
         String sql = "CREATE TABLE CATEGORIES " +
-                "(id INTEGER not NULL AUTO_INCREMENT, " +
+                "(categoryName VARCHAR(255) not NULL, " +
                 " userId INTEGER not NULL, " +
-                " categoryName VARCHAR(255), " +
                 " type VARCHAR(255), " +
                 " PRIMARY KEY (id), " +
                 " FOREIGN KEY (userId) REFERENCES users(id))";
@@ -84,9 +83,9 @@ public class DatabaseConnection {
                 " userId INTEGER not NULL, " +
                 " date DATE, " +
                 " amount DOUBLE, " +
-                " category INTEGER not null, " +
+                " category VARCHAR(255) not null, " +
                 " PRIMARY KEY (id), " +
-                " FOREIGN KEY (category) REFERENCES categories(id), " +
+                " FOREIGN KEY (category) REFERENCES categories(categoryName), " +
                 " FOREIGN KEY (userId) REFERENCES users(id))";
         try {
             Statement statement = this.connection.createStatement();
