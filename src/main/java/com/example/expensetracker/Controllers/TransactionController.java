@@ -2,6 +2,7 @@ package com.example.expensetracker.Controllers;
 
 import com.example.expensetracker.HelloApplication;
 import com.example.expensetracker.Models.Category;
+import com.example.expensetracker.Models.Transaction;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -37,7 +38,7 @@ public class TransactionController {
 
     @FXML
     protected void addTransactionPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/addTransaction.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/addtransaction.fxml")));
         Scene scene = new Scene(root);
         Stage stage = (Stage)addTransactionButton.getScene().getWindow();
         stage.setTitle("addTransaction");
@@ -56,10 +57,29 @@ public class TransactionController {
 
         }
         catch (SQLException e) {
-        e.printStackTrace();
+            e.printStackTrace();
         }
     }
-    public void addTransaction()
-    {}
+    public void addTransaction() throws SQLException {
+        LocalDate date = (LocalDate) transactionDate.getValue();
+        String selectedCategory = transactionCategory.getValue();
+        Double amount;
+        if(date ==null)
+        {
+            return;
+        }
+        if(selectedCategory.equals(""))
+        {
+            return;
+        }
+        try{
+                amount  = Double.parseDouble(transactionAmount.getText());
+        }
+        catch (NumberFormatException e){
+            return;
+        }
+        Transaction transaction = new Transaction();
+        transaction.addTransaction(date, selectedCategory, amount);
+    }
 
 }
