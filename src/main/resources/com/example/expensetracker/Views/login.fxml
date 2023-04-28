@@ -1,17 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.QuadCurve?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="408.0" prefWidth="608.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.LoginController">
-    <Label layoutX="67.0" layoutY="49.0" text="Email" />
-    <Label layoutX="67.0" layoutY="141.0" text="Password" />
-    <TextField fx:id="emailField" layoutX="67.0" layoutY="79.0" />
-    <PasswordField fx:id="passwordField" layoutX="67.0" layoutY="171.0" />
-    <Button fx:id="loginButton" layoutX="126.0" layoutY="231.0" mnemonicParsing="false" onAction="#login" text="Login" />
-    <Button fx:id="signupButton" layoutX="215.0" layoutY="231.0" mnemonicParsing="false" onAction="#signupPage" text="Sign Up to new account" />
-    <Label fx:id="messageText" layoutX="67.0" layoutY="269.0" prefWidth="266.0" textFill="RED" />
+<AnchorPane prefHeight="398.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.LoginController">
+   <HBox prefHeight="405.0" prefWidth="608.0">
+      <children>
+         <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="136.0" style="-fx-background-color: #3A4D8F;">
+            <children>
+               <ImageView fitHeight="135.0" fitWidth="138.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../Media/XPense.png" />
+                  </image>
+               </ImageView>
+            </children>
+         </VBox>
+         <VBox alignment="CENTER" prefHeight="408.0" prefWidth="468.0" spacing="10.0">
+            <children>
+               <Label style="-fx-font-weight: bold;" text="Welcome">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Label>
+               <VBox alignment="CENTER_LEFT" maxWidth="-Infinity" prefHeight="141.0" prefWidth="252.0" spacing="5.0">
+                  <children>
+                      <Label style="-fx-font-weight: bold;" text="Email" />
+                      <TextField fx:id="emailField" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="252.0" style="-fx-border-color: #cccccc; -fx-border-width: 1px; -fx-border-radius: 4px;" />
+                      <Label style="-fx-font-weight: bold;" text="Password" />
+                      <PasswordField fx:id="passwordField" maxWidth="-Infinity" prefHeight="27.0" prefWidth="253.0" style="-fx-border-color: #cccccc; -fx-border-width: 1px; -fx-border-radius: 4px;" />
+                  </children>
+               </VBox>
+                <Button fx:id="loginButton" maxWidth="-Infinity" mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="252.0" style="-fx-background-color: #3A4D8F; -fx-text-fill: #ffffff;" text="Login">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Button>
+                <Label fx:id="messageText" prefHeight="26.0" prefWidth="266.0" textFill="RED" />
+                <Button fx:id="signupButton" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#signupPage" style="-fx-background-color: transparent; -fx-text-fill: #3A4D8F;" text="Create an account" />
+            </children>
+         </VBox>
+      </children>
+   </HBox>
+   <QuadCurve controlX="18.0" controlY="-100.0" endX="-71.0" endY="8.0" fill="#809bce7a" layoutX="60.0" layoutY="410.0" startX="-71.0" startY="-145.0" stroke="#00000003" strokeType="INSIDE" />
+   <QuadCurve controlX="-1.0" controlY="-66.0" endX="-79.0" endY="14.0" fill="#ffffffe8" layoutX="60.0" layoutY="378.0" startX="-79.0" startY="-107.0" stroke="#00000004" strokeType="INSIDE" />
+   <QuadCurve controlX="153.0" controlY="-108.0" endX="-14.0" endY="-4.0" fill="#ffffff82" layoutX="-18.0" layoutY="124.0" startX="10.0" startY="-160.0" stroke="#d0e03d00" strokeType="INSIDE" />
+   <QuadCurve controlX="129.0" controlY="-91.0" endX="-14.0" endY="-4.0" fill="#ffffffab" layoutX="-28.0" layoutY="114.0" startX="15.0" startY="-150.0" stroke="#d0e03d00" strokeType="INSIDE" />
 </AnchorPane>

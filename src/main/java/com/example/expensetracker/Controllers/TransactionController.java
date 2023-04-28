@@ -2,6 +2,7 @@ package com.example.expensetracker.Controllers;
 
 import com.example.expensetracker.HelloApplication;
 import com.example.expensetracker.Models.Category;
+import com.example.expensetracker.Models.Transaction;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -57,7 +58,26 @@ public class TransactionController {
         }
 
     }
-    public void addTransaction()
-    {}
+    public void addTransaction() throws SQLException {
+        LocalDate date = (LocalDate) transactionDate.getValue();
+        String selectedCategory = transactionCategory.getValue();
+        Double amount;
+        if(date ==null)
+        {
+            return;
+        }
+        if(selectedCategory.equals(""))
+        {
+            return;
+        }
+        try{
+                amount  = Double.parseDouble(transactionAmount.getText());
+        }
+        catch (NumberFormatException e){
+            return;
+        }
+        Transaction transaction = new Transaction();
+        transaction.addTransaction(date, selectedCategory, amount);
+    }
 
 }
