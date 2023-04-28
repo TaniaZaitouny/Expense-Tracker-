@@ -38,6 +38,11 @@ public class TransactionController {
     @FXML
     TextField transactionAmount;
 
+    public void initialize() {
+        if(transactionCategory != null) {
+            initializeCategoryList();
+        }
+    }
     @FXML
     protected void addTransactionPage() throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/addTransaction.fxml")));
@@ -46,7 +51,6 @@ public class TransactionController {
         stage.setTitle("addTransaction");
         stage.setScene(scene);
         stage.show();
-        new TransactionController();
     }
 
     @FXML
@@ -66,23 +70,20 @@ public class TransactionController {
     }
     @FXML
     public void addTransaction() throws SQLException {
-        LocalDate date = (LocalDate) transactionDate.getValue();
+        LocalDate date = transactionDate.getValue();
         String selectedCategory = transactionCategory.getValue();
-        Double amount;
-        if(date ==null)
+        double amount = Double.parseDouble(transactionAmount.getText());
+        if(date == null)
         {
+            System.out.println("date null");
             return;
         }
         if(selectedCategory.equals(""))
         {
+            System.out.println("date null");
             return;
         }
-        try{
-            amount  = Double.parseDouble(transactionAmount.getText());
-        }
-        catch (NumberFormatException e){
-            return;
-        }
+
         Transaction transaction = new Transaction();
         transaction.addTransaction(date, selectedCategory, amount);
     }

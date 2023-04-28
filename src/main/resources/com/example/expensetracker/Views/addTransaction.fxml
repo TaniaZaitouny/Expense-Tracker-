@@ -29,20 +29,20 @@
                                                 <Font name="Candra" size="13.0" />
                                             </font>
                                         </Text>
-                                        <DatePicker />
+                                        <DatePicker fx:id="transactionDate" />
 
                                         <Text fill="#111111" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Category">
                                             <font>
                                                 <Font name="Candra" size="13.0" />
                                             </font>
                                         </Text>
-                                        <ChoiceBox fx:id="transactionCategory" prefWidth="150.0" onShown="#initializeCategoryList"/>
+                                        <ChoiceBox fx:id="transactionCategory" prefWidth="150.0"/>
                                         <Text fill="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Amount">
                                             <font>
                                                 <Font name="Candra" size="13.0" />
                                             </font>
                                         </Text>
-                                        <TextField />
+                                        <TextField fx:id="transactionAmount"/>
                                         <Button onAction="#addTransaction" mnemonicParsing="false" text="Submit" />
 
                                     </children></VBox>
