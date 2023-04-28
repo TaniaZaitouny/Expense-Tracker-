@@ -50,7 +50,7 @@ public class Login {
 
     private void saveId(int id)
     {
-        Preferences prefs = Preferences.userRoot().node("com.example.app");
+        Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
         prefs.putInt("userId", id);
     }
 

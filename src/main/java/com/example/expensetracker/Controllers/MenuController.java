@@ -10,9 +10,11 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.prefs.Preferences;
 
 public class MenuController {
 
@@ -24,15 +26,14 @@ public class MenuController {
     Button transactionsButton;
     @FXML
     Button reportsButton;
+    @FXML
+    Button logoutButton;
 
     @FXML
     protected void homePage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/home.fxml")));
-        Scene scene = new Scene(root);
         Stage stage = (Stage)homeButton.getScene().getWindow();
-        stage.setTitle("home");
-        stage.setScene(scene);
-        // Get a reference to the VBox element in the home.fxml file
+        Scene scene = HelloApplication.loadPage("Views/home.fxml",stage);
+         //Get a reference to the VBox element in the home.fxml file
         VBox vbox = (VBox)scene.lookup("#home_category");
 
         // Add the mouse entered event listener to make the VBox glow
@@ -52,33 +53,28 @@ public class MenuController {
             vbox.setScaleX(1.0);
             vbox.setScaleY(1.0);
         });
-        stage.show();
     }
     @FXML
     protected void categoriesPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/categories.fxml")));
-        Scene scene = new Scene(root);
         Stage stage = (Stage)categoriesButton.getScene().getWindow();
-        stage.setTitle("categories");
-        stage.setScene(scene);
-        stage.show();
+        Scene scene = HelloApplication.loadPage("Views/categories.fxml",stage);
     }
     @FXML
     protected void transactionsPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/transactions.fxml")));
-        Scene scene = new Scene(root);
         Stage stage = (Stage)transactionsButton.getScene().getWindow();
-        stage.setTitle("transactions");
-        stage.setScene(scene);
-        stage.show();
+        Scene scene = HelloApplication.loadPage("Views/transactions.fxml",stage);
     }
     @FXML
     protected void reportsPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/reports.fxml")));
-        Scene scene = new Scene(root);
         Stage stage = (Stage)reportsButton.getScene().getWindow();
-        stage.setTitle("reports");
-        stage.setScene(scene);
-        stage.show();
+        Scene scene = HelloApplication.loadPage("Views/reports.fxml",stage);
+    }
+
+    @FXML
+    protected void logoutPage() throws IOException {
+        Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
+        prefs.remove("userId");
+        Stage stage = (Stage)logoutButton.getScene().getWindow();
+        Scene scene = HelloApplication.loadPage("Views/login.fxml",stage);
     }
 }

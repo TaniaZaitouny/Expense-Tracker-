@@ -9,7 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import java.sql.*;
 
 import java.io.IOException;
@@ -18,31 +21,35 @@ import java.util.prefs.Preferences;
 
 public class HelloApplication extends Application {
 
-    Preferences prefs = Preferences.userRoot().node("com.example.app");
+    Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
 
     @Override
     public void start(Stage stage) throws IOException, SQLException {
+
+        stage.initStyle(StageStyle.UNDECORATED);
+
         int userId=prefs.getInt("userId", 0);
         if(userId==0)
         {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Views/login.fxml")));
-        Scene scene = new Scene(root);
-        stage.setTitle("login");
-        stage.setScene(scene);
+            HelloApplication.loadPage("Views/login.fxml",stage);
         }
         else
         {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Views/home.fxml")));
-            Scene scene = new Scene(root);
-            stage.setTitle("user id = "+userId);
-            stage.setScene(scene);
+            HelloApplication.loadPage("Views/home.fxml",stage);
         }
-        stage.show();
-        stage.setOnCloseRequest(event -> {  //to be removed
-            prefs.remove("userId");   // wil be added on logout button action
-        });
+
         DatabaseConnection db = DatabaseConnection.getInstance();
         Connection connection = db.getConnection();
+
+    }
+
+    public static Scene loadPage(String pageName,Stage stage) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource(pageName)));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        return scene;
+
     }
 
     public static void main(String[] args) {

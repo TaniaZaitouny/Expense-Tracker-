@@ -60,6 +60,19 @@
                         </ImageView>
                     </graphic>
                 </Button>
+
+                <Button fx:id="logoutButton" alignment="TOP_LEFT" graphicTextGap="8.0" mnemonicParsing="false" onAction="#logoutPage" prefHeight="28.0" prefWidth="150.0" stylesheets="@../Styles/styles.css" text="Logout">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Media/home.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
             </children>
         </VBox>
         <QuadCurve controlX="92.0" controlY="-22.0" endX="-14.0" endY="-4.0" fill="#86b2b5ad" layoutX="-38.0" layoutY="104.0" startX="63.0" startY="-96.0" stroke="#d0e03d00" strokeType="INSIDE" />

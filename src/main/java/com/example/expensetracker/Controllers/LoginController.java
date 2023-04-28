@@ -33,21 +33,13 @@ public class LoginController {
    Login login = new Login();
 
     public void loginPage(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/login.fxml")));
-        Scene scene = new Scene(root);
         Stage stage = (Stage)loginButton.getScene().getWindow();
-        stage.setTitle("login");
-        stage.setScene(scene);
-        stage.show();
+        Scene scene = HelloApplication.loadPage("Views/login.fxml",stage);
     }
 
     public void signupPage(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/signup.fxml")));
-        Scene scene = new Scene(root);
         Stage stage = (Stage)signupButton.getScene().getWindow();
-        stage.setTitle("signup");
-        stage.setScene(scene);
-        stage.show();
+        Scene scene = HelloApplication.loadPage("Views/signup.fxml",stage);
     }
 
     public void signup(ActionEvent actionEvent) throws IOException, SQLException {
@@ -63,12 +55,8 @@ public class LoginController {
         }
         else
         {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/home.fxml")));
-            Scene scene = new Scene(root);
             Stage stage = (Stage)signupButton.getScene().getWindow();
-            stage.setTitle("home");
-            stage.setScene(scene);
-            stage.show();
+            Scene scene = HelloApplication.loadPage("Views/home.fxml",stage);
         }
     }
 
@@ -81,12 +69,8 @@ public class LoginController {
         }
         if(login.login(email,password))
         {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/home.fxml")));
-            Scene scene = new Scene(root);
             Stage stage = (Stage)loginButton.getScene().getWindow();
-            stage.setTitle("home");
-            stage.setScene(scene);
-            stage.show();
+            Scene scene = HelloApplication.loadPage("Views/home.fxml",stage);
         }
     }
 
