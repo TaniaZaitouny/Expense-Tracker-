@@ -16,9 +16,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class TransactionController {
 
@@ -39,7 +43,6 @@ public class TransactionController {
         stage.setTitle("addTransaction");
         stage.setScene(scene);
         stage.show();
-        initializeCategoryList();
     }
 
     @FXML
@@ -49,13 +52,12 @@ public class TransactionController {
 
         try {
             ObservableList<String> categories = category.getCategories();
-            transactionCategory.setItems(categories);
+            transactionCategory.setItems(FXCollections.observableList(categories));
 
         }
         catch (SQLException e) {
         e.printStackTrace();
         }
-
     }
     public void addTransaction()
     {}
