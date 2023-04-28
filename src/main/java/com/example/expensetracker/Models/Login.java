@@ -14,7 +14,6 @@ public class Login {
 
     DatabaseConnection connection = DatabaseConnection.getInstance();
 
-
     private String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -41,7 +40,7 @@ public class Login {
         ResultSet result = statement.executeQuery();
 
         if (result.next()) {
-            valid=true;
+            valid = true;
         }
         result.close();
         statement.close();
@@ -56,8 +55,7 @@ public class Login {
 
     public boolean login(String email, String password) throws SQLException {
         int userId;
-        if(!validateAccount(email))
-        {
+        if(!validateAccount(email)) {
             return false;
         }
         String sql = "SELECT id FROM users WHERE email like ? AND password like ?";
@@ -70,7 +68,7 @@ public class Login {
             result.close();
             statement.close();
             saveId(userId);
-            System.out.println(userId);  ////////////////
+            System.out.println(userId);
             return true;
         }
         result.close();
@@ -99,11 +97,11 @@ public class Login {
                 result.close();
                 statement.close();
                 saveId(userId);
-                System.out.println(userId);//////
+                System.out.println(userId);
                 return true;
             }
         }
-        System.out.println("shit");
+        System.out.println("shit"); //???????????????????????
         return false;
     }
 }

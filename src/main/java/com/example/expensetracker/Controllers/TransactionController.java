@@ -38,12 +38,13 @@ public class TransactionController {
 
     @FXML
     protected void addTransactionPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/addtransaction.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Views/addTransaction.fxml")));
         Scene scene = new Scene(root);
         Stage stage = (Stage)addTransactionButton.getScene().getWindow();
         stage.setTitle("addTransaction");
         stage.setScene(scene);
         stage.show();
+        new TransactionController();
     }
 
     @FXML
@@ -54,7 +55,6 @@ public class TransactionController {
         try {
             ObservableList<String> categories = category.getCategories();
             transactionCategory.setItems(FXCollections.observableList(categories));
-
         }
         catch (SQLException e) {
             e.printStackTrace();

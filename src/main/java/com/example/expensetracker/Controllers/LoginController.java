@@ -33,13 +33,13 @@ public class LoginController {
    Login login = new Login();
 
     public void loginPage(ActionEvent actionEvent) throws IOException {
-        Stage stage = (Stage)loginButton.getScene().getWindow();
-        Scene scene = HelloApplication.loadPage("Views/login.fxml",stage);
+        Stage stage = (Stage) loginButton.getScene().getWindow();
+        Scene scene = MenuController.loadPage("Views/login.fxml", stage);
     }
 
     public void signupPage(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage)signupButton.getScene().getWindow();
-        Scene scene = HelloApplication.loadPage("Views/signup.fxml",stage);
+        Scene scene = MenuController.loadPage("Views/signup.fxml", stage);
     }
 
     public void signup(ActionEvent actionEvent) throws IOException, SQLException {
@@ -50,13 +50,13 @@ public class LoginController {
         if(username.equals("") || email.equals("") || password.equals("") || !password.equals(validatePassword)){
             messageText.setText("PLease fill information correctly");
         }
-        else if(!login.signup(username,email,password)){
+        else if(!login.signup(username, email, password)){
             messageText.setText("Error account is already taken");
         }
         else
         {
-            Stage stage = (Stage)signupButton.getScene().getWindow();
-            Scene scene = HelloApplication.loadPage("Views/home.fxml",stage);
+            Stage stage = (Stage) signupButton.getScene().getWindow();
+            Scene scene = MenuController.loadPage("Views/home.fxml", stage);
         }
     }
 
@@ -67,10 +67,10 @@ public class LoginController {
             messageText.setText("PLease fill information correctly");
             return;
         }
-        if(login.login(email,password))
+        if(login.login(email, password))
         {
-            Stage stage = (Stage)loginButton.getScene().getWindow();
-            Scene scene = HelloApplication.loadPage("Views/home.fxml",stage);
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            Scene scene = MenuController.loadPage("Views/home.fxml", stage);
         }
     }
 
