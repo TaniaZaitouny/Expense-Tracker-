@@ -108,7 +108,7 @@ public class TransactionController {
     public void populateTransactions() throws SQLException {
         Transaction transaction = new Transaction();
         ArrayList<String[]> transactions = transaction.getTransactions();
-        //hidden field to store id
+//        hidden field to store id
         TableColumn<String[], String> idColumn = new TableColumn<>("ID");
         idColumn.setVisible(false);
         idColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[3]));

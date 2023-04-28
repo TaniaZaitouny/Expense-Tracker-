@@ -65,7 +65,7 @@ public class Transaction {
     {
         ArrayList<String[]> transactions = new ArrayList<String[]>();
         Statement statement = connection.createStatement();
-        String query = "SELECT id, category, date, amount FROM transactions WHERE userId = " + userId;
+        String query = "SELECT category, date, amount, id FROM transactions WHERE userId = " + userId;
 //        System.out.println("Executing query: " + query);
         ResultSet resultSet = statement.executeQuery(query);
         while (resultSet.next()) {
