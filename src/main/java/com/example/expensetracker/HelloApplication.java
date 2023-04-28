@@ -16,7 +16,6 @@ public class HelloApplication extends Application {
     Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
 
     @Override
-
     public void start(Stage stage) throws IOException, SQLException {
 
         int userId = prefs.getInt("userId", 0);
