@@ -23,6 +23,7 @@ import java.util.Objects;
 public class HomeController {
     @FXML
     private HBox topCategoriesBox;
+
     public void initialize() {
         initializeTopCategories();
     }

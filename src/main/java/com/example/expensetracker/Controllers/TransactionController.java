@@ -186,43 +186,6 @@ public class TransactionController {
                     private final Button editBtn = new Button("Edit");
                     private final Button deleteBtn = new Button("Delete");
 
-                    {
-                        editBtn.setOnAction((ActionEvent event) -> {
-                            String[] rowData = getTableRow().getItem();
-                            prefs.put("category",rowData[0]);
-                            prefs.put("date",rowData[1]);
-                            prefs.put("amount",rowData[2]);
-                            prefs.put("id",rowData[3]);
-                            prefs.putBoolean("transAddMode",false);
-                            Stage stage = (Stage)editBtn.getScene().getWindow();
-                            try {
-                                MenuController.loadPage("Views/addTransaction.fxml",stage);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        });
-
-                        deleteBtn.setOnAction((ActionEvent event) -> {
-
-                            String[] rowData = getTableRow().getItem();
-                            try {
-                                transaction.deleteTransaction(Integer.parseInt(rowData[3]));
-                            } catch (SQLException e) {
-                                throw new RuntimeException(e);
-                            }
-                            //reload after deleting
-                            Stage stage = (Stage)deleteBtn.getScene().getWindow();
-                            try {
-                                MenuController.loadPage("Views/transactions.fxml",stage);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-
-
-
-                        });
-                    }
-
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -232,6 +195,36 @@ public class TransactionController {
                             HBox hb = new HBox();
                             hb.getChildren().addAll(editBtn, deleteBtn);
                             setGraphic(hb);
+                            editBtn.setOnAction((ActionEvent event) -> {
+                                String[] rowData = getTableRow().getItem();
+                                prefs.put("category",rowData[0]);
+                                prefs.put("date",rowData[1]);
+                                prefs.put("amount",rowData[2]);
+                                prefs.put("id",rowData[3]);
+                                prefs.putBoolean("transAddMode",false);
+                                Stage stage = (Stage)editBtn.getScene().getWindow();
+                                try {
+                                    MenuController.loadPage("Views/addTransaction.fxml",stage);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+
+                            deleteBtn.setOnAction((ActionEvent event) -> {
+                                String[] rowData = getTableRow().getItem();
+                                try {
+                                    transaction.deleteTransaction(Integer.parseInt(rowData[3]));
+                                } catch (SQLException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                //reload after deleting
+                                Stage stage = (Stage)deleteBtn.getScene().getWindow();
+                                try {
+                                    MenuController.loadPage("Views/transactions.fxml",stage);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
                         }
                     }
                 };

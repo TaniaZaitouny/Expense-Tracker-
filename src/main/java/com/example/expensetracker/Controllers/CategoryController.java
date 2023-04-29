@@ -223,43 +223,41 @@ public class CategoryController
             private final Button deleteButton = new Button("delete");
             private final HBox hbox = new HBox(editButton, deleteButton);
 
-            {
-                editButton.setOnAction(event -> {
-                    Pair<String,String> rowData = getTableRow().getItem();
-                    prefs.put("name",rowData.getKey());
-                    prefs.put("type",rowData.getValue());
-                    prefs.putBoolean("mode",false);
-                    Stage stage = (Stage)editButton.getScene().getWindow();
-                    try {
-                        MenuController.loadPage("Views/addCategory.fxml",stage);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-
-                deleteButton.setOnAction(event -> {
-                    Pair<String,String> rowData = getTableRow().getItem();
-                    String categoryName = rowData.getKey();
-                    try {
-                        category.deleteCategory(categoryName);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    //reload after deleting
-                    Stage stage = (Stage)deleteButton.getScene().getWindow();
-                    try {
-                        MenuController.loadPage("Views/categories.fxml",stage);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-            }
 
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 if (!empty) {
                     setGraphic(hbox);
+                    editButton.setOnAction(event -> {
+                        Pair<String,String> rowData = getTableRow().getItem();
+                        prefs.put("name",rowData.getKey());
+                        prefs.put("type",rowData.getValue());
+                        prefs.putBoolean("mode",false);
+                        Stage stage = (Stage)editButton.getScene().getWindow();
+                        try {
+                            MenuController.loadPage("Views/addCategory.fxml",stage);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+
+                    deleteButton.setOnAction(event -> {
+                        Pair<String,String> rowData = getTableRow().getItem();
+                        String categoryName = rowData.getKey();
+                        try {
+                            category.deleteCategory(categoryName);
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                        //reload after deleting
+                        Stage stage = (Stage)deleteButton.getScene().getWindow();
+                        try {
+                            MenuController.loadPage("Views/categories.fxml",stage);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
                 } else {
                     setGraphic(null);
                 }
