@@ -3,6 +3,7 @@ package com.example.expensetracker.Controllers;
 import com.example.expensetracker.HelloApplication;
 import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Models.Transaction;
+import com.example.expensetracker.Objects.CategoryObject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -101,9 +102,9 @@ public class TransactionController {
         Category category = new Category();
 
         try {
-            ArrayList<Pair<String,String> > results = category.getCategories();
+            ArrayList<CategoryObject> results = category.getCategories();
             ArrayList<String> categories = new ArrayList<>();
-            results.forEach(pair -> categories.add(pair.getKey()));
+            results.forEach(pair -> categories.add(pair.categoryName));
             transactionCategory.setItems(FXCollections.observableList(categories));
         }
         catch (SQLException e) {
@@ -154,7 +155,7 @@ public class TransactionController {
     }
 
     public void populateTransactions() throws SQLException {
-        Transaction transaction = new Transaction();
+        transaction = new Transaction();
         ArrayList<String[]> transactions = transaction.getTransactions();
 //        hidden field to store id
         TableColumn<String[], String> idColumn = new TableColumn<>("ID");
@@ -220,8 +221,5 @@ public class TransactionController {
             }
         };
         actionColumn.setCellFactory(cellFactory);
-
-
-
     }
 }
