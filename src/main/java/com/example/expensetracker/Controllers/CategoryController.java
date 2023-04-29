@@ -54,6 +54,8 @@ public class CategoryController
     @FXML
     TextField categoryName;
     @FXML
+    Label pageTitle;
+    @FXML
     ComboBox<String> iconComboBox;
     @FXML
     TableView<Pair<String,String>> categoriesTable;
@@ -84,6 +86,7 @@ public class CategoryController
             }
             else
             {
+                pageTitle.setText("Update Category");
                 submitButton.setText("Update Category");
                 categoryName.setText(previousCategoryName);
                 if(previousCategoryType.equals("income"))
@@ -96,46 +99,46 @@ public class CategoryController
                     incomeChoiceButton.setSelected(false);
                     expenseChoiceButton.setSelected(true);
                 }
-                final File folder = new File("src/main/resources/com/example/expensetracker/Media");
-                final File[] files = folder.listFiles();
-                String fileName, nameWithoutExtension;
-                List<String> iconNames = new ArrayList<>();
-                int extensionIndex;
-                for (File file : files) {
-                    fileName = file.getName();
-                    extensionIndex = fileName.lastIndexOf(".");
-                    nameWithoutExtension = extensionIndex == -1 ? fileName : fileName.substring(0, extensionIndex);
-                    iconNames.add(nameWithoutExtension);
-                }
-                iconComboBox.setItems(FXCollections.observableArrayList(iconNames));
-                iconComboBox.setCellFactory(listView -> new ListCell<>() {
-                    private final ImageView imageView = new ImageView();
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty || item == null) {
-                            setText(null);
-                            setGraphic(null);
-                        } else {
-                            setText(item);
-                            Image image = new Image(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("Media/" + item + ".png")));
-                            imageView.setImage(image);
-                            imageView.setFitWidth(32);
-                            imageView.setFitHeight(32);
-                            setGraphic(imageView);
-                        }
-                    }
-                });
             }
+            final File folder = new File("src/main/resources/com/example/expensetracker/Media");
+            final File[] files = folder.listFiles();
+            String fileName, nameWithoutExtension;
+            List<String> iconNames = new ArrayList<>();
+            int extensionIndex;
+            for (File file : files) {
+                fileName = file.getName();
+                extensionIndex = fileName.lastIndexOf(".");
+                nameWithoutExtension = extensionIndex == -1 ? fileName : fileName.substring(0, extensionIndex);
+                iconNames.add(nameWithoutExtension);
+            }
+            iconComboBox.setItems(FXCollections.observableArrayList(iconNames));
+            iconComboBox.setCellFactory(listView -> new ListCell<>() {
+                private final ImageView imageView = new ImageView();
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        setText(item);
+                        Image image = new Image(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("Media/" + item + ".png")));
+                        imageView.setImage(image);
+                        imageView.setFitWidth(32);
+                        imageView.setFitHeight(32);
+                        setGraphic(imageView);
+                    }
+                }
+            });
         }
     }
 
     @FXML
     protected void addCategoryPage() throws IOException {
-
+        prefs.putBoolean("mode",true);
         Stage stage = (Stage)addCategoryButton.getScene().getWindow();
         MenuController.loadPage("Views/addCategory.fxml",stage);
-        prefs.putBoolean("mode",true);
+
     }
 
     public void updateCategory(ActionEvent actionEvent) throws SQLException, BackingStoreException {
