@@ -71,31 +71,23 @@ public class CategoryController
 
     Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
     Category category = new Category();
-    private final String previousCategoryName = prefs.get("name","");
-    private final String previousCategoryType = prefs.get("type","");
-    private final boolean addingMode = prefs.getBoolean("mode",true);
+    private static String categoryNameToUpate = null;
+    private static String categoryTypeToUpdate = null;
     public void initialize() throws SQLException {
         if(categoriesTable != null) {
             getCategories();
         }
         else
         {
-            if (addingMode)
-            {
-                submitButton.setText("Add Category");
-            }
-            else
-            {
+            if(categoryNameToUpate != null) {
                 pageTitle.setText("Update Category");
                 submitButton.setText("Update Category");
-                categoryName.setText(previousCategoryName);
-                if(previousCategoryType.equals("income"))
-                {
+                categoryName.setText(categoryNameToUpate);
+                if(categoryTypeToUpdate.equals("income")) {
                     incomeChoiceButton.setSelected(true);
                     expenseChoiceButton.setSelected(false);
                 }
-                else
-                {
+                else {
                     incomeChoiceButton.setSelected(false);
                     expenseChoiceButton.setSelected(true);
                 }
@@ -135,22 +127,33 @@ public class CategoryController
 
     @FXML
     protected void addCategoryPage() throws IOException {
-        prefs.putBoolean("mode", true);
+        categoryNameToUpate = null;
+        categoryTypeToUpdate = null;
         Stage stage = (Stage)addCategoryButton.getScene().getWindow();
         MenuController.loadPage("Views/addCategory.fxml",stage);
+    }
 
+    @FXML
+    protected void addCategoryPage(String name, String type) throws IOException {
+        categoryNameToUpate = name;
+        categoryTypeToUpdate = type;
+        Stage stage = (Stage)addCategoryButton.getScene().getWindow();
+        MenuController.loadPage("Views/addCategory.fxml",stage);
     }
 
     public void updateCategory(ActionEvent actionEvent) throws SQLException, BackingStoreException {
-        if(addingMode) {
+        String action = ((Button) actionEvent.getSource()).getText();
+        if(action.equals("Submit")) {
+            categoryNameToUpate = null;
+            categoryTypeToUpdate = null;
             addCategory();
         }
         else {
             editCategory();
+            categoryNameToUpate = null;
+            categoryTypeToUpdate = null;
         }
-        prefs.remove("mode");
-        prefs.remove("name");
-        prefs.remove("type");
+
     }
 
 
@@ -166,14 +169,14 @@ public class CategoryController
             return;
         }
         if(incomeChoiceButton.isSelected()) {
-            type="income";
+            type = "income";
             incomeChoiceButton.setSelected(false);
         }
         else {
-            type="expense";
+            type = "expense";
             expenseChoiceButton.setSelected(false);
         }
-        if(category.addCategory(name,type)) {
+        if(category.addCategory(name, type)) {
             categoryName.setText("");
             //   messageText.setText("Category added successfully");
         }
@@ -194,14 +197,14 @@ public class CategoryController
             return;
         }
         if(incomeChoiceButton.isSelected()) {
-            type="income";
+            type = "income";
             incomeChoiceButton.setSelected(false);
         }
         else {
-            type="expense";
+            type = "expense";
             expenseChoiceButton.setSelected(false);
         }
-        category.updateCategory(previousCategoryName,name,type);
+        category.updateCategory(categoryNameToUpate, name, type);
         categoryName.setText("");
         //   messageText.setText("Category updated successfully");
 
@@ -225,12 +228,8 @@ public class CategoryController
                     setGraphic(hbox);
                     editButton.setOnAction(event -> {
                         Pair<String,String> rowData = getTableRow().getItem();
-                        prefs.put("name",rowData.getKey());
-                        prefs.put("type",rowData.getValue());
-                        prefs.putBoolean("mode",false);
-                        Stage stage = (Stage) editButton.getScene().getWindow();
                         try {
-                            MenuController.loadPage("Views/addCategory.fxml", stage);
+                            addCategoryPage(rowData.getKey(), rowData.getValue());
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

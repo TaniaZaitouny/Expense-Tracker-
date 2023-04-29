@@ -32,12 +32,11 @@ public class Category {
     };
 
     public boolean addCategory(String name,String type) throws SQLException {
-        if(findCategory(name))
-        {
+        if(findCategory(name)) {
             return false;
         }
-        String sqlQuery = "INSERT INTO categories (userId,categoryName, type) " +
-                "VALUES ('"+userId+"','" + name + "', '" + type + "')";
+        String sqlQuery = "INSERT INTO categories (userId, categoryName, type) " +
+                "VALUES ('" + userId + "','" + name + "', '" + type + "')";
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
         statement.close();
