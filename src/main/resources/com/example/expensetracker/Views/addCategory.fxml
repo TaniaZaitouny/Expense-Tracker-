@@ -30,11 +30,11 @@
                                 <VBox maxHeight="338.0" maxWidth="-Infinity" prefHeight="337.0" prefWidth="464.0" spacing="10.0" style="-fx-background-color: #FFFFFF; -fx-padding: 20px; -fx-background-radius: 15px;">
                                     <children>
                                         <HBox prefHeight="27.0" prefWidth="401.0">
-                                            <ToggleButton fx:id="expenseChoiceButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="129.0" stylesheets="@../Styles/styles.css" text="Expense" textFill="#6c756b">
+                                            <ToggleButton fx:id="expenseChoiceButton" onAction="#setExpenseChoice" mnemonicParsing="false" prefHeight="27.0" prefWidth="129.0" stylesheets="@../Styles/styles.css" text="Expense" textFill="#6c756b">
                                     <font>
                                        <Font size="13.0" />
                                     </font></ToggleButton>
-                                            <ToggleButton fx:id="incomeChoiceButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="122.0" style="-fx-background-color: #E1E5F2; -fx-text-fill: #3A4D8F;" stylesheets="@../Styles/styles.css" text="Income">
+                                            <ToggleButton fx:id="incomeChoiceButton" onAction="#setIncomeChoice" mnemonicParsing="false" prefHeight="27.0" prefWidth="122.0" style="-fx-background-color: #E1E5F2; -fx-text-fill: #3A4D8F;" stylesheets="@../Styles/styles.css" text="Income">
                                     <font>
                                        <Font size="13.0" />
                                     </font></ToggleButton>

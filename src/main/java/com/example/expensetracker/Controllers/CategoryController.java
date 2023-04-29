@@ -128,6 +128,8 @@ public class CategoryController
         }
     }
 
+
+
     @FXML
     protected void addCategoryPage() throws IOException {
         updatingMode=false;
@@ -187,16 +189,7 @@ public class CategoryController
             // messageText.setText("PLease choose a name for category");
             return;
         }
-        if(incomeChoiceButton.isSelected() && !expenseChoiceButton.isSelected()) {
-            type = "income";
-            incomeChoiceButton.setSelected(false);System.out.println(type);
-
-        }
-        else  {
-            type = "expense";
-            expenseChoiceButton.setSelected(false);
-        }
-        category.updateCategory(categoryNameToUpdate, name, type);
+        category.updateCategory(categoryNameToUpdate, name, categoryTypeToUpdate);
         categoryName.setText("");
         //   messageText.setText("Category updated successfully");
 
@@ -255,5 +248,13 @@ public class CategoryController
         });
     }
 
+    public void setExpenseChoice(ActionEvent actionEvent) {
+
+        categoryTypeToUpdate = "expense";
+    }
+
+    public void setIncomeChoice(ActionEvent actionEvent) {
+        categoryTypeToUpdate = "income";
+    }
 }
 
