@@ -66,22 +66,17 @@ public class TransactionController {
     private static String transactionDateToUpdate;
     private static boolean updatingMode;
     public void initialize() throws SQLException, ParseException {
-
-        if (transactionCategory != null) {
-            initializeCategoryList();
-
-        }
         if (transactionTable != null) {
-
             populateTransactions();
         }
         else {
+            initializeCategoryList();
             if (!updatingMode) {
                 submitButton.setText("Add Transaction");
             }
             else {
-                pageTitle.setText("Update transaction");
-                submitButton.setText("Update Transaction");
+                pageTitle.setText("Update Transaction");
+                submitButton.setText("Update");
                 transactionAmount.setText(transactionAmountToUpdate);
                 transactionCategory.setValue(transactionCategoryToUpdate);
                 LocalDate date = LocalDate.parse(transactionDateToUpdate);
@@ -91,8 +86,8 @@ public class TransactionController {
     }
     @FXML
     protected void addTransactionPage() throws IOException {
-        updatingMode=false;
-        Stage stage = (Stage)addTransactionButton.getScene().getWindow();
+        updatingMode = false;
+        Stage stage = (Stage) addTransactionButton.getScene().getWindow();
         MenuController.loadPage("Views/addTransaction.fxml",stage);
     }
 
@@ -102,7 +97,9 @@ public class TransactionController {
         Category category = new Category();
 
         try {
+
             ArrayList<CategoryObject> results = category.getCategories();
+
             ArrayList<String> categories = new ArrayList<>();
             results.forEach(pair -> categories.add(pair.categoryName));
             transactionCategory.setItems(FXCollections.observableList(categories));
@@ -187,13 +184,13 @@ public class TransactionController {
                             editBtn.setOnAction((ActionEvent event) -> {
                                 String[] rowData = getTableRow().getItem();
                                 try {
-                                    transactionIdToUpdate =rowData[3];
-                                    transactionAmountToUpdate =rowData[2];
+                                    transactionIdToUpdate = rowData[3];
+                                    transactionAmountToUpdate = rowData[2];
                                     transactionCategoryToUpdate = rowData[0];
-                                    transactionDateToUpdate =rowData[1];
-                                    updatingMode=true;
-                                    Stage stage = (Stage)editBtn.getScene().getWindow();
-                                    MenuController.loadPage("Views/addTransaction.fxml",stage);
+                                    transactionDateToUpdate = rowData[1];
+                                    updatingMode = true;
+                                    Stage stage = (Stage) editBtn.getScene().getWindow();
+                                    MenuController.loadPage("Views/addTransaction.fxml", stage);
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -207,9 +204,9 @@ public class TransactionController {
                                     throw new RuntimeException(e);
                                 }
                                 //reload after deleting
-                                Stage stage = (Stage)deleteBtn.getScene().getWindow();
+                                Stage stage = (Stage) deleteBtn.getScene().getWindow();
                                 try {
-                                    MenuController.loadPage("Views/transactions.fxml",stage);
+                                    MenuController.loadPage("Views/transactions.fxml", stage);
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }

@@ -39,14 +39,6 @@ import java.util.prefs.Preferences;
 public class CategoryController
 {
     @FXML
-    Button homeButton;
-    @FXML
-    Button categoriesButton;
-    @FXML
-    Button transactionsButton;
-    @FXML
-    Button reportsButton;
-    @FXML
     Button addCategoryButton;
     @FXML
     ToggleButton incomeChoiceButton;
@@ -62,6 +54,12 @@ public class CategoryController
     ComboBox<String> iconComboBox;
     @FXML
     TableView<CategoryObject> categoriesTable;
+    @FXML
+    CheckBox automatic;
+    @FXML
+    ChoiceBox<String> frequency;
+    @FXML
+    TextField amount;
     @FXML
     TableColumn<CategoryObject, String> categoryColumn;
     @FXML
@@ -86,7 +84,7 @@ public class CategoryController
         {
             if(updatingMode) {
                 pageTitle.setText("Update Category");
-                submitButton.setText("Update Category");
+                submitButton.setText("Update");
                 categoryName.setText(categoryNameToUpdate);
                 if(categoryTypeToUpdate.equals("income")) {
                     incomeChoiceButton.setSelected(true);
@@ -135,7 +133,7 @@ public class CategoryController
 
     @FXML
     protected void addCategoryPage() throws IOException {
-        updatingMode=false;
+        updatingMode = false;
         Stage stage = (Stage)addCategoryButton.getScene().getWindow();
         MenuController.loadPage("Views/addCategory.fxml",stage);
     }
@@ -147,7 +145,7 @@ public class CategoryController
         else {
             editCategory();
         }
-        updatingMode=false;
+        updatingMode = false;
         categoryNameToUpdate = null;
         categoryTypeToUpdate = null;
     }
@@ -156,6 +154,8 @@ public class CategoryController
     private void addCategory() throws SQLException {
         String name = categoryName.getText();
         String type;
+
+        String icon = iconComboBox.getValue();
         if(!incomeChoiceButton.isSelected() && !expenseChoiceButton.isSelected()) {
            // messageText.setText("PLease choose a type for category");
             return;
@@ -172,7 +172,18 @@ public class CategoryController
             type = "expense";
             expenseChoiceButton.setSelected(false);
         }
-        if(category.addCategory(name, type)) {
+        if(automatic.isSelected()) {
+            String frequencyValue = frequency.getValue();
+            double amountValue = Double.parseDouble(amount.getText());
+            if(category.addCategory(name, type, icon, frequencyValue, amountValue)) {
+                categoryName.setText("");
+                //   messageText.setText("Category added successfully");
+            }
+            else {
+                //   messageText.setText("Category already exists");
+            }
+        }
+        else if(category.addCategory(name, type, icon)) {
             categoryName.setText("");
             //   messageText.setText("Category added successfully");
         }
@@ -183,7 +194,7 @@ public class CategoryController
 
     private void editCategory() throws SQLException {
         String name = categoryName.getText();
-        String type=null ;
+        String type = null ;
         if(!incomeChoiceButton.isSelected() && !expenseChoiceButton.isSelected()){
             // messageText.setText("PLease choose a type for category");
             return;
@@ -207,10 +218,12 @@ public class CategoryController
 
         Callback<TableColumn<CategoryObject, Void>, TableCell<CategoryObject, Void>> cellFactory = new Callback<TableColumn<CategoryObject, Void>, TableCell<CategoryObject, Void>>() {
             @Override
+
             public TableCell<CategoryObject, Void> call(final TableColumn<CategoryObject, Void> param) {
                 final TableCell<CategoryObject, Void> cell = new TableCell<CategoryObject, Void>() {
                     private final Button editButton = new Button("Edit");
                     private final Button deleteButton = new Button("Delete");
+
 
                     @Override
                     protected void updateItem(Void item, boolean empty) {
@@ -267,6 +280,18 @@ public class CategoryController
 
     public void setIncomeChoice(ActionEvent actionEvent) {
         categoryTypeToUpdate = "income";
+    }
+
+    @FXML
+    public void showOptions(ActionEvent actionEvent) {
+        if(automatic.isSelected()) {
+            frequency.setVisible(true);
+            amount.setVisible(true);
+        }
+        else {
+            frequency.setVisible(false);
+            amount.setVisible(false);
+        }
     }
 }
 

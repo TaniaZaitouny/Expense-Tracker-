@@ -1,5 +1,7 @@
 package com.example.expensetracker.Database;
 
+import com.example.expensetracker.Models.Category;
+
 import java.sql.*;
 
 public class DatabaseConnection {
@@ -15,6 +17,8 @@ public class DatabaseConnection {
         try {
             connection = DriverManager.getConnection(dbURL, user, password);
             this.createTables();
+            Category category = new Category();
+            category.checkCategories();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -62,6 +66,10 @@ public class DatabaseConnection {
                 "(categoryName VARCHAR(255) not NULL, " +
                 " userId INTEGER not NULL, " +
                 " type VARCHAR(255), " +
+                " icon VARCHAR(255), " +
+                " frequency VARCHAR(255), " +
+                " lastTransaction DATE, " +
+                " amount DOUBLE, " +
                 " PRIMARY KEY (categoryName), " +
                 " FOREIGN KEY (userId) REFERENCES users(id))";
         try {
