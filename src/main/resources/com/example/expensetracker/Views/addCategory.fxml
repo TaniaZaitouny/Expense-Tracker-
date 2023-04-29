@@ -51,7 +51,7 @@
                                             </font>
                                         </Text>
                                        <ComboBox fx:id="iconComboBox" prefWidth="150.0"/>
-                                    <Button fx:id="submitButton" mnemonicParsing="false" onAction="#updateCategory" text="Submit">
+                                    <Button fx:id="submitButton" mnemonicParsing="false" onAction="#updateCategory" text="Add category">
                                          <font>
                                             <Font size="13.0" />
                                          </font></Button>

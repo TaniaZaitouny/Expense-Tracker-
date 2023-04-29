@@ -71,18 +71,20 @@ public class CategoryController
 
     Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
     Category category = new Category();
-    private static String categoryNameToUpate = null;
+    private static String categoryNameToUpdate = null;
     private static String categoryTypeToUpdate = null;
+   // private static String categoryIconToUpdate = null;
+    private static boolean updatingMode = false;
     public void initialize() throws SQLException {
         if(categoriesTable != null) {
             getCategories();
         }
         else
         {
-            if(categoryNameToUpate != null) {
+            if(updatingMode) {
                 pageTitle.setText("Update Category");
                 submitButton.setText("Update Category");
-                categoryName.setText(categoryNameToUpate);
+                categoryName.setText(categoryNameToUpdate);
                 if(categoryTypeToUpdate.equals("income")) {
                     incomeChoiceButton.setSelected(true);
                     expenseChoiceButton.setSelected(false);
@@ -92,6 +94,7 @@ public class CategoryController
                     expenseChoiceButton.setSelected(true);
                 }
             }
+
             final File folder = new File("src/main/resources/com/example/expensetracker/Media");
             final File[] files = folder.listFiles();
             String fileName, nameWithoutExtension;
@@ -127,33 +130,21 @@ public class CategoryController
 
     @FXML
     protected void addCategoryPage() throws IOException {
-        categoryNameToUpate = null;
-        categoryTypeToUpdate = null;
-        Stage stage = (Stage)addCategoryButton.getScene().getWindow();
-        MenuController.loadPage("Views/addCategory.fxml",stage);
-    }
-
-    @FXML
-    protected void addCategoryPage(String name, String type) throws IOException {
-        categoryNameToUpate = name;
-        categoryTypeToUpdate = type;
+        updatingMode=false;
         Stage stage = (Stage)addCategoryButton.getScene().getWindow();
         MenuController.loadPage("Views/addCategory.fxml",stage);
     }
 
     public void updateCategory(ActionEvent actionEvent) throws SQLException, BackingStoreException {
-        String action = ((Button) actionEvent.getSource()).getText();
-        if(action.equals("Submit")) {
-            categoryNameToUpate = null;
-            categoryTypeToUpdate = null;
+        if(!updatingMode) {
             addCategory();
         }
         else {
             editCategory();
-            categoryNameToUpate = null;
-            categoryTypeToUpdate = null;
         }
-
+        updatingMode=false;
+        categoryNameToUpdate = null;
+        categoryTypeToUpdate = null;
     }
 
 
@@ -187,7 +178,7 @@ public class CategoryController
 
     private void editCategory() throws SQLException {
         String name = categoryName.getText();
-        String type;
+        String type=null ;
         if(!incomeChoiceButton.isSelected() && !expenseChoiceButton.isSelected()){
             // messageText.setText("PLease choose a type for category");
             return;
@@ -196,15 +187,16 @@ public class CategoryController
             // messageText.setText("PLease choose a name for category");
             return;
         }
-        if(incomeChoiceButton.isSelected()) {
+        if(incomeChoiceButton.isSelected() && !expenseChoiceButton.isSelected()) {
             type = "income";
-            incomeChoiceButton.setSelected(false);
+            incomeChoiceButton.setSelected(false);System.out.println(type);
+
         }
-        else {
+        else  {
             type = "expense";
             expenseChoiceButton.setSelected(false);
         }
-        category.updateCategory(categoryNameToUpate, name, type);
+        category.updateCategory(categoryNameToUpdate, name, type);
         categoryName.setText("");
         //   messageText.setText("Category updated successfully");
 
@@ -229,7 +221,11 @@ public class CategoryController
                     editButton.setOnAction(event -> {
                         Pair<String,String> rowData = getTableRow().getItem();
                         try {
-                            addCategoryPage(rowData.getKey(), rowData.getValue());
+                            categoryNameToUpdate = rowData.getKey();
+                            categoryTypeToUpdate = rowData.getValue();
+                            updatingMode=true;
+                            Stage stage = (Stage)editButton.getScene().getWindow();
+                            MenuController.loadPage("Views/addCategory.fxml",stage);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
