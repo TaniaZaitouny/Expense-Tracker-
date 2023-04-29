@@ -132,7 +132,7 @@ public class TransactionController {
                         });
 
                         deleteBtn.setOnAction((ActionEvent event) -> {
-
+                            System.out.println("delete button");
                         });
                     }
 
