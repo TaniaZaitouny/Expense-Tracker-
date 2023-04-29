@@ -71,9 +71,9 @@ public class CategoryController
 
     Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
     Category category = new Category();
-    private String previousCategoryName=prefs.get("name","");
-    private String previousCategoryType=prefs.get("type","");
-    private boolean addingMode=prefs.getBoolean("mode",true);
+    private final String previousCategoryName = prefs.get("name","");
+    private final String previousCategoryType = prefs.get("type","");
+    private final boolean addingMode = prefs.getBoolean("mode",true);
     public void initialize() throws SQLException {
         if(categoriesTable != null) {
             getCategories();
@@ -135,15 +135,14 @@ public class CategoryController
 
     @FXML
     protected void addCategoryPage() throws IOException {
-        prefs.putBoolean("mode",true);
+        prefs.putBoolean("mode", true);
         Stage stage = (Stage)addCategoryButton.getScene().getWindow();
         MenuController.loadPage("Views/addCategory.fxml",stage);
 
     }
 
     public void updateCategory(ActionEvent actionEvent) throws SQLException, BackingStoreException {
-        if(addingMode)
-        {
+        if(addingMode) {
             addCategory();
         }
         else {
@@ -156,19 +155,17 @@ public class CategoryController
 
 
     private void addCategory() throws SQLException {
-        String name=categoryName.getText();
+        String name = categoryName.getText();
         String type;
-        if(!incomeChoiceButton.isSelected() && !expenseChoiceButton.isSelected()){
+        if(!incomeChoiceButton.isSelected() && !expenseChoiceButton.isSelected()) {
            // messageText.setText("PLease choose a type for category");
             return;
         }
-        if(name.equals(""))
-        {
+        if(name.equals("")) {
            // messageText.setText("PLease choose a name for category");
             return;
         }
-        if(incomeChoiceButton.isSelected())
-        {
+        if(incomeChoiceButton.isSelected()) {
             type="income";
             incomeChoiceButton.setSelected(false);
         }
@@ -186,19 +183,17 @@ public class CategoryController
     }
 
     private void editCategory() throws SQLException {
-        String name=categoryName.getText();
+        String name = categoryName.getText();
         String type;
         if(!incomeChoiceButton.isSelected() && !expenseChoiceButton.isSelected()){
             // messageText.setText("PLease choose a type for category");
             return;
         }
-        if(name.equals(""))
-        {
+        if(name.equals("")) {
             // messageText.setText("PLease choose a name for category");
             return;
         }
-        if(incomeChoiceButton.isSelected())
-        {
+        if(incomeChoiceButton.isSelected()) {
             type="income";
             incomeChoiceButton.setSelected(false);
         }
@@ -206,9 +201,9 @@ public class CategoryController
             type="expense";
             expenseChoiceButton.setSelected(false);
         }
-            category.updateCategory(previousCategoryName,name,type);
-            categoryName.setText("");
-            //   messageText.setText("Category updated successfully");
+        category.updateCategory(previousCategoryName,name,type);
+        categoryName.setText("");
+        //   messageText.setText("Category updated successfully");
 
     }
 
@@ -226,12 +221,12 @@ public class CategoryController
             {
                 editButton.setOnAction(event -> {
                     Pair<String,String> rowData = getTableRow().getItem();
-                    prefs.put("name",rowData.getKey());
-                    prefs.put("type",rowData.getValue());
-                    prefs.putBoolean("mode",false);
-                    Stage stage = (Stage)editButton.getScene().getWindow();
+                    prefs.put("name", rowData.getKey());
+                    prefs.put("type", rowData.getValue());
+                    prefs.putBoolean("mode", false);
+                    Stage stage = (Stage) editButton.getScene().getWindow();
                     try {
-                        MenuController.loadPage("Views/addCategory.fxml",stage);
+                        MenuController.loadPage("Views/addCategory.fxml", stage);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -246,9 +241,9 @@ public class CategoryController
                         throw new RuntimeException(e);
                     }
                     //reload after deleting
-                    Stage stage = (Stage)deleteButton.getScene().getWindow();
+                    Stage stage = (Stage) deleteButton.getScene().getWindow();
                     try {
-                        MenuController.loadPage("Views/categories.fxml",stage);
+                        MenuController.loadPage("Views/categories.fxml", stage);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
