@@ -21,7 +21,7 @@
                     <children>
                         <VBox prefHeight="400.0" prefWidth="488.0" spacing="10.0">
                             <children>
-                        <Label alignment="CENTER" prefHeight="37.0" prefWidth="465.0" style="-fx-font-size: 19px; -fx-font-weight: bold; -fx-background-color: #ffffff; -fx-background-radius: 15px;" text="Create a new transaction" textFill="#0d0d0d" />
+                        <Label fx:id="pageTitle" alignment="CENTER" prefHeight="37.0" prefWidth="465.0" style="-fx-font-size: 19px; -fx-font-weight: bold; -fx-background-color: #ffffff; -fx-background-radius: 15px;" text="Create a new transaction" textFill="#0d0d0d" />
                                 <VBox maxHeight="335.0" maxWidth="465.0" prefHeight="327.0" prefWidth="465.0" spacing="5.0" style="-fx-background-color: #ffffff; -fx-padding: 20px; -fx-background-radius: 15px;">
                                     <children>
                                         <Text fill="#111010" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Date">
@@ -43,7 +43,7 @@
                                             </font>
                                         </Text>
                                         <TextField fx:id="transactionAmount"/>
-                                        <Button onAction="#addTransaction" mnemonicParsing="false" text="Submit" />
+                                        <Button fx:id="submitButton" onAction="#updateTransaction" mnemonicParsing="false" text="Submit" />
 
                                     </children></VBox>
                             </children>

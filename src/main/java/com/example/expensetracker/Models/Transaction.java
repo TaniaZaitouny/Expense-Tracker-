@@ -55,7 +55,7 @@ public class Transaction {
         statement.executeUpdate(sqlQuery);
     }
 
-    public void updateTransactions(int transactionId, LocalDate newDate, String newCategory, Double newAmount) throws SQLException{
+    public void updateTransaction(int transactionId, LocalDate newDate, String newCategory, Double newAmount) throws SQLException{
         String sqlQuery = "UPDATE transactions SET date = '" + newDate + "', amount = '" + newAmount + "', category = '" + newCategory +"' WHERE id = " + transactionId;
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
