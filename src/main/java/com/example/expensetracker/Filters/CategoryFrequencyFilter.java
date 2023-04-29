@@ -20,9 +20,9 @@ public class CategoryFrequencyFilter implements CategoryFilter {
         ArrayList<CategoryObject> categories = new ArrayList<>();
         Statement statement = connection.createStatement();
         if (frequency.equals("NEVER")) {
-            sql = "SELECT * FROM categories where userId = '" + userId + "' AND frequency = 'NEVER';";
+            sql = "SELECT * FROM categories where userId = '" + userId + "' AND frequency = 'NEVER'";
         } else {
-            sql = "SELECT * FROM categories where userId = '" + userId + "' AND frequency != 'NEVER';";
+            sql = "SELECT * FROM categories where userId = '" + userId + "' AND frequency != 'NEVER'";
         }
         ResultSet resultSet = statement.executeQuery(sql);
         while (resultSet.next()) {

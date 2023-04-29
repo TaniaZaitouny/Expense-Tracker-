@@ -41,7 +41,7 @@ public class Category {
             return false;
         }
         String sqlQuery = "INSERT INTO categories (categoryName, userId, type, icon, frequency) " +
-                "VALUES ('" + name+ "','" + userId + "', '" + type + "','" + icon +  ", 'NEVER')";
+                "VALUES ('" + name+ "','" + userId + "', '" + type + "','" + icon + "', 'NEVER')";
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
         statement.close();
