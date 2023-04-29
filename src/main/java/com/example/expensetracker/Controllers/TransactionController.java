@@ -65,19 +65,12 @@ public class TransactionController {
     private static String transactionDateToUpdate;
 
     public void initialize() throws SQLException, ParseException {
-
-        if (transactionCategory != null) {
-            initializeCategoryList();
-
-        }
         if (transactionTable != null) {
-
             populateTransactions();
         }
         else {
-            if (transactionIdToUpdate == null) {
-                submitButton.setText("Add Transaction");
-            } else {
+            initializeCategoryList();
+            if (transactionIdToUpdate != null) {
                 pageTitle.setText("Update transaction");
                 submitButton.setText("Update Transaction");
                 transactionAmount.setText(transactionAmountToUpdate);
