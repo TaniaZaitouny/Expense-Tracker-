@@ -59,12 +59,11 @@ public class TransactionController {
     Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
     Transaction transaction = new Transaction();
 
-    private String previousTransactionAmount=prefs.get("amount","");
-    private String previousTransactionCategory=prefs.get("category","");
-    private String previousTransactionId=prefs.get("id","");
-    private String previousTransactionDate=prefs.get("date","");
-    private boolean addingMode=prefs.getBoolean("transAddMode",true);
-
+    private static String transactionAmountToUpdate;
+    private static String transactionCategoryToUpdate;
+    private static String transactionIdToUpdate = null;
+    private static String transactionDateToUpdate;
+    private static boolean updatingMode;
     public void initialize() throws SQLException, ParseException {
 
         if (transactionCategory != null) {
@@ -77,21 +76,22 @@ public class TransactionController {
             populateTransactions();
         }
         else {
-            if (addingMode) {
+            if (!updatingMode) {
                 submitButton.setText("Add Transaction");
-            } else {
+            }
+            else {
                 pageTitle.setText("Update transaction");
                 submitButton.setText("Update Transaction");
-                transactionAmount.setText(previousTransactionAmount);
-                transactionCategory.setValue(previousTransactionCategory);
-                LocalDate date = LocalDate.parse(previousTransactionDate);
+                transactionAmount.setText(transactionAmountToUpdate);
+                transactionCategory.setValue(transactionCategoryToUpdate);
+                LocalDate date = LocalDate.parse(transactionDateToUpdate);
                 transactionDate.setValue(date);
             }
         }
     }
     @FXML
     protected void addTransactionPage() throws IOException {
-        prefs.remove("transAddMode");
+        updatingMode=false;
         Stage stage = (Stage)addTransactionButton.getScene().getWindow();
         MenuController.loadPage("Views/addTransaction.fxml",stage);
     }
@@ -114,36 +114,27 @@ public class TransactionController {
 
     @FXML
     public void updateTransaction(ActionEvent actionEvent) throws SQLException, BackingStoreException {
-        if(addingMode)
-        {
+        if(!updatingMode) {
             addTransaction();
         }
         else {
             editTransaction();
         }
-        prefs.remove("transAddMode");
-        prefs.remove("id");
-        prefs.remove("category");
-        prefs.remove("date");
-        prefs.remove("amount");
+        transactionIdToUpdate = null;
     }
 
     public void addTransaction() throws SQLException {
         LocalDate date = transactionDate.getValue();
         String selectedCategory = transactionCategory.getValue();
         double amount = Double.parseDouble(transactionAmount.getText());
-        if(date == null)
-        {
+        if(date == null) {
             System.out.println("date null");
             return;
         }
-        if(selectedCategory.equals(""))
-        {
+        if(selectedCategory.equals("")) {
             System.out.println("category null");
             return;
         }
-
-        Transaction transaction = new Transaction();
         transaction.addTransaction(date, selectedCategory, amount);
     }
 
@@ -151,18 +142,16 @@ public class TransactionController {
         LocalDate date = transactionDate.getValue();
         String selectedCategory = transactionCategory.getValue();
         double amount = Double.parseDouble(transactionAmount.getText());
-        if(date == null)
-        {
+        if(date == null) {
             System.out.println("date null");
             return;
         }
-        if(selectedCategory.equals(""))
-        {
+        if(selectedCategory.equals("")) {
             System.out.println("category null");
             return;
         }
 
-        transaction.updateTransaction(Integer.parseInt(previousTransactionId),date, selectedCategory, amount);
+        transaction.updateTransaction(Integer.parseInt(transactionIdToUpdate), date, selectedCategory, amount);
     }
 
     public void populateTransactions() throws SQLException {
@@ -197,13 +186,13 @@ public class TransactionController {
                             setGraphic(hb);
                             editBtn.setOnAction((ActionEvent event) -> {
                                 String[] rowData = getTableRow().getItem();
-                                prefs.put("category",rowData[0]);
-                                prefs.put("date",rowData[1]);
-                                prefs.put("amount",rowData[2]);
-                                prefs.put("id",rowData[3]);
-                                prefs.putBoolean("transAddMode",false);
-                                Stage stage = (Stage)editBtn.getScene().getWindow();
                                 try {
+                                    transactionIdToUpdate =rowData[3];
+                                    transactionAmountToUpdate =rowData[2];
+                                    transactionCategoryToUpdate = rowData[0];
+                                    transactionDateToUpdate =rowData[1];
+                                    updatingMode=true;
+                                    Stage stage = (Stage)editBtn.getScene().getWindow();
                                     MenuController.loadPage("Views/addTransaction.fxml",stage);
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
