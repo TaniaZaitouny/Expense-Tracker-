@@ -36,14 +36,6 @@ import java.util.prefs.Preferences;
 public class CategoryController
 {
     @FXML
-    Button homeButton;
-    @FXML
-    Button categoriesButton;
-    @FXML
-    Button transactionsButton;
-    @FXML
-    Button reportsButton;
-    @FXML
     Button addCategoryButton;
     @FXML
     ToggleButton incomeChoiceButton;
@@ -58,6 +50,12 @@ public class CategoryController
     @FXML
     ComboBox<String> iconComboBox;
     @FXML
+    CheckBox automatic;
+    @FXML
+    ChoiceBox<String> frequency;
+    @FXML
+    TextField amount;
+    @FXML
     TableView<Pair<String,String>> categoriesTable;
     @FXML
     TableColumn<Pair<String,String>, String> categoryColumn;
@@ -71,18 +69,20 @@ public class CategoryController
 
     Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
     Category category = new Category();
-    private static String categoryNameToUpate = null;
+    private static String categoryNameToUpdate = null;
     private static String categoryTypeToUpdate = null;
+   // private static String categoryIconToUpdate = null;
+    private static boolean updatingMode = false;
     public void initialize() throws SQLException {
         if(categoriesTable != null) {
             getCategories();
         }
         else
         {
-            if(categoryNameToUpate != null) {
+            if(updatingMode) {
                 pageTitle.setText("Update Category");
-                submitButton.setText("Update Category");
-                categoryName.setText(categoryNameToUpate);
+                submitButton.setText("Update");
+                categoryName.setText(categoryNameToUpdate);
                 if(categoryTypeToUpdate.equals("income")) {
                     incomeChoiceButton.setSelected(true);
                     expenseChoiceButton.setSelected(false);
@@ -92,6 +92,7 @@ public class CategoryController
                     expenseChoiceButton.setSelected(true);
                 }
             }
+
             final File folder = new File("src/main/resources/com/example/expensetracker/Media");
             final File[] files = folder.listFiles();
             String fileName, nameWithoutExtension;
@@ -125,41 +126,33 @@ public class CategoryController
         }
     }
 
-    @FXML
-    protected void addCategoryPage() throws IOException {
-        categoryNameToUpate = null;
-        categoryTypeToUpdate = null;
-        Stage stage = (Stage)addCategoryButton.getScene().getWindow();
-        MenuController.loadPage("Views/addCategory.fxml",stage);
-    }
+
 
     @FXML
-    protected void addCategoryPage(String name, String type) throws IOException {
-        categoryNameToUpate = name;
-        categoryTypeToUpdate = type;
+    protected void addCategoryPage() throws IOException {
+        updatingMode = false;
         Stage stage = (Stage)addCategoryButton.getScene().getWindow();
         MenuController.loadPage("Views/addCategory.fxml",stage);
     }
 
     public void updateCategory(ActionEvent actionEvent) throws SQLException, BackingStoreException {
-        String action = ((Button) actionEvent.getSource()).getText();
-        if(action.equals("Submit")) {
-            categoryNameToUpate = null;
-            categoryTypeToUpdate = null;
+        if(!updatingMode) {
             addCategory();
         }
         else {
             editCategory();
-            categoryNameToUpate = null;
-            categoryTypeToUpdate = null;
         }
-
+        updatingMode = false;
+        categoryNameToUpdate = null;
+        categoryTypeToUpdate = null;
     }
 
 
     private void addCategory() throws SQLException {
         String name = categoryName.getText();
         String type;
+
+        String icon = iconComboBox.getValue();
         if(!incomeChoiceButton.isSelected() && !expenseChoiceButton.isSelected()) {
            // messageText.setText("PLease choose a type for category");
             return;
@@ -176,7 +169,18 @@ public class CategoryController
             type = "expense";
             expenseChoiceButton.setSelected(false);
         }
-        if(category.addCategory(name, type)) {
+        if(automatic.isSelected()) {
+            String frequencyValue = frequency.getValue();
+            double amountValue = Double.parseDouble(amount.getText());
+            if(category.addCategory(name, type, icon, frequencyValue, amountValue)) {
+                categoryName.setText("");
+                //   messageText.setText("Category added successfully");
+            }
+            else {
+                //   messageText.setText("Category already exists");
+            }
+        }
+        else if(category.addCategory(name, type, icon)) {
             categoryName.setText("");
             //   messageText.setText("Category added successfully");
         }
@@ -187,7 +191,7 @@ public class CategoryController
 
     private void editCategory() throws SQLException {
         String name = categoryName.getText();
-        String type;
+        String type = null ;
         if(!incomeChoiceButton.isSelected() && !expenseChoiceButton.isSelected()){
             // messageText.setText("PLease choose a type for category");
             return;
@@ -196,15 +200,7 @@ public class CategoryController
             // messageText.setText("PLease choose a name for category");
             return;
         }
-        if(incomeChoiceButton.isSelected()) {
-            type = "income";
-            incomeChoiceButton.setSelected(false);
-        }
-        else {
-            type = "expense";
-            expenseChoiceButton.setSelected(false);
-        }
-        category.updateCategory(categoryNameToUpate, name, type);
+        category.updateCategory(categoryNameToUpdate, name, categoryTypeToUpdate);
         categoryName.setText("");
         //   messageText.setText("Category updated successfully");
 
@@ -229,7 +225,11 @@ public class CategoryController
                     editButton.setOnAction(event -> {
                         Pair<String,String> rowData = getTableRow().getItem();
                         try {
-                            addCategoryPage(rowData.getKey(), rowData.getValue());
+                            categoryNameToUpdate = rowData.getKey();
+                            categoryTypeToUpdate = rowData.getValue();
+                            updatingMode = true;
+                            Stage stage = (Stage)editButton.getScene().getWindow();
+                            MenuController.loadPage("Views/addCategory.fxml",stage);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -258,5 +258,25 @@ public class CategoryController
         });
     }
 
+    public void setExpenseChoice(ActionEvent actionEvent) {
+
+        categoryTypeToUpdate = "expense";
+    }
+
+    public void setIncomeChoice(ActionEvent actionEvent) {
+        categoryTypeToUpdate = "income";
+    }
+
+    @FXML
+    public void showOptions(ActionEvent actionEvent) {
+        if(automatic.isSelected()) {
+            frequency.setVisible(true);
+            amount.setVisible(true);
+        }
+        else {
+            frequency.setVisible(false);
+            amount.setVisible(false);
+        }
+    }
 }
 

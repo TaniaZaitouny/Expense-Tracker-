@@ -63,16 +63,19 @@ public class TransactionController {
     private static String transactionCategoryToUpdate;
     private static String transactionIdToUpdate = null;
     private static String transactionDateToUpdate;
-
+    private static boolean updatingMode;
     public void initialize() throws SQLException, ParseException {
         if (transactionTable != null) {
             populateTransactions();
         }
         else {
             initializeCategoryList();
-            if (transactionIdToUpdate != null) {
-                pageTitle.setText("Update transaction");
-                submitButton.setText("Update Transaction");
+            if (!updatingMode) {
+                submitButton.setText("Add Transaction");
+            }
+            else {
+                pageTitle.setText("Update Transaction");
+                submitButton.setText("Update");
                 transactionAmount.setText(transactionAmountToUpdate);
                 transactionCategory.setValue(transactionCategoryToUpdate);
                 LocalDate date = LocalDate.parse(transactionDateToUpdate);
@@ -82,17 +85,8 @@ public class TransactionController {
     }
     @FXML
     protected void addTransactionPage() throws IOException {
-        transactionIdToUpdate = null;
-        Stage stage = (Stage)addTransactionButton.getScene().getWindow();
-        MenuController.loadPage("Views/addTransaction.fxml",stage);
-    }
-
-    protected void addTransactionPage(String id, String amount, String date, String category) throws IOException {
-        transactionIdToUpdate = id;
-        transactionAmountToUpdate = amount;
-        transactionCategoryToUpdate = category;
-        transactionDateToUpdate = date;
-        Stage stage = (Stage)addTransactionButton.getScene().getWindow();
+        updatingMode = false;
+        Stage stage = (Stage) addTransactionButton.getScene().getWindow();
         MenuController.loadPage("Views/addTransaction.fxml",stage);
     }
 
@@ -102,7 +96,7 @@ public class TransactionController {
         Category category = new Category();
 
         try {
-            ArrayList<Pair<String,String> > results = category.getCategories();
+            ArrayList<Pair<String, String> > results = category.getCategories();
             ArrayList<String> categories = new ArrayList<>();
             results.forEach(pair -> categories.add(pair.getKey()));
             transactionCategory.setItems(FXCollections.observableList(categories));
@@ -114,8 +108,7 @@ public class TransactionController {
 
     @FXML
     public void updateTransaction(ActionEvent actionEvent) throws SQLException, BackingStoreException {
-        String action = ((Button) actionEvent.getSource()).getText();
-        if(action.equals("Submit")) {
+        if(!updatingMode) {
             addTransaction();
         }
         else {
@@ -136,8 +129,6 @@ public class TransactionController {
             System.out.println("category null");
             return;
         }
-
-        Transaction transaction = new Transaction();
         transaction.addTransaction(date, selectedCategory, amount);
     }
 
@@ -190,7 +181,13 @@ public class TransactionController {
                             editBtn.setOnAction((ActionEvent event) -> {
                                 String[] rowData = getTableRow().getItem();
                                 try {
-                                    addTransactionPage(rowData[3], rowData[2], rowData[1], rowData[0]);
+                                    transactionIdToUpdate = rowData[3];
+                                    transactionAmountToUpdate = rowData[2];
+                                    transactionCategoryToUpdate = rowData[0];
+                                    transactionDateToUpdate = rowData[1];
+                                    updatingMode = true;
+                                    Stage stage = (Stage) editBtn.getScene().getWindow();
+                                    MenuController.loadPage("Views/addTransaction.fxml", stage);
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -204,9 +201,9 @@ public class TransactionController {
                                     throw new RuntimeException(e);
                                 }
                                 //reload after deleting
-                                Stage stage = (Stage)deleteBtn.getScene().getWindow();
+                                Stage stage = (Stage) deleteBtn.getScene().getWindow();
                                 try {
-                                    MenuController.loadPage("Views/transactions.fxml",stage);
+                                    MenuController.loadPage("Views/transactions.fxml", stage);
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
