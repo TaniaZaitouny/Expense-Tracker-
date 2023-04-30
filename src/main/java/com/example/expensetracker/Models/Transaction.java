@@ -1,10 +1,9 @@
 package com.example.expensetracker.Models;
 
 import com.example.expensetracker.Database.DatabaseConnection;
-import javafx.fxml.FXML;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import com.example.expensetracker.Filters.TransactionFilter;
+import com.example.expensetracker.Filters.TransactionNormalFilter;
+import com.example.expensetracker.Objects.TransactionObject;
 import javafx.util.Pair;
 
 import java.sql.*;
@@ -16,8 +15,9 @@ import java.util.prefs.Preferences;
 
 public class Transaction {
 
-    static Connection connection;
-    private int userId;
+    Connection connection;
+    private final int userId;
+
     public Transaction() {
         DatabaseConnection db = DatabaseConnection.getInstance();
         connection = db.getConnection();
@@ -26,40 +26,32 @@ public class Transaction {
     }
 
 
+
     public void addTransaction(LocalDate date, String selectedCategory, Double amount) throws SQLException {
         String sqlQuery = "INSERT INTO transactions(userId,date,amount,category)" +
-                "VALUES('"+userId+"','"+date+"','"+amount+"','"+selectedCategory+"')";
+                "VALUES('" + userId + "','" + date + "','" + amount + "','" + selectedCategory + "')";
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
+        statement.close();
     }
     public void deleteTransaction(int transactionId) throws SQLException{
         String sqlQuery = "DELETE FROM transactions WHERE id =" + transactionId;
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
+        statement.close();
     }
 
     public void updateTransaction(int transactionId, LocalDate newDate, String newCategory, Double newAmount) throws SQLException{
         String sqlQuery = "UPDATE transactions SET date = '" + newDate + "', amount = '" + newAmount + "', category = '" + newCategory +"' WHERE id = " + transactionId;
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
+        statement.close();
     }
 
-    public ArrayList<String[]> getTransactions() throws SQLException
+    public ArrayList<TransactionObject> getTransactions() throws SQLException
     {
-        ArrayList<String[]> transactions = new ArrayList<String[]>();
-        Statement statement = connection.createStatement();
-        String query = "SELECT category, date, amount, id FROM transactions WHERE userId = " + userId;
-//        System.out.println("Executing query: " + query);
-        ResultSet resultSet = statement.executeQuery(query);
-        while (resultSet.next()) {
-            String[] singleTransaction = new String[4];
-            singleTransaction[0] = resultSet.getString(1);
-            singleTransaction[1] = resultSet.getString(2);
-            singleTransaction[2] = resultSet.getString(3);
-            singleTransaction[3] = resultSet.getString(4);
-            transactions.add(singleTransaction);
-        }
-        return transactions;
+        TransactionFilter filter = new TransactionNormalFilter();
+        return filter.filter("");
     }
 
 
@@ -96,7 +88,7 @@ public class Transaction {
                     "FROM transactions t " +
                     "JOIN categories c ON category = c.categoryName " +
                     "GROUP BY category " +
-                    "ORDER BY amount desc " +
+                    "ORDER BY totalAmount desc " +
                     "LIMIT 5";
             List<Pair<Pair<String, Number>, String>> pairs = executeQuery(sql);
             return pairs;
