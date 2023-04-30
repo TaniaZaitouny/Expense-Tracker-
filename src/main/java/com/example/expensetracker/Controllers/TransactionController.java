@@ -116,12 +116,12 @@ public class TransactionController implements ObserverController {
         }
         catch (NumberFormatException e)
         {
-            messageText.setText("Please Enter Correct Amount Value !");
+            messageText.setText("Please enter correct amount value!");
             return;
         }
 
         if(date == null) {
-            messageText.setText("Please Choose A Date !");
+            messageText.setText("Please choose a date!");
             return;
         }
         if(selectedCategory.equals("")) {
@@ -158,10 +158,10 @@ public class TransactionController implements ObserverController {
 //        hidden field to store id
         TableColumn<TransactionObject, String> idColumn = new TableColumn<>("ID");
         idColumn.setVisible(false);
-        idColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().id+""));
+        idColumn.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().id)));
         categoryColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().category));
-        dateColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().date+""));
-        amountColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().amount+""));
+        dateColumn.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().date)));
+        amountColumn.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().amount)));
         transactionTable.getColumns().add(idColumn);
         transactionTable.setItems(FXCollections.observableArrayList(transactions));
 
