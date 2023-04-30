@@ -43,7 +43,7 @@
                                         </Text>
                                        <ComboBox fx:id="categoryIcon" prefWidth="150.0" />
                                       <CheckBox fx:id="automatic" mnemonicParsing="false" onAction="#showOptions" text="Make automatic" />
-                                      <ChoiceBox fx:id="frequency" prefWidth="150.0" value="Frequency" visible="false" >
+                                      <ChoiceBox fx:id="frequency" prefWidth="150.0" value="Frequency" visible="false" managed="false">
                                           <items>
                                               <FXCollections fx:factory="observableArrayList">
                                                   <String fx:value="DAILY"/>
@@ -53,7 +53,7 @@
                                               </FXCollections>
                                           </items>
                                       </ChoiceBox>
-                                        <TextField fx:id="amount" visible="false" />
+                                        <TextField fx:id="amount" visible="false" managed="false"/>
                               <Label fx:id="messageText" text="Label" />
                                     <Button fx:id="submitButton" mnemonicParsing="false" onAction="#updateCategory" text="Add category">
                                          <font>
