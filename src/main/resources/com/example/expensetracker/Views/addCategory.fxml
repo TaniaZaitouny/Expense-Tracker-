@@ -41,7 +41,7 @@
                                                 <Font size="14.0" />
                                             </font>
                                         </Text>
-                                       <ComboBox fx:id="categoryIcon" prefWidth="150.0" />
+                                       <ComboBox fx:id="categoryIcon" prefWidth="150.0" value="No Category"/>
                                       <CheckBox fx:id="automatic" mnemonicParsing="false" onAction="#showOptions" text="Make automatic" />
                                       <HBox>
                                           <Text fx:id="frequencyLabel" fill="#222325" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Frequency" visible="false" managed="false">

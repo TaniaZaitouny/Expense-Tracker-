@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.prefs.Preferences;
 
 public class MenuController {
 
@@ -23,13 +24,12 @@ public class MenuController {
     @FXML
     Button reportsButton;
     @FXML
-    Button settingButton;
+    Button logoutButton;
 
     static String homeStyle = "-fx-background-color: #2D3B64;";
     static String categoryStyle = null;
     static String transactionStyle = null;
     static String reportsStyle = null;
-    static String settingsStyle = null;
 
     public static Scene loadPage(String pageName, Stage stage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(pageName)));
@@ -45,7 +45,6 @@ public class MenuController {
         categoriesButton.setStyle(categoryStyle);
         transactionsButton.setStyle(transactionStyle);
         reportsButton.setStyle(reportsStyle);
-        settingButton.setStyle(settingsStyle);
     }
 
     @FXML
@@ -54,7 +53,6 @@ public class MenuController {
         categoryStyle = "";
         transactionStyle = "";
         reportsStyle = "";
-        settingsStyle = "";
         Stage stage = (Stage) homeButton.getScene().getWindow();
         MenuController.loadPage("Views/home.fxml", stage);
     }
@@ -65,7 +63,6 @@ public class MenuController {
         categoryStyle = "-fx-background-color: #2D3B64;";
         transactionStyle = "";
         reportsStyle = "";
-        settingsStyle = "";
         Stage stage = (Stage) categoriesButton.getScene().getWindow();
         MenuController.loadPage("Views/categories.fxml", stage);
         categoriesButton.setStyle("-fx-background-color: #FFFFFF; -fx-background-radius: 0 0 0 0; -fx-text-fill: #3A4D8F;");
@@ -77,7 +74,6 @@ public class MenuController {
         categoryStyle = "";
         transactionStyle = "-fx-background-color: #2D3B64;";
         reportsStyle = "";
-        settingsStyle = "";
         Stage stage = (Stage) transactionsButton.getScene().getWindow();
         MenuController.loadPage("Views/transactions.fxml", stage);
     }
@@ -88,20 +84,20 @@ public class MenuController {
         categoryStyle = "";
         transactionStyle = "";
         reportsStyle = "-fx-background-color: #2D3B64;";
-        settingsStyle = "";
         Stage stage = (Stage) reportsButton.getScene().getWindow();
         MenuController.loadPage("Views/reports.fxml", stage);
     }
 
     @FXML
-    protected void settingPage() throws IOException {
-        homeStyle = "";
-        categoryStyle = "";
-        transactionStyle = "";
-        reportsStyle = "";
-        settingsStyle = "-fx-background-color: #2D3B64;";
-        Stage stage = (Stage)settingButton.getScene().getWindow();
-        MenuController.loadPage("Views/setting.fxml", stage);
+    protected void logout() {
+        Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
+        prefs.remove("userId");
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+        try {
+            MenuController.loadPage("Views/login.fxml", stage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
