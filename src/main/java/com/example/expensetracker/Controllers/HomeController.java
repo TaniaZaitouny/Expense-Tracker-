@@ -5,6 +5,7 @@ import com.example.expensetracker.Main;
 import com.example.expensetracker.Models.Transaction;
 import com.example.expensetracker.Strategy.DefaultStrategy;
 import com.example.expensetracker.Strategy.TransactionStrategy;
+import com.example.expensetracker.Threads.CheckAutomaticCategoriesThread;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -28,6 +29,9 @@ public class HomeController implements ObserverController {
     private HBox topCategoriesBox;
 
     public void initialize() {
+        CheckAutomaticCategoriesThread thread = new CheckAutomaticCategoriesThread();
+        thread.registerObserver(this);
+        thread.start();
         initializeTopCategories();
     }
    public void initializeTopCategories()
@@ -87,7 +91,7 @@ public class HomeController implements ObserverController {
 
     }
     @Override
-    public void notify(ArrayList<Object> tableData) {
+    public void getNotified() {
         if(topCategoriesBox != null) {
 
         }

@@ -6,6 +6,7 @@ import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Models.Transaction;
 import com.example.expensetracker.Objects.CategoryObject;
 import com.example.expensetracker.Objects.TransactionObject;
+import com.example.expensetracker.Threads.CheckAutomaticCategoriesThread;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -57,6 +58,9 @@ public class TransactionController implements ObserverController {
     private TransactionObject transactionToUpdate;
     private static int transactionToUpdateId = 0;
     public void initialize() throws SQLException, ParseException {
+        CheckAutomaticCategoriesThread thread = new CheckAutomaticCategoriesThread();
+        thread.registerObserver(this);
+        thread.start();
         if (transactionTable != null) {
             filterTransactions(null);
         }
@@ -207,13 +211,6 @@ public class TransactionController implements ObserverController {
         actionColumn.setCellFactory(cellFactory);
     }
 
-    @Override
-    public void notify(ArrayList<Object> tableData) {
-        if(transactionTable != null) {
-
-        }
-    }
-
     public void filterTransactions(ActionEvent actionEvent) throws SQLException
     {
         String filter = filters.getValue();
@@ -262,6 +259,26 @@ public class TransactionController implements ObserverController {
             case "Ascending" -> populateTransactions(new TransactionAmountFilter(), "ascending");
             case "Descending" -> populateTransactions(new TransactionAmountFilter(), "descending");
             default -> populateTransactions(new TransactionCategoryFilter(), filter);
+        }
+    }
+
+    @Override
+    public void getNotified() {
+        if(transactionTable != null) {
+            if(filtersType.isVisible()) {
+                try {
+                    filterTransactionTypes(null);
+                } catch (SQLException e) {
+                    //do something
+                }
+            }
+            else {
+                try {
+                    filterTransactions(null);
+                } catch (SQLException e) {
+                    //do something
+                }
+            }
         }
     }
 }
