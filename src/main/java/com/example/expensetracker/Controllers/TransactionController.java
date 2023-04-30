@@ -1,6 +1,8 @@
 package com.example.expensetracker.Controllers;
 
-import com.example.expensetracker.Filters.CategoryNormalFilter;
+import com.example.expensetracker.Filters.CategoryFilters.CategoryNormalFilter;
+import com.example.expensetracker.Filters.TransactionFilters.TransactionFilter;
+import com.example.expensetracker.Filters.TransactionFilters.TransactionNormalFilter;
 import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Models.Transaction;
 import com.example.expensetracker.Objects.CategoryObject;
@@ -56,8 +58,7 @@ public class TransactionController implements ObserverController {
     private static int transactionToUpdateId = 0;
     public void initialize() throws SQLException, ParseException {
         if (transactionTable != null) {
-            populateTransactions();
-
+            filterTransactions(null);
         }
         else {
             initializeCategoryList();
@@ -156,9 +157,9 @@ public class TransactionController implements ObserverController {
         transaction.updateTransaction(transactionToUpdateId, date, selectedCategory, amount);
     }
 
-    public void populateTransactions() throws SQLException {
+    public void populateTransactions(TransactionFilter Filter, String filterType) throws SQLException {
         transaction = new Transaction();
-        ArrayList<TransactionObject> transactions = transaction.getTransactions();
+        ArrayList<TransactionObject> transactions = transaction.getTransactions(Filter, filterType);
 //        hidden field to store id
         TableColumn<TransactionObject, String> idColumn = new TableColumn<>("ID");
         idColumn.setVisible(false);
@@ -226,5 +227,9 @@ public class TransactionController implements ObserverController {
         if(transactionTable != null) {
 
         }
+    }
+
+    public void filterTransactions(ActionEvent actionEvent) throws SQLException {
+        populateTransactions(new TransactionNormalFilter(), "");
     }
 }

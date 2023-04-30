@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.TransactionController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.TransactionController">
     <children>
         <HBox prefHeight="400.0" prefWidth="600.0">
             <children>
@@ -28,18 +21,18 @@
                            </padding>
                            <children>
                               <Label prefHeight="44.0" prefWidth="359.0" style="-fx-font-size: 19px; -fx-font-weight: bold;" text="Transactions" textFill="#1c1d1e" HBox.hgrow="ALWAYS" />
-                              <ChoiceBox fx:id="filter" prefWidth="110.0" value="Filter By">
+                              <ChoiceBox fx:id="categoryFilter" managed="false" prefWidth="170.0" value="Filter By" visible="false"/>
+                              <ChoiceBox fx:id="filter" onAction="#filterTransactions" prefWidth="170.0" value="All">
                                  <items>
                                     <FXCollections fx:factory="observableArrayList">
-                                       <String fx:value="DAILY"/>
-                                       <String fx:value="WEEKLY"/>
-                                       <String fx:value="MONTHLY"/>
-                                       <String fx:value="YEARLY"/>
+                                       <String fx:id="all" fx:value="All" />
+                                       <String fx:value="WEEKLY" />
+                                       <String fx:value="MONTHLY" />
+                                       <String fx:value="YEARLY" />
                                     </FXCollections>
                                  </items>
                               </ChoiceBox>
-                              <ChoiceBox fx:id="categoryFilter" prefWidth="110.0" value="Filter By" visible="false" managed="false"/>
-                              <Button fx:id="addTransactionButton" mnemonicParsing="false" onAction="#addTransactionPage" prefHeight="25.0" prefWidth="122.0" text="Add Transaction" HBox.hgrow="NEVER" />
+                              <Button fx:id="addTransactionButton" mnemonicParsing="false" onAction="#addTransactionPage" prefHeight="25.0" prefWidth="220.0" text="Add Transaction" HBox.hgrow="NEVER" />
                            </children>
                         </HBox>
                         <VBox alignment="CENTER" prefHeight="343.0" prefWidth="382.0">

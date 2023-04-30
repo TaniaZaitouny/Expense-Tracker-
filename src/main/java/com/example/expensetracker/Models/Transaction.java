@@ -1,17 +1,12 @@
 package com.example.expensetracker.Models;
 
 import com.example.expensetracker.Database.DatabaseConnection;
-import com.example.expensetracker.Filters.TransactionFilter;
-import com.example.expensetracker.Filters.TransactionNormalFilter;
-import com.example.expensetracker.Objects.CategoryObject;
+import com.example.expensetracker.Filters.TransactionFilters.TransactionFilter;
 import com.example.expensetracker.Objects.TransactionObject;
-import javafx.util.Pair;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 import java.util.prefs.Preferences;
 
 public class Transaction {
@@ -49,10 +44,9 @@ public class Transaction {
         statement.close();
     }
 
-    public ArrayList<TransactionObject> getTransactions() throws SQLException
+    public ArrayList<TransactionObject> getTransactions(TransactionFilter Filter, String filterType) throws SQLException
     {
-        TransactionFilter filter = new TransactionNormalFilter();
-        return filter.filter("");
+        return Filter.filter(filterType);
     }
 
     public TransactionObject getTransaction(int id) throws SQLException {

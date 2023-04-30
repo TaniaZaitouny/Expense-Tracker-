@@ -1,6 +1,6 @@
 package com.example.expensetracker.Controllers;
 
-import com.example.expensetracker.Filters.*;
+import com.example.expensetracker.Filters.CategoryFilters.*;
 import com.example.expensetracker.Main;
 import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Objects.CategoryObject;

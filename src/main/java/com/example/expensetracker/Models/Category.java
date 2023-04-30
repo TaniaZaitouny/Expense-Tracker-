@@ -1,14 +1,10 @@
 package com.example.expensetracker.Models;
 
 import com.example.expensetracker.Database.DatabaseConnection;
-import com.example.expensetracker.Filters.CategoryFilter;
-import com.example.expensetracker.Filters.CategoryNormalFilter;
+import com.example.expensetracker.Filters.CategoryFilters.CategoryFilter;
 import com.example.expensetracker.Objects.CategoryObject;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 

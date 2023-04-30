@@ -1,6 +1,7 @@
-package com.example.expensetracker.Filters;
+package com.example.expensetracker.Filters.TransactionFilters;
 
 import com.example.expensetracker.Database.DatabaseConnection;
+import com.example.expensetracker.Filters.TransactionFilters.TransactionFilter;
 import com.example.expensetracker.Objects.TransactionObject;
 
 import java.sql.Connection;
