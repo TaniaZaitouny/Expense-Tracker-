@@ -4,6 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
 <AnchorPane prefHeight="408.0" prefWidth="608.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.CategoryController">
     <children>
         <HBox prefHeight="400.0" prefWidth="600.0">
@@ -15,7 +18,17 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="375.0" spacing="5.0">
                            <Label prefHeight="44.0" prefWidth="359.0" style="-fx-font-size: 19px; -fx-font-weight: bold;" text="Categories" textFill="#1c1d1e" HBox.hgrow="ALWAYS" />
-                                    <Button fx:id="addCategoryButton" mnemonicParsing="false" onAction="#addCategoryPage" text="Add Category" HBox.hgrow="NEVER" />
+                           <ChoiceBox fx:id="filter" prefWidth="110.0" value="Filter By">
+                               <items>
+                                   <FXCollections fx:factory="observableArrayList">
+                                       <String fx:value="DAILY"/>
+                                       <String fx:value="WEEKLY"/>
+                                       <String fx:value="MONTHLY"/>
+                                       <String fx:value="YEARLY"/>
+                                   </FXCollections>
+                               </items>
+                           </ChoiceBox>
+                            <Button fx:id="addCategoryButton" mnemonicParsing="false" onAction="#addCategoryPage" text="Add Category" HBox.hgrow="ALWAYS" />
                            <padding>
                               <Insets left="10.0" right="18.0" top="25.0" />
                            </padding>

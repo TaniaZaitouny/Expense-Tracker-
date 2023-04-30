@@ -18,12 +18,12 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.prefs.BackingStoreException;
 
 public class TransactionController {
-
+    @FXML
+    ChoiceBox<String> filter;
     @FXML
     Button addTransactionButton;
     @FXML
