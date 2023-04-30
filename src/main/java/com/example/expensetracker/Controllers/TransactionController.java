@@ -219,6 +219,7 @@ public class TransactionController implements ObserverController {
         switch (filter) {
             case "All" -> {
                 filtersType.setVisible(false);
+                filtersType.setManaged(false);
                 populateTransactions(new TransactionNormalFilter(), "");
                 return;
             }
@@ -226,8 +227,8 @@ public class TransactionController implements ObserverController {
             case "Category" -> setTypeList("category");
             case "Amount" -> setTypeList("amount");
         }
-        if(!filtersType.isVisible())
-            filtersType.setVisible(true);
+        filtersType.setVisible(true);
+        filtersType.setManaged(true);
     }
 
     private void setTypeList(String Filter)
@@ -245,7 +246,7 @@ public class TransactionController implements ObserverController {
             case "amount" -> {
                 items.add("Ascending");
                 items.add("Descending");
-                filtersType.setValue("Increasing");
+                filtersType.setValue("Ascending");
             }
         }
     }

@@ -317,6 +317,7 @@ public class CategoryController {
         switch (filter) {
             case "All" -> {
                 filtersType.setVisible(false);
+                filtersType.setManaged(false);
                 getCategories(new CategoryNormalFilter(), "");
                 return;
             }
@@ -324,12 +325,13 @@ public class CategoryController {
             case "Automatic" -> setTypeList("frequency");
             case "Date" -> {
                 filtersType.setVisible(false);
+                filtersType.setManaged(false);
                 setTypeList("date");
             }
             case "Alphabetically" -> setTypeList("alphabetical");
         }
-        if(!filtersType.isVisible())
-          filtersType.setVisible(true);
+        filtersType.setVisible(true);
+        filtersType.setManaged(true);
     }
     private void setTypeList(String Filter)
     {
