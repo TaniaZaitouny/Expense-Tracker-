@@ -26,6 +26,12 @@ public class MenuController {
     @FXML
     Button settingButton;
 
+    static String homeStyle = null;
+    static String categoryStyle = null;
+    static String transactionStyle = null;
+    static String reportsStyle = null;
+    static String settingsStyle = null;
+
     public static Scene loadPage(String pageName, Stage stage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(pageName)));
         Scene scene = new Scene(root);
@@ -35,37 +41,67 @@ public class MenuController {
         return scene;
     }
 
+    public void initialize() {
+        homeButton.setStyle(homeStyle);
+        categoriesButton.setStyle(categoryStyle);
+        transactionsButton.setStyle(transactionStyle);
+        reportsButton.setStyle(reportsStyle);
+        settingButton.setStyle(settingsStyle);
+    }
+
     @FXML
     protected void homePage() throws IOException {
+        homeStyle = "-fx-background-color: #2D3B64;";
+        categoryStyle = "";
+        transactionStyle = "";
+        reportsStyle = "";
+        settingsStyle = "";
         Stage stage = (Stage) homeButton.getScene().getWindow();
         Scene scene = MenuController.loadPage("Views/home.fxml", stage);
-        homeButton.setStyle("-fx-background-color:   #FFFFFF; -fx-background-radius: 0 0 0 0; -fx-text-fill: #3A4D8F;");
     }
+
     @FXML
     protected void categoriesPage() throws IOException {
+        homeStyle = "";
+        categoryStyle = "-fx-background-color: #2D3B64;";
+        transactionStyle = "";
+        reportsStyle = "";
+        settingsStyle = "";
         Stage stage = (Stage) categoriesButton.getScene().getWindow();
         Scene scene = MenuController.loadPage("Views/categories.fxml", stage);
-        categoriesButton.setStyle("-fx-background-color:   #FFFFFF; -fx-background-radius: 0 0 0 0; -fx-text-fill: #3A4D8F;");
+        categoriesButton.setStyle("-fx-background-color: #FFFFFF; -fx-background-radius: 0 0 0 0; -fx-text-fill: #3A4D8F;");
     }
+
     @FXML
     protected void transactionsPage() throws IOException {
+        homeStyle = "";
+        categoryStyle = "";
+        transactionStyle = "-fx-background-color: #2D3B64;";
+        reportsStyle = "";
+        settingsStyle = "";
         Stage stage = (Stage) transactionsButton.getScene().getWindow();
         Scene scene = MenuController.loadPage("Views/transactions.fxml", stage);
-        transactionsButton.setStyle("-fx-background-color:   #FFFFFF; -fx-background-radius: 0 0 0 0; -fx-text-fill: #3A4D8F;");
     }
+
     @FXML
     protected void reportsPage() throws IOException {
+        homeStyle = "";
+        categoryStyle = "";
+        transactionStyle = "";
+        reportsStyle = "-fx-background-color: #2D3B64;";
+        settingsStyle = "";
         Stage stage = (Stage) reportsButton.getScene().getWindow();
         Scene scene = MenuController.loadPage("Views/reports.fxml", stage);
-        reportsButton.setStyle("-fx-background-color:   #FFFFFF; -fx-background-radius: 0 0 0 0; -fx-text-fill: #3A4D8F;");
     }
 
     @FXML
-    protected void settingPage() throws IOException
-    {
+    protected void settingPage() throws IOException {
+        homeStyle = "";
+        categoryStyle = "";
+        transactionStyle = "";
+        reportsStyle = "";
+        settingsStyle = "-fx-background-color: #2D3B64;";
         Stage stage = (Stage)settingButton.getScene().getWindow();
-        Scene scene = MenuController.loadPage("Views/setting.fxml", stage);
-
     }
 
 }
