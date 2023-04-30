@@ -3,6 +3,7 @@ package com.example.expensetracker.Models;
 import com.example.expensetracker.Database.DatabaseConnection;
 import com.example.expensetracker.Filters.TransactionFilter;
 import com.example.expensetracker.Filters.TransactionNormalFilter;
+import com.example.expensetracker.Objects.CategoryObject;
 import com.example.expensetracker.Objects.TransactionObject;
 import javafx.util.Pair;
 
@@ -70,4 +71,14 @@ public class Transaction {
         return filter.filter("");
     }
 
+    public TransactionObject getTransaction(int id) throws SQLException {
+        String sql = "SELECT * FROM transactions where id = '" + id + "';";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        resultSet.next();
+        TransactionObject transaction = new TransactionObject(resultSet.getInt(1), resultSet.getInt(2), resultSet.getDate(3), resultSet.getDouble(4), resultSet.getString(5));
+        statement.close();
+        return transaction;
+
+    }
 }
