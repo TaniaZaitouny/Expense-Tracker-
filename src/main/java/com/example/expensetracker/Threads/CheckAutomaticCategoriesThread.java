@@ -2,31 +2,30 @@ package com.example.expensetracker.Threads;
 
 import com.example.expensetracker.Controllers.ObserverController;
 import com.example.expensetracker.Database.DatabaseConnection;
+import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Models.Transaction;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CheckAutomaticCategoriesThread extends Thread {
     private List<ObserverController> observers = new ArrayList<>();
 
-    public void addListener(ObserverController listener) {
-        observers.add(listener);
+    public void registerObserver(ObserverController observer) {
+        observers.add(observer);
     }
 
-    public void removeListener(ObserverController listener) {
-        observers.remove(listener);
+    public void unregisterObserver(ObserverController observer) {
+        observers.remove(observer);
     }
 
-    private void notifyListeners() {
+    private void notifyObservers() {
         for (ObserverController observer : observers) {
-            observer.notify(new ArrayList<>());
+            observer.notify();
         }
     }
 
@@ -46,26 +45,32 @@ public class CheckAutomaticCategoriesThread extends Thread {
                 LocalDate lastTransactionDate = LocalDate.parse(dateString);
                 double amount = resultSet.getDouble(7);
                 LocalDate currentDate = LocalDate.now();
+                java.sql.Date sqlDate = java.sql.Date.valueOf(currentDate);
                 Transaction transaction = new Transaction();
+                Category category = new Category();
                 switch (frequency) {
                     case "DAILY" -> {
                         if (lastTransactionDate.plusDays(1).isBefore(currentDate) || lastTransactionDate.plusDays(1).isEqual(currentDate)) {
                             transaction.addTransaction(currentDate, name, amount);
+                            category.updateCategory(name, name, resultSet.getString(3), resultSet.getString(4), frequency, sqlDate, amount);
                         }
                     }
                     case "WEEKLY" -> {
                         if (lastTransactionDate.plusWeeks(1).isBefore(currentDate) || lastTransactionDate.plusWeeks(1).isEqual(currentDate)) {
                             transaction.addTransaction(currentDate, name, amount);
+                            category.updateCategory(name, name, resultSet.getString(3), resultSet.getString(4), frequency, sqlDate, amount);
                         }
                     }
                     case "MONTHLY" -> {
                         if (lastTransactionDate.plusMonths(1).isBefore(currentDate) || lastTransactionDate.plusMonths(1).isEqual(currentDate)) {
                             transaction.addTransaction(currentDate, name, amount);
+                            category.updateCategory(name, name, resultSet.getString(3), resultSet.getString(4), frequency, sqlDate, amount);
                         }
                     }
                     case "YEARLY" -> {
                         if (lastTransactionDate.plusYears(1).isBefore(currentDate) || lastTransactionDate.plusYears(1).isEqual(currentDate)) {
                             transaction.addTransaction(currentDate, name, amount);
+                            category.updateCategory(name, name, resultSet.getString(3), resultSet.getString(4), frequency, sqlDate, amount);
                         }
                     }
                     default -> System.out.println("Invalid frequency for category: " + name);
@@ -73,6 +78,7 @@ public class CheckAutomaticCategoriesThread extends Thread {
             }
             resultSet.close();
             statement.close();
+            notifyObservers();
         }
         catch (SQLException e) {
             System.out.println("failed to check categories");

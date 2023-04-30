@@ -25,7 +25,7 @@ public class MenuController {
     @FXML
     Button settingButton;
 
-    static String homeStyle = null;
+    static String homeStyle = "-fx-background-color: #2D3B64;";
     static String categoryStyle = null;
     static String transactionStyle = null;
     static String reportsStyle = null;

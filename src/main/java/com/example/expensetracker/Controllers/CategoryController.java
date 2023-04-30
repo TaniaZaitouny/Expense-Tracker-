@@ -4,6 +4,7 @@ import com.example.expensetracker.Filters.CategoryFilters.*;
 import com.example.expensetracker.Main;
 import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Objects.CategoryObject;
+import com.example.expensetracker.Threads.CheckAutomaticCategoriesThread;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +22,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.sql.Date;
 
 
 public class CategoryController {
@@ -177,7 +179,8 @@ public class CategoryController {
                 addCategory(name, type, icon, frequencyValue, amountValue);
             }
             else {
-                editCategory(name, type, icon, frequencyValue, amountValue);
+                java.sql.Date sqlDate = new java.sql.Date(categoryToUpdate.lastTransaction.getTime());
+                editCategory(name, type, icon, frequencyValue, sqlDate, amountValue);
             }
         }
         else {
@@ -232,10 +235,11 @@ public class CategoryController {
 
     }
 
-    private void editCategory(String name, String type, String icon, String frequencyValue, double amountValue) throws SQLException
+    private void editCategory(String name, String type, String icon, String frequencyValue, Date lastTransactionDate, double amountValue) throws SQLException
     {
-        category.updateCategory(categoryToUpdate.categoryName, name, type, icon, frequencyValue, amountValue);
-        Stage stage = (Stage) submitButton.getScene().getWindow();
+
+        category.updateCategory(categoryToUpdate.categoryName, name, type, icon, frequencyValue, lastTransactionDate, amountValue);
+        Stage stage = (Stage) addCategoryButton.getScene().getWindow();
         try {
             MenuController.loadPage("Views/categories.fxml", stage);
         } catch (IOException e) {
@@ -380,6 +384,7 @@ public class CategoryController {
 
     public void filterCategoryTypes() throws SQLException {
         String filter = filtersType.getValue();
+        if(filter == null) return;
         switch (filter) {
             case "Income" -> getCategories(new CategoryTypeFilter(), "income");
             case "Expense" -> getCategories(new CategoryTypeFilter(), "expense");

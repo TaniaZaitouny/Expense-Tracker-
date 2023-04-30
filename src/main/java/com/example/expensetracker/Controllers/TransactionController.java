@@ -6,6 +6,7 @@ import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Models.Transaction;
 import com.example.expensetracker.Objects.CategoryObject;
 import com.example.expensetracker.Objects.TransactionObject;
+import com.example.expensetracker.Threads.CheckAutomaticCategoriesThread;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -58,6 +59,9 @@ public class TransactionController implements ObserverController {
     private TransactionObject transactionToUpdate;
     private static int transactionToUpdateId = 0;
     public void initialize() throws SQLException, ParseException {
+        CheckAutomaticCategoriesThread thread = new CheckAutomaticCategoriesThread();
+        thread.registerObserver(this);
+        thread.start();
         if (transactionTable != null) {
             filterTransactions();
         }
@@ -95,6 +99,7 @@ public class TransactionController implements ObserverController {
             ArrayList<String> categories = new ArrayList<>();
             results.forEach(pair -> categories.add(pair.categoryName));
             toFill.setItems(FXCollections.observableList(categories));
+            toFill.setValue(categories.get(0));
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -212,12 +217,6 @@ public class TransactionController implements ObserverController {
         actionColumn.setCellFactory(cellFactory);
     }
 
-    @Override
-    public void notify(ArrayList<Object> tableData) {
-        if(transactionTable != null) {
-
-        }
-    }
 
     public void filterTransactions() throws SQLException
     {
@@ -248,7 +247,7 @@ public class TransactionController implements ObserverController {
                 items.add("Oldest");
                 filtersType.setValue("Recent");
             }
-            case "category" -> {initializeCategoryList(filtersType);}
+            case "category" -> initializeCategoryList(filtersType);
             case "amount" -> {
                 items.add("Ascending");
                 items.add("Descending");
@@ -260,13 +259,33 @@ public class TransactionController implements ObserverController {
 
     public void filterTransactionTypes() throws SQLException {
         String filter = filtersType.getValue();
-
+        if(filter == null) return;
         switch (filter) {
             case "Recent" -> populateTransactions(new TransactionDateFilter(), "recent");
             case "Oldest" -> populateTransactions(new TransactionDateFilter(), "oldest");
             case "Ascending" -> populateTransactions(new TransactionAmountFilter(), "ascending");
             case "Descending" -> populateTransactions(new TransactionAmountFilter(), "descending");
             default -> populateTransactions(new TransactionCategoryFilter(), filter);
+        }
+    }
+
+    @Override
+    public void getNotified() {
+        if(transactionTable != null) {
+            if(filtersType.isVisible()) {
+                try {
+                    filterTransactionTypes();
+                } catch (SQLException e) {
+                    //do something
+                }
+            }
+            else {
+                try {
+                    filterTransactions();
+                } catch (SQLException e) {
+                    //do something
+                }
+            }
         }
     }
 }
