@@ -17,23 +17,19 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="375.0" spacing="5.0">
                            <Label prefHeight="44.0" prefWidth="359.0" style="-fx-font-size: 19px; -fx-font-weight: bold;" text="Categories" textFill="#1c1d1e" HBox.hgrow="ALWAYS" />
-                                <ChoiceBox fx:id="filtersType" onAction="#filterCategories" prefWidth="110.0" value="All"/>
-                                <ChoiceBox fx:id="filters" onAction="#filterCategories" prefWidth="110.0" value="All">
+                                <ChoiceBox fx:id="filtersType" onAction="#filterCategoryTypes" prefWidth="250.0" value="All" visible="false"/>
+                                <ChoiceBox fx:id="filters" onAction="#filterCategories" prefWidth="250.0" value="All">
                                <items>
                                    <FXCollections fx:factory="observableArrayList">
                                        <String fx:value="All" />
-                                       <String fx:value="Expense" />
-                                       <String fx:value="Income" />
+                                       <String fx:value="Type" />
                                        <String fx:value="Automatic" />
-                                       <String fx:value="Normal" />
-                                       <String fx:value="Recent" />
-                                       <String fx:value="Oldest" />
-                                       <String fx:value="Ascending" />
-                                       <String fx:value="Descending" />
+                                       <String fx:value="Date" />
+                                       <String fx:value="Alphabetical" />
                                    </FXCollections>
                                </items>
                            </ChoiceBox>
-                            <Button fx:id="addCategoryButton" mnemonicParsing="false" onAction="#addCategoryPage" prefWidth="150.0" text="Add Category" HBox.hgrow="ALWAYS" />
+                            <Button fx:id="addCategoryButton" mnemonicParsing="false" onAction="#addCategoryPage" prefWidth="250.0" text="Add Category" HBox.hgrow="ALWAYS" />
                            <padding>
                               <Insets left="10.0" right="18.0" top="25.0" />
                            </padding>
