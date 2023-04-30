@@ -4,6 +4,7 @@ import com.example.expensetracker.Filters.CategoryFilters.*;
 import com.example.expensetracker.Main;
 import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Objects.CategoryObject;
+import com.example.expensetracker.Threads.CheckAutomaticCategoriesThread;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,7 +22,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.prefs.BackingStoreException;
+import java.sql.Date;
 
 
 public class CategoryController {
@@ -65,7 +66,7 @@ public class CategoryController {
     private CategoryObject categoryToUpdate;
     public void initialize() throws SQLException {
         if(categoriesTable != null) {
-            filterCategories(null);
+            filterCategories();
         }
         else
         {
@@ -139,18 +140,18 @@ public class CategoryController {
         MenuController.loadPage("Views/addCategory.fxml",stage);
     }
 
-    public void updateCategory(ActionEvent actionEvent) throws SQLException, BackingStoreException {
+    public void updateCategory() throws SQLException{
         String name = categoryName.getText();
         String type;
         String icon = categoryIcon.getValue();
 
         if(!incomeChoiceButton.isSelected() && !expenseChoiceButton.isSelected()) {
-             messageText.setText("PLease choose a type for category");
+             messageText.setText("PLease Choose A Type For Category !");
             return;
         }
 
         if(name.equals("")) {
-             messageText.setText("PLease choose a name for category");
+             messageText.setText("PLease Choose A Name For Category !");
             return;
         }
 
@@ -165,17 +166,24 @@ public class CategoryController {
 
         if(automatic.isSelected()) {
             String frequencyValue = frequency.getValue();
-            double amountValue = Double.parseDouble(amount.getText());
+            double amountValue;
+            try {
+                amountValue = Double.parseDouble(amount.getText());
+            }
+            catch (NumberFormatException e)
+            {
+                messageText.setText("Please Enter Correct Amount Value !");
+                return;
+            }
             if(categoryNameToUpdate == null) {
                 addCategory(name, type, icon, frequencyValue, amountValue);
             }
             else {
-                editCategory(name, type, icon, frequencyValue, amountValue);
+                java.sql.Date sqlDate = new java.sql.Date(categoryToUpdate.lastTransaction.getTime());
+                editCategory(name, type, icon, frequencyValue, sqlDate, amountValue);
             }
         }
         else {
-            categoryName.setText("");
-            messageText.setText("Category added successfully");
             if(categoryNameToUpdate == null) {
                 addCategory(name, type, icon);
             }
@@ -188,38 +196,55 @@ public class CategoryController {
     private void addCategory(String name, String type, String icon) throws SQLException
     {
         if(category.addCategory(name, type, icon)) {
-            categoryName.setText("");
-            messageText.setText("Category added successfully");
+            Stage stage = (Stage) submitButton.getScene().getWindow();
+            try {
+                MenuController.loadPage("Views/categories.fxml", stage);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         else {
-            messageText.setText("Category already exists");
+            messageText.setText("Category Already Exists !");
         }
     }
 
     private void addCategory(String name, String type, String icon, String frequencyValue, double amountValue) throws SQLException
     {
         if(category.addCategory(name, type, icon, frequencyValue, amountValue)) {
-            categoryName.setText("");
-            messageText.setText("Category added successfully");
+            Stage stage = (Stage) submitButton.getScene().getWindow();
+            try {
+                MenuController.loadPage("Views/categories.fxml", stage);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         else {
-            messageText.setText("Category already exists");
+            messageText.setText("Category Already Exists !");
         }
     }
 
     private void editCategory(String name, String type, String icon) throws SQLException
     {
         category.updateCategory(categoryToUpdate.categoryName, name, type, icon);
-        categoryName.setText("");
-        messageText.setText("Category updated successfully");
+        Stage stage = (Stage) submitButton.getScene().getWindow();
+        try {
+            MenuController.loadPage("Views/categories.fxml", stage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
-    private void editCategory(String name, String type, String icon, String frequencyValue, double amountValue) throws SQLException
+    private void editCategory(String name, String type, String icon, String frequencyValue, Date lastTransactionDate, double amountValue) throws SQLException
     {
-        category.updateCategory(categoryToUpdate.categoryName, name, type, icon, frequencyValue, amountValue);
-        categoryName.setText("");
-        messageText.setText("Category updated successfully");
+
+        category.updateCategory(categoryToUpdate.categoryName, name, type, icon, frequencyValue, lastTransactionDate, amountValue);
+        Stage stage = (Stage) addCategoryButton.getScene().getWindow();
+        try {
+            MenuController.loadPage("Views/categories.fxml", stage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void getCategories(CategoryFilter Filter, String filterType) throws SQLException
@@ -284,7 +309,7 @@ public class CategoryController {
     }
 
     @FXML
-    public void showOptions(ActionEvent actionEvent) {
+    public void showOptions() {
         if(automatic.isSelected()) {
             frequency.setVisible(true);
             frequency.setManaged(true);
@@ -312,24 +337,22 @@ public class CategoryController {
         }
     }
 
-    public void filterCategories(ActionEvent actionEvent) throws SQLException {
+    public void filterCategories() throws SQLException {
         String filter = filters.getValue();
         switch (filter) {
             case "All" -> {
                 filtersType.setVisible(false);
+                filtersType.setManaged(false);
                 getCategories(new CategoryNormalFilter(), "");
                 return;
             }
             case "Type" -> setTypeList("type");
             case "Automatic" -> setTypeList("frequency");
-            case "Date" -> {
-                filtersType.setVisible(false);
-                setTypeList("date");
-            }
-            case "Alphabetically" -> setTypeList("alphabetical");
+            case "Date" -> setTypeList("date");
+            case "Alphabetical" -> setTypeList("alphabetical");
         }
-        if(!filtersType.isVisible())
-          filtersType.setVisible(true);
+        filtersType.setVisible(true);
+        filtersType.setManaged(true);
     }
     private void setTypeList(String Filter)
     {
@@ -359,8 +382,9 @@ public class CategoryController {
         }
     }
 
-    public void filterCategoryTypes(ActionEvent actionEvent) throws SQLException {
+    public void filterCategoryTypes() throws SQLException {
         String filter = filtersType.getValue();
+        if(filter == null) return;
         switch (filter) {
             case "Income" -> getCategories(new CategoryTypeFilter(), "income");
             case "Expense" -> getCategories(new CategoryTypeFilter(), "expense");

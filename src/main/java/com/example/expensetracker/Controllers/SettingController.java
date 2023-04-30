@@ -2,7 +2,6 @@ package com.example.expensetracker.Controllers;
 
 import com.example.expensetracker.Models.User;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,6 +15,8 @@ public class SettingController {
     @FXML
     Button logoutButton;
     @FXML
+    Button setButton;
+    @FXML
     TextField monthlyBudget;
     @FXML
     Label error;
@@ -28,7 +29,7 @@ public class SettingController {
              prefs.remove("userId");
              Stage stage = (Stage)logoutButton.getScene().getWindow();
             try {
-                Scene scene = MenuController.loadPage("Views/login.fxml", stage);
+                MenuController.loadPage("Views/login.fxml", stage);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -45,8 +46,12 @@ public class SettingController {
             double monthly = Double.parseDouble(monthlyBudget.getText());
             User u = new User();
             u.updateUser(monthly);
-            error.setText("Monthly Budget Set!");
-            monthlyBudget.setText("");
+            Stage stage = (Stage) setButton.getScene().getWindow();
+            try {
+                MenuController.loadPage("Views/home.fxml", stage);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }

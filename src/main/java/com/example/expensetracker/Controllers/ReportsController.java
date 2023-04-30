@@ -2,6 +2,7 @@ package com.example.expensetracker.Controllers;
 
 import com.example.expensetracker.Models.Transaction;
 import com.example.expensetracker.Strategy.*;
+import com.example.expensetracker.Threads.CheckAutomaticCategoriesThread;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,6 +30,9 @@ public class ReportsController implements ObserverController {
 
     //    boolean chartDrawn = false;
     public void initialize() {
+        CheckAutomaticCategoriesThread thread = new CheckAutomaticCategoriesThread();
+        thread.registerObserver(this);
+        thread.start();
         filterReport.setValue("Default");
     }
 
@@ -88,20 +92,12 @@ public class ReportsController implements ObserverController {
         int currentSliceIndex = 0;
         for (PieChart.Data slice : pieChart.getData()) {
             String type = types.get(currentSliceIndex);
-            if(type == null) System.out.println("pie" + currentSliceIndex);
+            if (type == null) System.out.println("pie" + currentSliceIndex);
             currentSliceIndex += 1;
             slice.getNode().setStyle(type.equals("expense") ? "-fx-pie-color: #3A4D8F;" : "-fx-pie-color: #99b3ff;");
         }
         pieChart.setLegendVisible(false);
     }
-
-    @Override
-    public void notify(ArrayList<Object> tableData) {
-        if (barChart != null) {
-
-        }
-    }
-
 
     public void filterReports(ActionEvent event) {
         String strategy = filterReport.getValue();
@@ -146,5 +142,12 @@ public class ReportsController implements ObserverController {
 //            String categoryType = pair.getValue();
 //            System.out.println(categoryAmountPair.getKey() + " : " + categoryAmountPair.getValue() + " : " + categoryType);
 //        }
+    }
+
+    @Override
+    public void getNotified() {
+        if (barChart != null) {
+
+        }
     }
 }

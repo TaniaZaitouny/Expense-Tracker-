@@ -6,6 +6,7 @@ import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Models.Transaction;
 import com.example.expensetracker.Objects.CategoryObject;
 import com.example.expensetracker.Objects.TransactionObject;
+import com.example.expensetracker.Threads.CheckAutomaticCategoriesThread;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +23,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.prefs.BackingStoreException;
 
 public class TransactionController implements ObserverController {
     @FXML
@@ -33,6 +33,8 @@ public class TransactionController implements ObserverController {
     Button addTransactionButton;
     @FXML
     Label pageTitle;
+    @FXML
+    Label messageText;
     @FXML
     Button submitButton;
     @FXML
@@ -57,8 +59,11 @@ public class TransactionController implements ObserverController {
     private TransactionObject transactionToUpdate;
     private static int transactionToUpdateId = 0;
     public void initialize() throws SQLException, ParseException {
+        CheckAutomaticCategoriesThread thread = new CheckAutomaticCategoriesThread();
+        thread.registerObserver(this);
+        thread.start();
         if (transactionTable != null) {
-            filterTransactions(null);
+            filterTransactions();
         }
         else {
             initializeCategoryList(transactionCategory);
@@ -94,6 +99,7 @@ public class TransactionController implements ObserverController {
             ArrayList<String> categories = new ArrayList<>();
             results.forEach(pair -> categories.add(pair.categoryName));
             toFill.setItems(FXCollections.observableList(categories));
+            toFill.setValue(categories.get(0));
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -101,43 +107,48 @@ public class TransactionController implements ObserverController {
     }
 
     @FXML
-    public void updateTransaction(ActionEvent actionEvent) throws SQLException, BackingStoreException {
-        if(transactionToUpdateId == 0) {
-            addTransaction();
-        }
-        else {
-            editTransaction();
-        }
-    }
-
-    public void addTransaction() throws SQLException {
+    public void updateTransaction() throws SQLException{
         LocalDate date = transactionDate.getValue();
         String selectedCategory = transactionCategory.getValue();
-        double amount = Double.parseDouble(transactionAmount.getText());
+        double amount;
+        try {
+            amount = Double.parseDouble(transactionAmount.getText());
+        }
+        catch (NumberFormatException e)
+        {
+            messageText.setText("Please Enter Correct Amount Value !");
+            return;
+        }
+
         if(date == null) {
-            System.out.println("date null");
+            messageText.setText("Please Choose A Date !");
             return;
         }
         if(selectedCategory.equals("")) {
-            System.out.println("category null");
             return;
         }
+
+        if(transactionToUpdateId == 0) {
+            addTransaction(date,selectedCategory,amount);
+        }
+        else {
+            editTransaction(date,selectedCategory,amount);
+        }
+        Stage stage = (Stage) submitButton.getScene().getWindow();
+        try {
+            MenuController.loadPage("Views/transactions.fxml", stage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void addTransaction(LocalDate date,String selectedCategory,double amount) throws SQLException
+    {
         transaction.addTransaction(date, selectedCategory, amount);
     }
 
-    public void editTransaction() throws SQLException {
-        LocalDate date = transactionDate.getValue();
-        String selectedCategory = transactionCategory.getValue();
-        double amount = Double.parseDouble(transactionAmount.getText());
-        if(date == null) {
-            System.out.println("date null");
-            return;
-        }
-        if(selectedCategory.equals("")) {
-            System.out.println("category null");
-            return;
-        }
-
+    public void editTransaction(LocalDate date,String selectedCategory,double amount) throws SQLException
+    {
         transaction.updateTransaction(transactionToUpdateId, date, selectedCategory, amount);
     }
 
@@ -155,7 +166,7 @@ public class TransactionController implements ObserverController {
         transactionTable.setItems(FXCollections.observableArrayList(transactions));
 
 
-        Callback<TableColumn<TransactionObject, Void>, TableCell<TransactionObject, Void>> cellFactory = new Callback<TableColumn<TransactionObject, Void>, TableCell<TransactionObject, Void>>() {
+        Callback<TableColumn<TransactionObject, Void>, TableCell<TransactionObject, Void>> cellFactory = new Callback<>() {
             @Override
             public TableCell<TransactionObject, Void> call(final TableColumn<TransactionObject, Void> param) {
                 final TableCell<TransactionObject, Void> cell = new TableCell<TransactionObject, Void>() {
@@ -173,7 +184,7 @@ public class TransactionController implements ObserverController {
                             setGraphic(hb);
                             editBtn.setOnAction((ActionEvent event) -> {
                                 TransactionObject rowData = getTableRow().getItem();
-                                transactionToUpdateId =rowData.id;
+                                transactionToUpdateId = rowData.id;
                                 try {
                                     Stage stage = (Stage) editBtn.getScene().getWindow();
                                     MenuController.loadPage("Views/addTransaction.fxml", stage);
@@ -206,19 +217,14 @@ public class TransactionController implements ObserverController {
         actionColumn.setCellFactory(cellFactory);
     }
 
-    @Override
-    public void notify(ArrayList<Object> tableData) {
-        if(transactionTable != null) {
 
-        }
-    }
-
-    public void filterTransactions(ActionEvent actionEvent) throws SQLException
+    public void filterTransactions() throws SQLException
     {
         String filter = filters.getValue();
         switch (filter) {
             case "All" -> {
                 filtersType.setVisible(false);
+                filtersType.setManaged(false);
                 populateTransactions(new TransactionNormalFilter(), "");
                 return;
             }
@@ -226,8 +232,8 @@ public class TransactionController implements ObserverController {
             case "Category" -> setTypeList("category");
             case "Amount" -> setTypeList("amount");
         }
-        if(!filtersType.isVisible())
-            filtersType.setVisible(true);
+        filtersType.setVisible(true);
+        filtersType.setManaged(true);
     }
 
     private void setTypeList(String Filter)
@@ -241,25 +247,45 @@ public class TransactionController implements ObserverController {
                 items.add("Oldest");
                 filtersType.setValue("Recent");
             }
-            case "category" -> {initializeCategoryList(filtersType);}
+            case "category" -> initializeCategoryList(filtersType);
             case "amount" -> {
                 items.add("Ascending");
                 items.add("Descending");
-                filtersType.setValue("Increasing");
+                filtersType.setValue("Ascending");
             }
         }
     }
 
 
-    public void filterTransactionTypes(ActionEvent actionEvent) throws SQLException {
+    public void filterTransactionTypes() throws SQLException {
         String filter = filtersType.getValue();
-
+        if(filter == null) return;
         switch (filter) {
             case "Recent" -> populateTransactions(new TransactionDateFilter(), "recent");
             case "Oldest" -> populateTransactions(new TransactionDateFilter(), "oldest");
             case "Ascending" -> populateTransactions(new TransactionAmountFilter(), "ascending");
             case "Descending" -> populateTransactions(new TransactionAmountFilter(), "descending");
             default -> populateTransactions(new TransactionCategoryFilter(), filter);
+        }
+    }
+
+    @Override
+    public void getNotified() {
+        if(transactionTable != null) {
+            if(filtersType.isVisible()) {
+                try {
+                    filterTransactionTypes();
+                } catch (SQLException e) {
+                    //do something
+                }
+            }
+            else {
+                try {
+                    filterTransactions();
+                } catch (SQLException e) {
+                    //do something
+                }
+            }
         }
     }
 }

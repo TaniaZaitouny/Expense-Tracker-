@@ -45,7 +45,7 @@ public class User {
         result.close();
         statement.close();
         return valid;
-    };
+    }
 
     private void saveId(int id)
     {
@@ -68,7 +68,6 @@ public class User {
             result.close();
             statement.close();
             saveId(userId);
-            System.out.println(userId);
             return true;
         }
         result.close();
@@ -108,7 +107,7 @@ public class User {
     }
 
     public void updateUser(double amount) throws SQLException {
-        String sql = "UPDATE users SET monthlyBUdget =  " + amount;
+        String sql = "UPDATE users SET monthlyBudget =  " + amount;
         Statement statement = connection.getConnection().createStatement();
         statement.executeUpdate(sql);
         statement.close();

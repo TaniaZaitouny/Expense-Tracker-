@@ -5,6 +5,10 @@ import com.example.expensetracker.Filters.CategoryFilters.CategoryFilter;
 import com.example.expensetracker.Objects.CategoryObject;
 
 import java.sql.*;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
@@ -55,10 +59,50 @@ public class Category {
         if(findCategory(name)) {
             return false;
         }
-        String sqlQuery = "INSERT INTO categories (categoryName, userId, type, icon, frequency, amount) " +
-                "VALUES ('" + name + "','" + userId + "', '" + type + "','" + icon + "','" + frequency + "'," + amount + ")";
+        boolean toAddTransaction = false;
+        LocalDate lastTransactionDate = null;
+        LocalDate currentDate = LocalDate.now();
+        switch (frequency) {
+            case "DAILY" -> {
+                toAddTransaction = true;
+                lastTransactionDate = LocalDate.now();
+            }
+            case "WEEKLY" -> {
+                String dayOfWeek = String.valueOf(currentDate.getDayOfWeek());
+                if (dayOfWeek.equals("MONDAY")) {
+                    toAddTransaction = true;
+                    lastTransactionDate = LocalDate.now();
+                } else {
+                    lastTransactionDate = currentDate.with(TemporalAdjusters.previous(DayOfWeek.MONDAY));
+                }
+            }
+            case "MONTHLY" -> {
+                int dayOfMonth = currentDate.getDayOfMonth();
+                if (dayOfMonth == 1) {
+                    toAddTransaction = true;
+                    lastTransactionDate = LocalDate.now();
+                } else {
+                    lastTransactionDate = currentDate.withDayOfMonth(1);
+                }
+            }
+            case "YEARLY" -> {
+                Month monthOfYear = currentDate.getMonth();
+                if (monthOfYear == Month.JANUARY) {
+                    toAddTransaction = true;
+                    lastTransactionDate = LocalDate.now();
+                } else {
+                    lastTransactionDate = currentDate.withMonth(1).withDayOfMonth(1);
+                }
+            }
+        }
+        String sqlQuery = "INSERT INTO categories (categoryName, userId, type, icon, frequency, lastTransaction, amount) " +
+                "VALUES ('" + name + "','" + userId + "', '" + type + "','" + icon + "','" + frequency + "','" + lastTransactionDate + "'," + amount + ")";
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
+        if(toAddTransaction) {
+            Transaction transaction = new Transaction();
+            transaction.addTransaction(lastTransactionDate, name, amount);
+        }
         statement.close();
         return true;
     }
@@ -72,9 +116,9 @@ public class Category {
         statement.close();
     }
 
-    public void updateCategory(String previousName, String name, String type, String icon, String frequency, double amount) throws SQLException {
+    public void updateCategory(String previousName, String name, String type, String icon, String frequency, Date lastTransactionDate, double amount) throws SQLException {
         String sqlQuery = "UPDATE transactions SET category = '" + name +"' WHERE category = '" + previousName + "';";
-        String sqlQuery2 = "UPDATE categories SET categoryName = '" + name + "', type = '" + type + "', icon = '" + icon + "', frequency = '" + frequency + "', amount = " + amount +  " WHERE categoryName = '" + previousName + "';";
+        String sqlQuery2 = "UPDATE categories SET categoryName = '" + name + "', type = '" + type + "', icon = '" + icon + "', frequency = '" + frequency + "', lastTransaction = '" + lastTransactionDate + "', amount = " + amount +  " WHERE categoryName = '" + previousName + "';";
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
         statement.executeUpdate(sqlQuery2);

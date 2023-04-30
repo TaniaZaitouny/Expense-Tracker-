@@ -8,6 +8,9 @@ import com.example.expensetracker.Strategy.DailyStrategy;
 import com.example.expensetracker.Strategy.DefaultStrategy;
 import com.example.expensetracker.Strategy.TransactionStrategy;
 import javafx.collections.FXCollections;
+import com.example.expensetracker.Strategy.DefaultStrategy;
+import com.example.expensetracker.Strategy.TransactionStrategy;
+import com.example.expensetracker.Threads.CheckAutomaticCategoriesThread;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -47,11 +50,13 @@ public class HomeController implements ObserverController {
     @FXML
     PieChart pieChart;
     public void initialize() {
+        CheckAutomaticCategoriesThread thread = new CheckAutomaticCategoriesThread();
+        thread.registerObserver(this);
+        thread.start();
         initializeTopCategories();
     }
    public void initializeTopCategories()
    {
-
        displayTopCategories();
        initializeHomeCharts();
    }
@@ -134,7 +139,6 @@ public class HomeController implements ObserverController {
             Category c = new Category();
             String iconName = c.getIcon(categoryName);
             Label label = new Label(categoryName);
-
             Image icon = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("Media/Icons/" + iconName + ".png")));
             ImageView imageView = new ImageView(icon);
             imageView.setFitWidth(35);
@@ -147,9 +151,7 @@ public class HomeController implements ObserverController {
             imgBox.setPrefHeight(40);
             imgBox.setMaxWidth(Region.USE_PREF_SIZE);
             VBox box = new VBox(imgBox,label);
-
             box.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 20px;");
-
             box.setPrefHeight(30);
             box.setPrefWidth(80);
             box.setPadding(new Insets(10,0,0,0));
@@ -181,7 +183,7 @@ public class HomeController implements ObserverController {
 
 
     @Override
-    public void notify(ArrayList<Object> tableData) {
+    public void getNotified() {
         if(topCategoriesBox != null) {
 
         }

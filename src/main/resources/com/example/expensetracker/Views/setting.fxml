@@ -24,7 +24,7 @@
                            </font>
                         </Label>
                         <TextField fx:id="monthlyBudget" prefHeight="25.0" prefWidth="144.0" />
-                        <Button mnemonicParsing="false" onAction="#addSettings" text="Set" />
+                        <Button fx:id="setButton" mnemonicParsing="false" onAction="#addSettings" text="Set" />
                         <Label fx:id="error" textFill="#3a4d8f" />
                      </children>
                      <VBox.margin>

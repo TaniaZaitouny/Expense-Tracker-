@@ -24,7 +24,7 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="375.0" spacing="5.0">
                            <Label prefHeight="28.0" prefWidth="291.0" style="-fx-font-size: 19px; -fx-font-weight: bold;" text="Categories" textFill="#1c1d1e" HBox.hgrow="ALWAYS" />
-                                <ChoiceBox fx:id="filtersType" onAction="#filterCategoryTypes" prefWidth="250.0" value="All" visible="false"/>
+                                <ChoiceBox fx:id="filtersType" managed="false" onAction="#filterCategoryTypes" prefWidth="250.0" value="All" visible="false"/>
                                 <ChoiceBox fx:id="filters" onAction="#filterCategories" prefWidth="250.0" value="All">
                                <items>
                                    <FXCollections fx:factory="observableArrayList">

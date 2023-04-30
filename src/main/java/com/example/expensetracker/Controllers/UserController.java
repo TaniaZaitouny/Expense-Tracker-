@@ -2,9 +2,7 @@ package com.example.expensetracker.Controllers;
 
 
 import com.example.expensetracker.Models.User;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -27,17 +25,17 @@ public class UserController {
 
    User login = new User();
 
-    public void loginPage(ActionEvent actionEvent) throws IOException {
+    public void loginPage() throws IOException {
         Stage stage = (Stage) loginButton.getScene().getWindow();
-        Scene scene = MenuController.loadPage("Views/login.fxml", stage);
+        MenuController.loadPage("Views/login.fxml", stage);
     }
 
-    public void signupPage(ActionEvent actionEvent) throws IOException {
+    public void signupPage() throws IOException {
         Stage stage = (Stage)signupButton.getScene().getWindow();
-        Scene scene = MenuController.loadPage("Views/signup.fxml", stage);
+        MenuController.loadPage("Views/signup.fxml", stage);
     }
 
-    public void signup(ActionEvent actionEvent) throws IOException, SQLException {
+    public void signup() throws IOException, SQLException {
         String username = usernameField.getText();
         String email = emailField.getText();
         String password = passwordField.getText();
@@ -51,11 +49,11 @@ public class UserController {
         else
         {
             Stage stage = (Stage) signupButton.getScene().getWindow();
-            Scene scene = MenuController.loadPage("Views/home.fxml", stage);
+            MenuController.loadPage("Views/home.fxml", stage);
         }
     }
 
-    public void login(ActionEvent actionEvent) throws IOException, SQLException {
+    public void login() throws IOException, SQLException {
         String email = emailField.getText();
         String password = passwordField.getText();
         if(email.equals("") || password.equals("")){
@@ -65,7 +63,7 @@ public class UserController {
         if(login.login(email, password))
         {
             Stage stage = (Stage) loginButton.getScene().getWindow();
-            Scene scene = MenuController.loadPage("Views/home.fxml", stage);
+            MenuController.loadPage("Views/home.fxml", stage);
         }
     }
 
