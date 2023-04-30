@@ -24,6 +24,7 @@ public class CategoryTypeFilter implements CategoryFilter {
         while (resultSet.next()) {
             categories.add(new CategoryObject(resultSet.getString(1), resultSet.getInt(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getDate(6), resultSet.getDouble(7)));
         }
+        resultSet.close();
         statement.close();
         return categories;
     }

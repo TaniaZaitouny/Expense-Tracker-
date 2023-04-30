@@ -323,12 +323,8 @@ public class CategoryController {
             }
             case "Type" -> setTypeList("type");
             case "Automatic" -> setTypeList("frequency");
-            case "Date" -> {
-                filtersType.setVisible(false);
-                filtersType.setManaged(false);
-                setTypeList("date");
-            }
-            case "Alphabetically" -> setTypeList("alphabetical");
+            case "Date" -> setTypeList("date");
+            case "Alphabetical" -> setTypeList("alphabetical");
         }
         filtersType.setVisible(true);
         filtersType.setManaged(true);
@@ -363,6 +359,7 @@ public class CategoryController {
 
     public void filterCategoryTypes(ActionEvent actionEvent) throws SQLException {
         String filter = filtersType.getValue();
+        if(filter == null) return;
         switch (filter) {
             case "Income" -> getCategories(new CategoryTypeFilter(), "income");
             case "Expense" -> getCategories(new CategoryTypeFilter(), "expense");

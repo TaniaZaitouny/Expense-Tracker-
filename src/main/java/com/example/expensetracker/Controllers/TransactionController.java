@@ -94,6 +94,7 @@ public class TransactionController implements ObserverController {
             ArrayList<String> categories = new ArrayList<>();
             results.forEach(pair -> categories.add(pair.categoryName));
             toFill.setItems(FXCollections.observableList(categories));
+            toFill.setValue(categories.get(0));
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -242,7 +243,7 @@ public class TransactionController implements ObserverController {
                 items.add("Oldest");
                 filtersType.setValue("Recent");
             }
-            case "category" -> {initializeCategoryList(filtersType);}
+            case "category" -> initializeCategoryList(filtersType);
             case "amount" -> {
                 items.add("Ascending");
                 items.add("Descending");
@@ -254,7 +255,7 @@ public class TransactionController implements ObserverController {
 
     public void filterTransactionTypes(ActionEvent actionEvent) throws SQLException {
         String filter = filtersType.getValue();
-
+        if(filter == null) return;
         switch (filter) {
             case "Recent" -> populateTransactions(new TransactionDateFilter(), "recent");
             case "Oldest" -> populateTransactions(new TransactionDateFilter(), "oldest");

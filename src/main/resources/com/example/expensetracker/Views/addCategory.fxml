@@ -43,23 +43,35 @@
                                         </Text>
                                        <ComboBox fx:id="categoryIcon" prefWidth="150.0" />
                                       <CheckBox fx:id="automatic" mnemonicParsing="false" onAction="#showOptions" text="Make automatic" />
-                                      <ChoiceBox fx:id="frequency" prefWidth="150.0" value="Frequency" visible="false" managed="false">
-                                          <items>
-                                              <FXCollections fx:factory="observableArrayList">
-                                                  <String fx:value="DAILY"/>
-                                                  <String fx:value="WEEKLY"/>
-                                                  <String fx:value="MONTHLY"/>
-                                                  <String fx:value="YEARLY"/>
-                                              </FXCollections>
-                                          </items>
-                                      </ChoiceBox>
+                                      <HBox>
+                                          <Text fill="#222325" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Frequency">
+                                              <font>
+                                                  <Font size="14.0" />
+                                              </font>
+                                          </Text>
+                                          <ChoiceBox fx:id="frequency" prefWidth="150.0" value="MONTHLY" visible="false" managed="false">
+                                              <items>
+                                                  <FXCollections fx:factory="observableArrayList">
+                                                      <String fx:value="DAILY"/>
+                                                      <String fx:value="WEEKLY"/>
+                                                      <String fx:value="MONTHLY"/>
+                                                      <String fx:value="YEARLY"/>
+                                                  </FXCollections>
+                                              </items>
+                                          </ChoiceBox>
+                                      </HBox>
+
+                                        <Text fill="#222325" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Amount">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Text>
                                         <TextField fx:id="amount" visible="false" managed="false"/>
-                              <Label fx:id="messageText" text="Label" />
                                     <Button fx:id="submitButton" mnemonicParsing="false" onAction="#updateCategory" text="Add category">
                                          <font>
                                             <Font size="13.0" />
                                          </font></Button>
-
+                                        <Label fx:id="messageText" />
                                     </children></VBox>
                             </children>
                      <padding>

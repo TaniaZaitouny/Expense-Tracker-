@@ -26,7 +26,7 @@ public class MenuController {
     @FXML
     Button settingButton;
 
-    static String homeStyle = null;
+    static String homeStyle = "-fx-background-color: #2D3B64;";
     static String categoryStyle = null;
     static String transactionStyle = null;
     static String reportsStyle = null;
@@ -102,6 +102,7 @@ public class MenuController {
         reportsStyle = "";
         settingsStyle = "-fx-background-color: #2D3B64;";
         Stage stage = (Stage)settingButton.getScene().getWindow();
+        Scene scene = MenuController.loadPage("Views/setting.fxml", stage);
     }
 
 }
