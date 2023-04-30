@@ -135,8 +135,14 @@ public class HomeController implements ObserverController {
         TransactionStrategy defaultStrategy = new DefaultStrategy();
         List<Pair<Pair<String, Number>, String>> topCategories = defaultStrategy.topCategories();
         if(topCategories.isEmpty()) {
+            topLabel.setVisible(true);
+            topLabel.setManaged(true);
             topLabel.setText("No Top Categories");
             return;
+        }
+        else {
+            topLabel.setVisible(false);
+            topLabel.setManaged(false);
         }
        for(Pair<Pair<String, Number>,String> category : topCategories)
         {
