@@ -35,7 +35,7 @@ public class ReportsController implements ObserverController {
     }
 
 
-    private void initializeBarChart(List<Pair<Pair<String, Number>, String>> results) {
+    public void initializeBarChart(List<Pair<Pair<String, Number>, String>> results) {
         barChart.getData().clear();
         ((CategoryAxis) barChart.getXAxis()).getCategories().clear();
         Transaction transaction = new Transaction();

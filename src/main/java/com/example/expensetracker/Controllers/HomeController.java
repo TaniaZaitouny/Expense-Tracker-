@@ -35,7 +35,10 @@ public class HomeController implements ObserverController {
 
        displayTopCategories();
 
+
+
    }
+
     public void displayTopCategories()
     {
         TransactionStrategy defaultStrategy = new DefaultStrategy();
