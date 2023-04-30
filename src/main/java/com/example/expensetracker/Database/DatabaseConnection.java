@@ -17,8 +17,8 @@ public class DatabaseConnection {
         try {
             connection = DriverManager.getConnection(dbURL, user, password);
             this.createTables();
-            Category category = new Category();
-            category.checkCategories();
+//            Category category = new Category();
+//            category.checkCategories();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

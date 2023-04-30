@@ -1,19 +1,13 @@
 package com.example.expensetracker.Controllers;
 
-import com.example.expensetracker.HelloApplication;
+import com.example.expensetracker.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -32,10 +26,11 @@ public class MenuController {
     @FXML
     Button logoutButton;
 
+
     public static Scene loadPage(String pageName, Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource(pageName)));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(pageName)));
         Scene scene = new Scene(root);
-        stage.getIcons().add(new Image(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("Media/logo.png"))));
+        stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("Media/logo.png"))));
         stage.setScene(scene);
         stage.show();
         return scene;

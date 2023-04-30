@@ -1,11 +1,15 @@
 package com.example.expensetracker.Models;
 
 import com.example.expensetracker.Database.DatabaseConnection;
+import com.example.expensetracker.Filters.TransactionFilter;
+import com.example.expensetracker.Filters.TransactionNormalFilter;
+import com.example.expensetracker.Objects.TransactionObject;
 import javafx.util.Pair;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.prefs.Preferences;
 
@@ -13,6 +17,7 @@ public class Transaction {
 
     Connection connection;
     private final int userId;
+
     public Transaction() {
         DatabaseConnection db = DatabaseConnection.getInstance();
         connection = db.getConnection();
@@ -20,25 +25,7 @@ public class Transaction {
         userId = prefs.getInt("userId", 0);
     }
 
-    public List<Pair<String, Number>> getTopCategories() {
-        String sql = "SELECT category, amount " +
-                "FROM transactions " +
-                "GROUP BY category " +
-                "ORDER BY amount desc " +
-                "LIMIT 5";
-        List<Pair<String, Number>> pairs = new ArrayList<>(5);
-        try {
-            Statement statement = this.connection.createStatement();
-            ResultSet result = statement.executeQuery(sql);
-            while(result.next()) {
-                pairs.add(new Pair<>(result.getString("category"), result.getDouble(2)));
-            }
-            statement.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return pairs;
-    }
+
 
     public void addTransaction(LocalDate date, String selectedCategory, Double amount) throws SQLException {
         String sqlQuery = "INSERT INTO transactions(userId,date,amount,category)" +
@@ -61,23 +48,90 @@ public class Transaction {
         statement.close();
     }
 
-    public ArrayList<String[]> getTransactions() throws SQLException
+    public ArrayList<TransactionObject> getTransactions() throws SQLException
     {
-        ArrayList<String[]> transactions = new ArrayList<String[]>();
-        Statement statement = connection.createStatement();
-        String query = "SELECT category, date, amount, id FROM transactions WHERE userId = " + userId;
-//        System.out.println("Executing query: " + query);
-        ResultSet resultSet = statement.executeQuery(query);
-        while (resultSet.next()) {
-            String[] singleTransaction = new String[4];
-            singleTransaction[0] = resultSet.getString(1);
-            singleTransaction[1] = resultSet.getString(2);
-            singleTransaction[2] = resultSet.getString(3);
-            singleTransaction[3] = resultSet.getString(4);
-            transactions.add(singleTransaction);
-        }
-        statement.close();
-        return transactions;
+        TransactionFilter filter = new TransactionNormalFilter();
+        return filter.filter("");
     }
+
+
+
+    //Strategy design pattern to get top transactions monthly and weekly
+    public abstract class TransactionStrategy{
+        Calendar calendar = Calendar.getInstance();
+        int current_year = calendar.get(Calendar.YEAR);
+        int current_month = calendar.get(Calendar.MONTH) + 1;
+        int current_week = calendar.get(Calendar.WEEK_OF_YEAR);
+        public abstract List<Pair<Pair<String, Number>,String>> topCategories(); // implemented with 2 different algorithms monthly/weekly
+
+        List<Pair<Pair<String,Number>, String>> executeQuery(String sql) {
+            List<Pair<Pair<String,Number>, String>> pairs = new ArrayList<>(5);
+            try {
+                Statement statement = connection.createStatement();
+                ResultSet result = statement.executeQuery(sql);
+                while (result.next()) {
+                    String category = result.getString("category");
+                    Number totalAmount = result.getDouble("totalAmount");
+                    String categoryType = result.getString("categoryType");
+                    pairs.add(new Pair<>(new Pair<>(category, totalAmount), categoryType));
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return pairs;
+        }
+    }
+    public class DefaultStrategy extends TransactionStrategy {
+        @Override
+        public List<Pair<Pair<String, Number>, String>> topCategories() {
+            String sql = "SELECT t.category AS category , t.amount AS totalAmount , c.type AS categoryType " +
+                    "FROM transactions t " +
+                    "JOIN categories c ON category = c.categoryName " +
+                    "GROUP BY category " +
+                    "ORDER BY totalAmount desc " +
+                    "LIMIT 5";
+            List<Pair<Pair<String, Number>, String>> pairs = executeQuery(sql);
+            return pairs;
+        }
+
+    }
+    public class MonthlyStrategy extends TransactionStrategy {
+        @Override
+        public List<Pair<Pair<String,Number>, String>> topCategories()
+        {
+
+            System.out.println(current_month);
+            String sql = "SELECT t.category AS category , SUM(t.amount) AS totalAmount , c.type AS categoryType " +
+                    "FROM transactions t " +
+                    "JOIN categories c ON category = c.categoryName " +
+                    "WHERE YEAR(t.date) = " + current_year +
+                    " AND MONTH(t.date) = " + current_month +
+                    " GROUP BY category " +
+                    "ORDER BY totalAmount DESC " +
+                    "LIMIT 5";
+             List<Pair<Pair<String,Number>, String>> pairs = executeQuery(sql);
+            return pairs;
+        }
+    }
+
+    public class WeeklyStrategy extends TransactionStrategy{
+        @Override
+        public List<Pair<Pair<String,Number>, String>> topCategories()
+        {
+
+            System.out.println(current_week);
+            String sql = "SELECT t.category AS category , SUM(t.amount) AS totalAmount, c.type AS categoryType " +
+                    "FROM transactions t " +
+                    "JOIN categories c ON t.category = c.categoryName " +
+                    "WHERE YEAR(t.date) = " + current_year +
+                    " AND WEEK(t.date) = " + current_week +
+                    " GROUP BY category " +
+                    "ORDER BY totalAmount DESC " +
+                    "LIMIT 5";
+            List<Pair<Pair<String,Number>, String>> pairs = executeQuery(sql);
+            return pairs;
+        }
+    }
+
 
 }

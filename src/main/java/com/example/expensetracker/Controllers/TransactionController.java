@@ -1,35 +1,26 @@
 package com.example.expensetracker.Controllers;
 
-import com.example.expensetracker.HelloApplication;
 import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Models.Transaction;
+import com.example.expensetracker.Objects.CategoryObject;
+import com.example.expensetracker.Objects.TransactionObject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.Pair;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
-import java.util.stream.Collectors;
 
 public class TransactionController {
 
@@ -46,46 +37,46 @@ public class TransactionController {
     @FXML
     TextField transactionAmount;
     @FXML
-    private TableView<String[]> transactionTable;
+    private TableView<TransactionObject> transactionTable;
     @FXML
-    private TableColumn<String[], String> categoryColumn;
+    private TableColumn<TransactionObject, String> categoryColumn;
     @FXML
-    private TableColumn<String[], String> dateColumn;
+    private TableColumn<TransactionObject, String> dateColumn;
     @FXML
-    private TableColumn<String[], String> amountColumn;
+    private TableColumn<TransactionObject, String> amountColumn;
     @FXML
-    private TableColumn<String[], Void> actionColumn;
+    private TableColumn<TransactionObject, Void> actionColumn;
 
     Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
     Transaction transaction = new Transaction();
 
-    private static String transactionAmountToUpdate;
-    private static String transactionCategoryToUpdate;
-    private static String transactionIdToUpdate = null;
-    private static String transactionDateToUpdate;
-    private static boolean updatingMode;
+//    private static String transactionAmountToUpdate;
+//    private static String transactionCategoryToUpdate;
+//    private static String transactionIdToUpdate = null;
+//    private static String transactionDateToUpdate;
+//   private static boolean updatingMode;
+    private static TransactionObject transactionToUpdate;
     public void initialize() throws SQLException, ParseException {
         if (transactionTable != null) {
             populateTransactions();
         }
         else {
             initializeCategoryList();
-            if (!updatingMode) {
+            if (transactionToUpdate == null) {
                 submitButton.setText("Add Transaction");
             }
             else {
                 pageTitle.setText("Update Transaction");
                 submitButton.setText("Update");
-                transactionAmount.setText(transactionAmountToUpdate);
-                transactionCategory.setValue(transactionCategoryToUpdate);
-                LocalDate date = LocalDate.parse(transactionDateToUpdate);
-                transactionDate.setValue(date);
+                transactionAmount.setText(transactionToUpdate.amount+"");
+                transactionCategory.setValue(transactionToUpdate.category);
+                transactionDate.setValue(transactionToUpdate.date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             }
         }
     }
     @FXML
     protected void addTransactionPage() throws IOException {
-        updatingMode = false;
+        transactionToUpdate = null;
         Stage stage = (Stage) addTransactionButton.getScene().getWindow();
         MenuController.loadPage("Views/addTransaction.fxml",stage);
     }
@@ -96,9 +87,11 @@ public class TransactionController {
         Category category = new Category();
 
         try {
-            ArrayList<Pair<String, String> > results = category.getCategories();
+
+            ArrayList<CategoryObject> results = category.getCategories();
+
             ArrayList<String> categories = new ArrayList<>();
-            results.forEach(pair -> categories.add(pair.getKey()));
+            results.forEach(pair -> categories.add(pair.categoryName));
             transactionCategory.setItems(FXCollections.observableList(categories));
         }
         catch (SQLException e) {
@@ -108,13 +101,12 @@ public class TransactionController {
 
     @FXML
     public void updateTransaction(ActionEvent actionEvent) throws SQLException, BackingStoreException {
-        if(!updatingMode) {
+        if(transactionToUpdate == null) {
             addTransaction();
         }
         else {
             editTransaction();
         }
-        transactionIdToUpdate = null;
     }
 
     public void addTransaction() throws SQLException {
@@ -145,27 +137,27 @@ public class TransactionController {
             return;
         }
 
-        transaction.updateTransaction(Integer.parseInt(transactionIdToUpdate), date, selectedCategory, amount);
+        transaction.updateTransaction(transactionToUpdate.id, date, selectedCategory, amount);
     }
 
     public void populateTransactions() throws SQLException {
-        Transaction transaction = new Transaction();
-        ArrayList<String[]> transactions = transaction.getTransactions();
+        transaction = new Transaction();
+        ArrayList<TransactionObject> transactions = transaction.getTransactions();
 //        hidden field to store id
-        TableColumn<String[], String> idColumn = new TableColumn<>("ID");
+        TableColumn<TransactionObject, String> idColumn = new TableColumn<>("ID");
         idColumn.setVisible(false);
-        idColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[3]));
-        categoryColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[0]));
-        dateColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[1]));
-        amountColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[2]));
+        idColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().id+""));
+        categoryColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().category));
+        dateColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().date+""));
+        amountColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().amount+""));
         transactionTable.getColumns().add(idColumn);
         transactionTable.setItems(FXCollections.observableArrayList(transactions));
 
 
-        Callback<TableColumn<String[], Void>, TableCell<String[], Void>> cellFactory = new Callback<TableColumn<String[], Void>, TableCell<String[], Void>>() {
+        Callback<TableColumn<TransactionObject, Void>, TableCell<TransactionObject, Void>> cellFactory = new Callback<TableColumn<TransactionObject, Void>, TableCell<TransactionObject, Void>>() {
             @Override
-            public TableCell<String[], Void> call(final TableColumn<String[], Void> param) {
-                final TableCell<String[], Void> cell = new TableCell<String[], Void>() {
+            public TableCell<TransactionObject, Void> call(final TableColumn<TransactionObject, Void> param) {
+                final TableCell<TransactionObject, Void> cell = new TableCell<TransactionObject, Void>() {
                     private final Button editBtn = new Button("Edit");
                     private final Button deleteBtn = new Button("Delete");
 
@@ -179,13 +171,9 @@ public class TransactionController {
                             hb.getChildren().addAll(editBtn, deleteBtn);
                             setGraphic(hb);
                             editBtn.setOnAction((ActionEvent event) -> {
-                                String[] rowData = getTableRow().getItem();
+                                TransactionObject rowData = getTableRow().getItem();
+                                transactionToUpdate = new TransactionObject(rowData.id,prefs.getInt("userId",0), rowData.date, rowData.amount, rowData.category);
                                 try {
-                                    transactionIdToUpdate = rowData[3];
-                                    transactionAmountToUpdate = rowData[2];
-                                    transactionCategoryToUpdate = rowData[0];
-                                    transactionDateToUpdate = rowData[1];
-                                    updatingMode = true;
                                     Stage stage = (Stage) editBtn.getScene().getWindow();
                                     MenuController.loadPage("Views/addTransaction.fxml", stage);
                                 } catch (IOException e) {
@@ -194,9 +182,9 @@ public class TransactionController {
                             });
 
                             deleteBtn.setOnAction((ActionEvent event) -> {
-                                String[] rowData = getTableRow().getItem();
+                                TransactionObject rowData = getTableRow().getItem();
                                 try {
-                                    transaction.deleteTransaction(Integer.parseInt(rowData[3]));
+                                    transaction.deleteTransaction(rowData.id);
                                 } catch (SQLException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -215,8 +203,5 @@ public class TransactionController {
             }
         };
         actionColumn.setCellFactory(cellFactory);
-
-
-
     }
 }

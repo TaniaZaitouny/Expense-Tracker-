@@ -1,6 +1,9 @@
 package com.example.expensetracker.Models;
 
 import com.example.expensetracker.Database.DatabaseConnection;
+import com.example.expensetracker.Filters.CategoryFilter;
+import com.example.expensetracker.Filters.CategoryNormalFilter;
+import com.example.expensetracker.Objects.CategoryObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Pair;
@@ -33,12 +36,22 @@ public class Category {
         return found;
     };
 
+    public CategoryObject getCategory(String name) throws SQLException {
+        String sql = "SELECT * FROM categories where categoryName = '" + name + "';";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        resultSet.next();
+        CategoryObject category = new CategoryObject(resultSet.getString(1), resultSet.getInt(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getDate(6), resultSet.getDouble(7));
+        statement.close();
+        return category;
+    }
+
     public boolean addCategory(String name, String type, String icon) throws SQLException {
         if(findCategory(name)) {
             return false;
         }
         String sqlQuery = "INSERT INTO categories (categoryName, userId, type, icon, frequency) " +
-                "VALUES ('" + name+ "','" + userId + "', '" + type + "','" + icon +  ", 'NEVER')";
+                "VALUES ('" + name+ "','" + userId + "', '" + type + "','" + icon + "', 'NEVER')";
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
         statement.close();
@@ -75,16 +88,9 @@ public class Category {
         statement.close();
     }
 
-    public ArrayList<Pair<String, String>> getCategories() throws SQLException{
-        ArrayList<Pair<String, String>> categories = new ArrayList<>();
-        Statement statement = connection.createStatement();
-        String query = "SELECT categoryName, type FROM categories WHERE userId = " + userId;
-        ResultSet resultSet = statement.executeQuery(query);
-        while (resultSet.next()) {
-            categories.add(new Pair<>(resultSet.getString(1), resultSet.getString(2)));
-        }
-        statement.close();
-        return categories;
+    public ArrayList<CategoryObject> getCategories() throws SQLException{
+        CategoryFilter filter = new CategoryNormalFilter();
+        return filter.filter("");
     }
 
     public void checkCategories() throws SQLException {
