@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="615.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.ReportsController">
@@ -45,7 +46,7 @@
                               <Insets right="5.0" top="5.0" />
                            </VBox.margin>
                         </HBox>
-                        <HBox maxWidth="-Infinity" prefHeight="78.0" prefWidth="482.0" spacing="20.0">
+                        <HBox maxWidth="-Infinity" prefHeight="67.0" prefWidth="482.0" spacing="20.0">
                            <children>
                               <VBox alignment="TOP_CENTER" prefHeight="63.0" prefWidth="150.0">
                                  <children>
@@ -100,10 +101,10 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <HBox maxWidth="-Infinity" prefHeight="318.0" prefWidth="475.0">
+                        <HBox maxWidth="-Infinity" prefHeight="279.0" prefWidth="475.0">
                            <children>
                               <PieChart fx:id="pieChart" />
-                              <BarChart fx:id="barChart" stylesheets="@../Styles/styles.css">
+                              <BarChart fx:id="barChart" maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@../Styles/styles.css">
                                 <xAxis>
                                   <CategoryAxis fx:id="categoryAxis" side="BOTTOM" />
                                 </xAxis>
@@ -118,6 +119,22 @@
 <!--                                    <LegendItem text="Income" fill="#77dd77"/>-->
 <!--                                 </items>-->
 <!--                              </Legend>-->
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="36.0" prefWidth="482.0" spacing="5.0">
+                           <children>
+                              <Circle fill="#3a4d8f" radius="4.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                              <Label prefHeight="19.0" prefWidth="146.0" text="Expense">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Circle fill="#99b3ff" radius="4.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                              <Label prefHeight="19.0" prefWidth="51.0" text="Income">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </HBox>
                      </children>

@@ -70,3 +70,6 @@
     -fx-background-radius: 5px;
 
 }
+.chart-legend-item-symbol {
+    -fx-background-color: #3A4D8F;
+}

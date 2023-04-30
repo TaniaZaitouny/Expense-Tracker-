@@ -35,9 +35,9 @@
                                                 <Font name="Candra" size="13.0" />
                                             </font>
                                         </Text>
-                                        <TextField fx:id="transactionAmount" />
-                                        <Button fx:id="submitButton" mnemonicParsing="false" onAction="#updateTransaction" text="Submit" />
-                              <Label id="messageText"/>
+                                        <TextField fx:id="transactionAmount"/>
+                                        <Button fx:id="submitButton" onAction="#updateTransaction" mnemonicParsing="false" text="Submit" />
+                                        <Label fx:id="messageText" style="-fx-text-fill: red;" />
 
                                     </children></VBox>
                             </children>

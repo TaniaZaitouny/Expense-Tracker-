@@ -138,4 +138,22 @@ public class Category {
         return Filter.filter(filterType);
     }
 
+    public String getIcon(String name) {
+        String sql = "SELECT icon AS iconName FROM categories WHERE categoryName = '" + name + "';";
+        String iconName;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultset = statement.executeQuery(sql);
+            if (resultset.next()) {
+                iconName = resultset.getString("iconName");
+            } else {
+                iconName = "Category";
+            }
+            statement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return iconName;
+    }
+
 }

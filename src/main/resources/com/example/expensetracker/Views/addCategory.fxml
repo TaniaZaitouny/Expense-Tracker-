@@ -44,7 +44,7 @@
                                        <ComboBox fx:id="categoryIcon" prefWidth="150.0" />
                                       <CheckBox fx:id="automatic" mnemonicParsing="false" onAction="#showOptions" text="Make automatic" />
                                       <HBox>
-                                          <Text fill="#222325" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Frequency">
+                                          <Text fx:id="frequencyLabel" fill="#222325" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Frequency" visible="false" managed="false">
                                               <font>
                                                   <Font size="14.0" />
                                               </font>
@@ -61,7 +61,7 @@
                                           </ChoiceBox>
                                       </HBox>
 
-                                        <Text fill="#222325" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Amount">
+                                        <Text fx:id="amountLabel" fill="#222325" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Amount" visible="false" managed="false">
                                             <font>
                                                 <Font size="14.0" />
                                             </font>
@@ -71,7 +71,7 @@
                                          <font>
                                             <Font size="13.0" />
                                          </font></Button>
-                                        <Label fx:id="messageText" />
+                                        <Label fx:id="messageText" style="-fx-text-fill: red;" />
                                     </children></VBox>
                             </children>
                      <padding>

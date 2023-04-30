@@ -11,9 +11,12 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
+
 
 public class CheckAutomaticCategoriesThread extends Thread {
     private List<ObserverController> observers = new ArrayList<>();
+    private ReentrantLock lock = new ReentrantLock();
 
     public void registerObserver(ObserverController observer) {
         observers.add(observer);
@@ -25,7 +28,7 @@ public class CheckAutomaticCategoriesThread extends Thread {
 
     private void notifyObservers() {
         for (ObserverController observer : observers) {
-            observer.notify();
+            observer.getNotified();
         }
     }
 
@@ -78,6 +81,7 @@ public class CheckAutomaticCategoriesThread extends Thread {
             }
             resultSet.close();
             statement.close();
+            lock.lock();
             notifyObservers();
         }
         catch (SQLException e) {
