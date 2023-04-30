@@ -2,7 +2,6 @@ package com.example.expensetracker.Controllers;
 
 
 import com.example.expensetracker.Main;
-import com.example.expensetracker.Models.Transaction;
 import com.example.expensetracker.Strategy.DefaultStrategy;
 import com.example.expensetracker.Strategy.TransactionStrategy;
 import javafx.fxml.FXML;
@@ -32,9 +31,7 @@ public class HomeController implements ObserverController {
     }
    public void initializeTopCategories()
    {
-
        displayTopCategories();
-
    }
     public void displayTopCategories()
     {
@@ -45,7 +42,6 @@ public class HomeController implements ObserverController {
             Pair<String, Number> categoryPair = category.getKey();
             String categoryName = categoryPair.getKey();
             Label label = new Label(categoryName);
-
             Image icon = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("Media/coffee.png")));
             ImageView imageView = new ImageView(icon);
             imageView.setFitWidth(29);
@@ -57,9 +53,7 @@ public class HomeController implements ObserverController {
             imgBox.setPrefHeight(40);
             imgBox.setMaxWidth(Region.USE_PREF_SIZE);
             VBox box = new VBox(imgBox,label);
-
             box.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 20px;");
-
             box.setPrefHeight(30);
             box.setPrefWidth(80);
             box.setPadding(new Insets(10,0,0,0));

@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
-import java.util.prefs.Preferences;
 
 public class MenuController {
 
@@ -57,7 +56,7 @@ public class MenuController {
         reportsStyle = "";
         settingsStyle = "";
         Stage stage = (Stage) homeButton.getScene().getWindow();
-        Scene scene = MenuController.loadPage("Views/home.fxml", stage);
+        MenuController.loadPage("Views/home.fxml", stage);
     }
 
     @FXML
@@ -68,7 +67,7 @@ public class MenuController {
         reportsStyle = "";
         settingsStyle = "";
         Stage stage = (Stage) categoriesButton.getScene().getWindow();
-        Scene scene = MenuController.loadPage("Views/categories.fxml", stage);
+        MenuController.loadPage("Views/categories.fxml", stage);
         categoriesButton.setStyle("-fx-background-color: #FFFFFF; -fx-background-radius: 0 0 0 0; -fx-text-fill: #3A4D8F;");
     }
 
@@ -80,7 +79,7 @@ public class MenuController {
         reportsStyle = "";
         settingsStyle = "";
         Stage stage = (Stage) transactionsButton.getScene().getWindow();
-        Scene scene = MenuController.loadPage("Views/transactions.fxml", stage);
+        MenuController.loadPage("Views/transactions.fxml", stage);
     }
 
     @FXML
@@ -91,7 +90,7 @@ public class MenuController {
         reportsStyle = "-fx-background-color: #2D3B64;";
         settingsStyle = "";
         Stage stage = (Stage) reportsButton.getScene().getWindow();
-        Scene scene = MenuController.loadPage("Views/reports.fxml", stage);
+        MenuController.loadPage("Views/reports.fxml", stage);
     }
 
     @FXML
@@ -102,6 +101,7 @@ public class MenuController {
         reportsStyle = "";
         settingsStyle = "-fx-background-color: #2D3B64;";
         Stage stage = (Stage)settingButton.getScene().getWindow();
+        MenuController.loadPage("Views/setting.fxml", stage);
     }
 
 }

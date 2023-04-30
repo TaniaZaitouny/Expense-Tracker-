@@ -1,7 +1,6 @@
 package com.example.expensetracker.Filters.CategoryFilters;
 
 import com.example.expensetracker.Database.DatabaseConnection;
-import com.example.expensetracker.Filters.CategoryFilters.CategoryFilter;
 import com.example.expensetracker.Objects.CategoryObject;
 
 import java.sql.Connection;
@@ -17,20 +16,17 @@ public class CategoryAlphabeticalFilter implements CategoryFilter
 
     @Override
     public ArrayList<CategoryObject> filter(String order) throws SQLException {
-
-        ResultSet resultSet;
-        String sql = "SELECT * FROM categories where userId = '" + userId + "' ORDER BY categoryName ASC;";
-        String sql2 = "SELECT * FROM categories where userId = '" + userId + "' ORDER BY categoryName DESC;";
-        ArrayList<CategoryObject> categories = new ArrayList<>();
-        Statement statement = connection.createStatement();
-
+        String sql;
         if(order.equals("ascending"))
         {
-            resultSet = statement.executeQuery(sql);
+            sql = "SELECT * FROM categories where userId = '" + userId + "' ORDER BY categoryName ASC;";
         }
         else {
-            resultSet = statement.executeQuery(sql2);
+            sql = "SELECT * FROM categories where userId = '" + userId + "' ORDER BY categoryName DESC;";
         }
+        ArrayList<CategoryObject> categories = new ArrayList<>();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
         while (resultSet.next()) {
             categories.add(new CategoryObject(resultSet.getString(1), resultSet.getInt(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getDate(6), resultSet.getDouble(7)));
         }
