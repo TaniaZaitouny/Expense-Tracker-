@@ -98,43 +98,4 @@ public class Category {
         return Filter.filter(filterType);
     }
 
-    public void checkCategories() throws SQLException {
-        String query = "SELECT * FROM categories WHERE frequency != 'NEVER'";
-        PreparedStatement statement = connection.prepareStatement(query);
-        ResultSet resultSet = statement.executeQuery(query);
-        while (resultSet.next()) {
-            String name = resultSet.getString("name");
-            String frequency = resultSet.getString(5);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String dateString = dateFormat.format(resultSet.getDate(6));
-            LocalDate lastTransactionDate =LocalDate.parse(dateString);
-            double amount = resultSet.getDouble(7);
-            LocalDate currentDate = LocalDate.now();
-            Transaction transaction = new Transaction();
-            switch (frequency) {
-                case "DAILY" -> {
-                    if (lastTransactionDate.plusDays(1).isBefore(currentDate) || lastTransactionDate.plusDays(1).isEqual(currentDate)) {
-                        transaction.addTransaction(currentDate, name, amount);
-                    }
-                }
-                case "WEEKLY" -> {
-                    if (lastTransactionDate.plusWeeks(1).isBefore(currentDate) || lastTransactionDate.plusWeeks(1).isEqual(currentDate)) {
-                        transaction.addTransaction(currentDate, name, amount);
-                    }
-                }
-                case "MONTHLY" -> {
-                    if (lastTransactionDate.plusMonths(1).isBefore(currentDate) || lastTransactionDate.plusMonths(1).isEqual(currentDate)) {
-                        transaction.addTransaction(currentDate, name, amount);
-                    }
-                }
-                case "YEARLY" -> {
-                    if (lastTransactionDate.plusYears(1).isBefore(currentDate) || lastTransactionDate.plusYears(1).isEqual(currentDate)) {
-                        transaction.addTransaction(currentDate, name, amount);
-                    }
-                }
-                default -> System.out.println("Invalid frequency for category: " + name);
-            }
-        }
-        statement.close();
-    }
 }

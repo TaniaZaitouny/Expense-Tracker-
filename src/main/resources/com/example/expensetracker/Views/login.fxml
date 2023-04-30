@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="408.0" prefWidth="618.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.LoginController">
+<AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="408.0" prefWidth="618.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.UserController">
    <HBox prefHeight="405.0" prefWidth="608.0">
       <children>
           <fx:include source="loginTemplate.fxml" />

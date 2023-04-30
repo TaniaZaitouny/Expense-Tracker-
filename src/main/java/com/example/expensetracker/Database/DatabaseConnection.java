@@ -26,13 +26,15 @@ public class DatabaseConnection {
         if(databaseConnection == null) {
             databaseConnection = new DatabaseConnection();
             Category category = new Category();
-            try {
-                category.checkCategories();
-                System.out.println("checked categories");
-            }
-            catch (SQLException e) {
-                System.out.println("failed to check automatic categories");
-            }
+//            Thread thread = new Thread(() -> {
+//                try {
+//                    category.checkCategories();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            });
+//            thread.start();
+
         }
         return databaseConnection;
     }
@@ -53,6 +55,7 @@ public class DatabaseConnection {
                 " username VARCHAR(255), " +
                 " email VARCHAR(255), " +
                 " password VARCHAR(255), " +
+                " monthlyBudget Double NULL, " +
                 " PRIMARY KEY (id))";
         try {
             Statement statement = this.connection.createStatement();
