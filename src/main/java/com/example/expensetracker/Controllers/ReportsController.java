@@ -13,8 +13,7 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportsController
-{
+public class ReportsController implements ObserverController {
     @FXML
     BarChart<String, Number> barChart;
     @FXML
@@ -124,4 +123,10 @@ private void initializePieChart(List<Pair<Pair<String, Number>, String>> results
     pieChart.setData(FXCollections.observableArrayList(data));
 }
 
+    @Override
+    public void notify(ArrayList<Object> tableData) {
+        if(barChart != null) {
+
+        }
+    }
 }

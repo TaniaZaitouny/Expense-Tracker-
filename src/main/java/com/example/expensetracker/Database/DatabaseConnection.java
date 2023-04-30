@@ -17,8 +17,6 @@ public class DatabaseConnection {
         try {
             connection = DriverManager.getConnection(dbURL, user, password);
             this.createTables();
-//            Category category = new Category();
-//            category.checkCategories();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -27,6 +25,16 @@ public class DatabaseConnection {
     public static DatabaseConnection getInstance() {
         if(databaseConnection == null) {
             databaseConnection = new DatabaseConnection();
+            Category category = new Category();
+//            Thread thread = new Thread(() -> {
+//                try {
+//                    category.checkCategories();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            });
+//            thread.start();
+
         }
         return databaseConnection;
     }
