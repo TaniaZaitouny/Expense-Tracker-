@@ -245,8 +245,8 @@ public class CategoryController
                                 CategoryObject rowData = getTableRow().getItem();
                                 categoryNameToUpdate = rowData.categoryName;
                                 try {
-                                    Stage stage = (Stage)editButton.getScene().getWindow();
-                                    MenuController.loadPage("Views/addCategory.fxml",stage);
+                                    Stage stage = (Stage) editButton.getScene().getWindow();
+                                    MenuController.loadPage("Views/addCategory.fxml", stage);
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -284,11 +284,15 @@ public class CategoryController
     public void showOptions(ActionEvent actionEvent) {
         if(automatic.isSelected()) {
             frequency.setVisible(true);
+            frequency.setManaged(true);
             amount.setVisible(true);
+            amount.setManaged(true);
         }
         else {
             frequency.setVisible(false);
+            frequency.setManaged(false);
             amount.setVisible(false);
+            amount.setManaged(false);
         }
     }
 

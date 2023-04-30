@@ -25,6 +25,8 @@ public class TransactionController {
     @FXML
     ChoiceBox<String> filter;
     @FXML
+    ChoiceBox<String> categoryFilter;
+    @FXML
     Button addTransactionButton;
     @FXML
     Label pageTitle;
@@ -37,15 +39,15 @@ public class TransactionController {
     @FXML
     TextField transactionAmount;
     @FXML
-    private TableView<TransactionObject> transactionTable;
+    TableView<TransactionObject> transactionTable;
     @FXML
-    private TableColumn<TransactionObject, String> categoryColumn;
+    TableColumn<TransactionObject, String> categoryColumn;
     @FXML
-    private TableColumn<TransactionObject, String> dateColumn;
+    TableColumn<TransactionObject, String> dateColumn;
     @FXML
-    private TableColumn<TransactionObject, String> amountColumn;
+    TableColumn<TransactionObject, String> amountColumn;
     @FXML
-    private TableColumn<TransactionObject, Void> actionColumn;
+    TableColumn<TransactionObject, Void> actionColumn;
 
     Transaction transaction = new Transaction();
 
@@ -54,6 +56,7 @@ public class TransactionController {
     public void initialize() throws SQLException, ParseException {
         if (transactionTable != null) {
             populateTransactions();
+
         }
         else {
             initializeCategoryList();
@@ -68,7 +71,7 @@ public class TransactionController {
                 transactionCategory.setValue(transactionToUpdate.category);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String dateString = dateFormat.format(transactionToUpdate.date);
-               transactionDate.setValue(LocalDate.parse(dateString));
+                transactionDate.setValue(LocalDate.parse(dateString));
             }
         }
     }
@@ -76,7 +79,7 @@ public class TransactionController {
     protected void addTransactionPage() throws IOException {
         transactionToUpdateId = 0;
         Stage stage = (Stage) addTransactionButton.getScene().getWindow();
-        MenuController.loadPage("Views/addTransaction.fxml",stage);
+        MenuController.loadPage("Views/addTransaction.fxml", stage);
     }
 
     @FXML
@@ -85,12 +88,26 @@ public class TransactionController {
         Category category = new Category();
 
         try {
-
             ArrayList<CategoryObject> results = category.getCategories();
-
             ArrayList<String> categories = new ArrayList<>();
             results.forEach(pair -> categories.add(pair.categoryName));
             transactionCategory.setItems(FXCollections.observableList(categories));
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void initializeCategoryFilterList()
+    {
+        Category category = new Category();
+
+        try {
+            ArrayList<CategoryObject> results = category.getCategories();
+            ArrayList<String> categories = new ArrayList<>();
+            results.forEach(pair -> categories.add(pair.categoryName));
+            categoryFilter.setItems(FXCollections.observableList(categories));
         }
         catch (SQLException e) {
             e.printStackTrace();

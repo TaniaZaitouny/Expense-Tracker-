@@ -38,6 +38,7 @@
                                     </FXCollections>
                                  </items>
                               </ChoiceBox>
+                              <ChoiceBox fx:id="categoryFilter" prefWidth="110.0" value="Filter By" visible="false" managed="false"/>
                               <Button fx:id="addTransactionButton" mnemonicParsing="false" onAction="#addTransactionPage" prefHeight="25.0" prefWidth="122.0" text="Add Transaction" HBox.hgrow="NEVER" />
                            </children>
                         </HBox>
