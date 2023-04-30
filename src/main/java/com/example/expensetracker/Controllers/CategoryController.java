@@ -22,8 +22,7 @@ import java.util.Objects;
 import java.util.prefs.BackingStoreException;
 
 
-public class CategoryController
-{
+public class CategoryController {
     @FXML
     ChoiceBox<String> filter;
     @FXML

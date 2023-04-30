@@ -21,7 +21,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.prefs.BackingStoreException;
 
-public class TransactionController {
+public class TransactionController implements ObserverController {
     @FXML
     ChoiceBox<String> filter;
     @FXML
@@ -218,5 +218,12 @@ public class TransactionController {
             }
         };
         actionColumn.setCellFactory(cellFactory);
+    }
+
+    @Override
+    public void notify(ArrayList<Object> tableData) {
+        if(transactionTable != null) {
+
+        }
     }
 }

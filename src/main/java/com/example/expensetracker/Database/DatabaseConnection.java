@@ -26,13 +26,15 @@ public class DatabaseConnection {
         if(databaseConnection == null) {
             databaseConnection = new DatabaseConnection();
             Category category = new Category();
-            try {
-                category.checkCategories();
-                System.out.println("checked categories");
-            }
-            catch (SQLException e) {
-                System.out.println("failed to check automatic categories");
-            }
+//            Thread thread = new Thread(() -> {
+//                try {
+//                    category.checkCategories();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            });
+//            thread.start();
+
         }
         return databaseConnection;
     }

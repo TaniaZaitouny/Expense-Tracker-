@@ -15,11 +15,13 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Pair;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 
-public class HomeController {
+public class HomeController implements ObserverController {
     @FXML
     private HBox topCategoriesBox;
 
@@ -78,4 +80,10 @@ public class HomeController {
 
    }
 
+    @Override
+    public void notify(ArrayList<Object> tableData) {
+        if(topCategoriesBox != null) {
+
+        }
+    }
 }
