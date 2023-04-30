@@ -261,6 +261,18 @@ public class CategoryController {
                     private final Button editButton = new Button("Edit");
                     private final Button deleteButton = new Button("Delete");
 
+                    {
+                        // Set the icons for the buttons
+                        ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("")));
+                        editIcon.setFitHeight(16);
+                        editIcon.setFitWidth(16);
+                        editButton.setGraphic(editIcon);
+
+                        ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/path/to/deleteIcon.png")));
+                        deleteIcon.setFitHeight(16);
+                        deleteIcon.setFitWidth(16);
+                        deleteButton.setGraphic(deleteIcon);
+                    }
 
                     @Override
                     protected void updateItem(Void item, boolean empty) {
