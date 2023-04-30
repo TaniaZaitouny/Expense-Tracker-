@@ -1,12 +1,14 @@
 package com.example.expensetracker.Controllers;
 
-import com.example.expensetracker.Filters.CategoryNormalFilter;
+import com.example.expensetracker.Filters.CategoryFilters.*;
+import com.example.expensetracker.Filters.TransactionFilters.*;
 import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Models.Transaction;
 import com.example.expensetracker.Objects.CategoryObject;
 import com.example.expensetracker.Objects.TransactionObject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -24,9 +26,9 @@ import java.util.prefs.BackingStoreException;
 
 public class TransactionController implements ObserverController {
     @FXML
-    ChoiceBox<String> filter;
+    ChoiceBox<String> filters;
     @FXML
-    ChoiceBox<String> categoryFilter;
+    ChoiceBox<String> filtersType;
     @FXML
     Button addTransactionButton;
     @FXML
@@ -56,8 +58,7 @@ public class TransactionController implements ObserverController {
     private static int transactionToUpdateId = 0;
     public void initialize() throws SQLException, ParseException {
         if (transactionTable != null) {
-            populateTransactions();
-            initializeCategoryList(categoryFilter);
+            filterTransactions(null);
         }
         else {
             initializeCategoryList(transactionCategory);
@@ -140,9 +141,9 @@ public class TransactionController implements ObserverController {
         transaction.updateTransaction(transactionToUpdateId, date, selectedCategory, amount);
     }
 
-    public void populateTransactions() throws SQLException {
+    public void populateTransactions(TransactionFilter Filter, String filterType) throws SQLException {
         transaction = new Transaction();
-        ArrayList<TransactionObject> transactions = transaction.getTransactions();
+        ArrayList<TransactionObject> transactions = transaction.getTransactions(Filter, filterType);
 //        hidden field to store id
         TableColumn<TransactionObject, String> idColumn = new TableColumn<>("ID");
         idColumn.setVisible(false);
@@ -209,6 +210,56 @@ public class TransactionController implements ObserverController {
     public void notify(ArrayList<Object> tableData) {
         if(transactionTable != null) {
 
+        }
+    }
+
+    public void filterTransactions(ActionEvent actionEvent) throws SQLException
+    {
+        String filter = filters.getValue();
+        switch (filter) {
+            case "All" -> {
+                filtersType.setVisible(false);
+                populateTransactions(new TransactionNormalFilter(), "");
+                return;
+            }
+            case "Date" -> setTypeList("date");
+            case "Category" -> setTypeList("category");
+            case "Amount" -> setTypeList("amount");
+        }
+        if(!filtersType.isVisible())
+            filtersType.setVisible(true);
+    }
+
+    private void setTypeList(String Filter)
+    {
+        ObservableList<String> items = filtersType.getItems();
+        items.clear();
+
+        switch (Filter) {
+            case "date" -> {
+                items.add("Recent");
+                items.add("Oldest");
+                filtersType.setValue("Recent");
+            }
+            case "category" -> {initializeCategoryList(filtersType);}
+            case "amount" -> {
+                items.add("Ascending");
+                items.add("Descending");
+                filtersType.setValue("Increasing");
+            }
+        }
+    }
+
+
+    public void filterTransactionTypes(ActionEvent actionEvent) throws SQLException {
+        String filter = filtersType.getValue();
+
+        switch (filter) {
+            case "Recent" -> populateTransactions(new TransactionDateFilter(), "recent");
+            case "Oldest" -> populateTransactions(new TransactionDateFilter(), "oldest");
+            case "Ascending" -> populateTransactions(new TransactionAmountFilter(), "ascending");
+            case "Descending" -> populateTransactions(new TransactionAmountFilter(), "descending");
+            default -> populateTransactions(new TransactionCategoryFilter(), filter);
         }
     }
 }

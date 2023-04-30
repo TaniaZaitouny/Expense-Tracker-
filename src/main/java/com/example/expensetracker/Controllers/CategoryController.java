@@ -1,11 +1,12 @@
 package com.example.expensetracker.Controllers;
 
-import com.example.expensetracker.Filters.*;
+import com.example.expensetracker.Filters.CategoryFilters.*;
 import com.example.expensetracker.Main;
 import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Objects.CategoryObject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -26,6 +27,8 @@ import java.util.prefs.BackingStoreException;
 public class CategoryController {
     @FXML
     ChoiceBox<String> filters;
+    @FXML
+    ChoiceBox<String> filtersType;
     @FXML
     Button addCategoryButton;
     @FXML
@@ -311,46 +314,64 @@ public class CategoryController {
 
     public void filterCategories(ActionEvent actionEvent) throws SQLException {
         String filter = filters.getValue();
-        CategoryFilter Filter = null;
-        String filterType = "";
-        switch (filter)
-        {
-            case "All", "Oldest":
-                Filter = new CategoryNormalFilter();
-                filterType = "";
-                break;
-            case "Expense":
-                Filter = new CategoryTypeFilter();
-                filterType = "expense";
-                break;
-            case "Income":
-                Filter = new CategoryTypeFilter();
-                filterType = "income";
-                break;
-            case "Automatic":
-                Filter = new CategoryFrequencyFilter();
-                filterType = "AUTO";
-                break;
-            case "Normal":
-                Filter = new CategoryFrequencyFilter();
-                filterType = "NEVER";
-                break;
-            case "Recent":
-                Filter = new CategoryRecentFilter();
-                filterType = "";
-                break;
-            case "Ascending":
-                Filter = new CategoryAlphabeticalFilter();
-                filterType = "ascending";
-                break;
-            case "Descending":
-                Filter = new CategoryAlphabeticalFilter();
-                filterType = "descending";
-                break;
+        switch (filter) {
+            case "All" -> {
+                filtersType.setVisible(false);
+                getCategories(new CategoryNormalFilter(), "");
+                return;
+            }
+            case "Type" -> setTypeList("type");
+            case "Automatic" -> setTypeList("frequency");
+            case "Date" -> {
+                filtersType.setVisible(false);
+                setTypeList("date");
+            }
+            case "Alphabetically" -> setTypeList("alphabetical");
         }
-        getCategories(Filter,filterType);
+        if(!filtersType.isVisible())
+          filtersType.setVisible(true);
+    }
+    private void setTypeList(String Filter)
+    {
+        ObservableList<String> items = filtersType.getItems();
+        items.clear();
+        switch (Filter) {
+            case "type" -> {
+                items.add("Income");
+                items.add("Expense");
+                filtersType.setValue("Income");
+            }
+            case "frequency" -> {
+                items.add("Automatic");
+                items.add("Normal");
+                filtersType.setValue("Automatic");
+            }
+            case "alphabetical" -> {
+                items.add("Ascending");
+                items.add("Descending");
+                filtersType.setValue("Ascending");
+            }
+            case "date" -> {
+                items.add("Oldest");
+                items.add("Recent");
+                filtersType.setValue("Recent");
+            }
+        }
     }
 
+    public void filterCategoryTypes(ActionEvent actionEvent) throws SQLException {
+        String filter = filtersType.getValue();
+        switch (filter) {
+            case "Income" -> getCategories(new CategoryTypeFilter(), "income");
+            case "Expense" -> getCategories(new CategoryTypeFilter(), "expense");
+            case "Automatic" -> getCategories(new CategoryFrequencyFilter(), "auto");
+            case "Normal" -> getCategories(new CategoryFrequencyFilter(), "never");
+            case "Ascending" -> getCategories(new CategoryAlphabeticalFilter(), "ascending");
+            case "Descending" -> getCategories(new CategoryAlphabeticalFilter(), "descending");
+            case "Oldest" -> getCategories(new CategoryNormalFilter(), "");
+            case "Recent" -> getCategories(new CategoryRecentFilter(), "");
+        }
+    }
 }
 
 

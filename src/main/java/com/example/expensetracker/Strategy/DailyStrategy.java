@@ -24,4 +24,26 @@ public class DailyStrategy extends TransactionStrategy{
         List<Pair<Pair<String, Number>, String>> pairs = executeQuery(sql);
         return pairs;
     }
+
+    public Number totalIncome() {
+        String sql =
+                "SELECT SUM(t.amount) AS totalExpense " +
+                        "FROM transactions t " +
+                        "JOIN categories c ON t.category = c.categoryName " +
+                        "WHERE c.type = 'income' AND t.date = '" + formattedDate + "' " ;
+        Number result = executeQuery2(sql);
+
+        return result;
+    }
+    public Number totalExpense() {
+        String sql =
+                "SELECT SUM(t.amount) AS totalExpense " +
+                        "FROM transactions t " +
+                        "JOIN categories c ON t.category = c.categoryName " +
+                        "WHERE c.type = 'expense' AND t.date = '" + formattedDate + "' " ;
+        Number result = executeQuery2(sql);
+
+        return result;
+    }
+
 }

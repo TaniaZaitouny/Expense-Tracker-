@@ -21,11 +21,16 @@
             <fx:include source="layout.fxml" />
             <AnchorPane id="content" prefHeight="400.0" prefWidth="488.0">
                <children>
-                  <VBox prefHeight="408.0" prefWidth="482.0" spacing="5.0">
+                  <VBox prefHeight="408.0" prefWidth="482.0" spacing="3.0">
                      <children>
                         <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" prefHeight="0.0" prefWidth="462.0">
                            <children>
-                              <ChoiceBox fx:id="filterReport" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#filterReports" prefHeight="22.0" prefWidth="75.0">
+                              <Label fx:id="selectedStrategy" prefHeight="13.0" prefWidth="397.0" style="-fx-font-weight: bold;">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <ChoiceBox fx:id="filterReport" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#filterReports" prefHeight="22.0" prefWidth="75.0" value="Default">
                                  <items>
                                     <FXCollections fx:factory="observableArrayList">
                                        <String fx:value="Default" />
@@ -49,7 +54,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="expenseLabel" text="Label">
+                                    <Label fx:id="expenseLabel">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -69,7 +74,7 @@
                                           <Insets top="5.0" />
                                        </padding>
                                     </Label>
-                                    <Label fx:id="incomeLabel" text="Label">
+                                    <Label fx:id="incomeLabel">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -83,7 +88,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="balanceLabel" text="Label">
+                                    <Label fx:id="balanceLabel">
                                        <font>
                                           <Font size="14.0" />
                                        </font>

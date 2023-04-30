@@ -1,8 +1,8 @@
-package com.example.expensetracker.Filters;
+package com.example.expensetracker.Filters.CategoryFilters;
 
 import com.example.expensetracker.Database.DatabaseConnection;
+import com.example.expensetracker.Filters.CategoryFilters.CategoryFilter;
 import com.example.expensetracker.Objects.CategoryObject;
-import javafx.util.Pair;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class CategoryTypeFilter implements CategoryFilter{
+public class CategoryTypeFilter implements CategoryFilter {
 
     DatabaseConnection db  = DatabaseConnection.getInstance();
     Connection connection = db.getConnection();
