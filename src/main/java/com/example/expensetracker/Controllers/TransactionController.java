@@ -61,7 +61,7 @@ public class TransactionController implements ObserverController {
             filterTransactions(null);
         }
         else {
-            initializeCategoryList();
+            initializeCategoryList(transactionCategory);
             if (transactionToUpdateId == 0) {
                 submitButton.setText("Add Transaction");
             }
@@ -85,7 +85,7 @@ public class TransactionController implements ObserverController {
     }
 
     @FXML
-    public void initializeCategoryList()
+    public void initializeCategoryList(ChoiceBox<String> toFill)
     {
         Category category = new Category();
 
@@ -93,23 +93,7 @@ public class TransactionController implements ObserverController {
             ArrayList<CategoryObject> results = category.getCategories(new CategoryNormalFilter(),"");
             ArrayList<String> categories = new ArrayList<>();
             results.forEach(pair -> categories.add(pair.categoryName));
-            transactionCategory.setItems(FXCollections.observableList(categories));
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void initializeCategoryFilterList()
-    {
-        Category category = new Category();
-
-        try {
-            ArrayList<CategoryObject> results = category.getCategories(new CategoryNormalFilter(),"");
-            ArrayList<String> categories = new ArrayList<>();
-            results.forEach(pair -> categories.add(pair.categoryName));
-            categoryFilter.setItems(FXCollections.observableList(categories));
+            toFill.setItems(FXCollections.observableList(categories));
         }
         catch (SQLException e) {
             e.printStackTrace();
