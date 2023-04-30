@@ -44,7 +44,7 @@
                         <HBox maxWidth="-Infinity" prefHeight="300.0" prefWidth="475.0">
                            <children>
                               <PieChart fx:id="pieChart" />
-                              <BarChart fx:id="barChart">
+                              <BarChart fx:id="barChart" stylesheets="@../Styles/styles.css">
                                 <xAxis>
                                   <CategoryAxis fx:id="categoryAxis" side="BOTTOM" />
                                 </xAxis>
