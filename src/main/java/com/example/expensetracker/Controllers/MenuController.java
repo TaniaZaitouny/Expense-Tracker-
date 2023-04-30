@@ -24,8 +24,7 @@ public class MenuController {
     @FXML
     Button reportsButton;
     @FXML
-    Button logoutButton;
-
+    Button settingButton;
 
     public static Scene loadPage(String pageName, Stage stage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(pageName)));
@@ -62,10 +61,11 @@ public class MenuController {
     }
 
     @FXML
-    protected void logoutPage() throws IOException {
-        Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
-        prefs.remove("userId");
-        Stage stage = (Stage)logoutButton.getScene().getWindow();
-        Scene scene = MenuController.loadPage("Views/login.fxml", stage);
+    protected void settingPage() throws IOException
+    {
+        Stage stage = (Stage)settingButton.getScene().getWindow();
+        Scene scene = MenuController.loadPage("Views/setting.fxml", stage);
+
     }
+
 }

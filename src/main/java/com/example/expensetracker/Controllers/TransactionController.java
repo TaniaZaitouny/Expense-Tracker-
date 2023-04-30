@@ -16,11 +16,11 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
 
 public class TransactionController {
 
@@ -47,36 +47,34 @@ public class TransactionController {
     @FXML
     private TableColumn<TransactionObject, Void> actionColumn;
 
-    Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
     Transaction transaction = new Transaction();
 
-//    private static String transactionAmountToUpdate;
-//    private static String transactionCategoryToUpdate;
-//    private static String transactionIdToUpdate = null;
-//    private static String transactionDateToUpdate;
-//   private static boolean updatingMode;
-    private static TransactionObject transactionToUpdate;
+    private TransactionObject transactionToUpdate;
+    private static int transactionToUpdateId = 0;
     public void initialize() throws SQLException, ParseException {
         if (transactionTable != null) {
             populateTransactions();
         }
         else {
             initializeCategoryList();
-            if (transactionToUpdate == null) {
+            if (transactionToUpdateId == 0) {
                 submitButton.setText("Add Transaction");
             }
             else {
+                transactionToUpdate = transaction.getTransaction(transactionToUpdateId);
                 pageTitle.setText("Update Transaction");
                 submitButton.setText("Update");
-                transactionAmount.setText(transactionToUpdate.amount+"");
+                transactionAmount.setText(transactionToUpdate.amount + "");
                 transactionCategory.setValue(transactionToUpdate.category);
-                transactionDate.setValue(transactionToUpdate.date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String dateString = dateFormat.format(transactionToUpdate.date);
+               transactionDate.setValue(LocalDate.parse(dateString));
             }
         }
     }
     @FXML
     protected void addTransactionPage() throws IOException {
-        transactionToUpdate = null;
+        transactionToUpdateId = 0;
         Stage stage = (Stage) addTransactionButton.getScene().getWindow();
         MenuController.loadPage("Views/addTransaction.fxml",stage);
     }
@@ -101,7 +99,7 @@ public class TransactionController {
 
     @FXML
     public void updateTransaction(ActionEvent actionEvent) throws SQLException, BackingStoreException {
-        if(transactionToUpdate == null) {
+        if(transactionToUpdateId == 0) {
             addTransaction();
         }
         else {
@@ -137,7 +135,7 @@ public class TransactionController {
             return;
         }
 
-        transaction.updateTransaction(transactionToUpdate.id, date, selectedCategory, amount);
+        transaction.updateTransaction(transactionToUpdateId, date, selectedCategory, amount);
     }
 
     public void populateTransactions() throws SQLException {
@@ -172,7 +170,7 @@ public class TransactionController {
                             setGraphic(hb);
                             editBtn.setOnAction((ActionEvent event) -> {
                                 TransactionObject rowData = getTableRow().getItem();
-                                transactionToUpdate = new TransactionObject(rowData.id,prefs.getInt("userId",0), rowData.date, rowData.amount, rowData.category);
+                                transactionToUpdateId =rowData.id;
                                 try {
                                     Stage stage = (Stage) editBtn.getScene().getWindow();
                                     MenuController.loadPage("Views/addTransaction.fxml", stage);

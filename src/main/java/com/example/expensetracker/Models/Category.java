@@ -6,6 +6,7 @@ import com.example.expensetracker.Filters.CategoryNormalFilter;
 import com.example.expensetracker.Objects.CategoryObject;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -105,7 +106,9 @@ public class Category {
         while (resultSet.next()) {
             String name = resultSet.getString("name");
             String frequency = resultSet.getString(5);
-            LocalDate lastTransactionDate = resultSet.getDate(6).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String dateString = dateFormat.format(resultSet.getDate(6));
+            LocalDate lastTransactionDate =LocalDate.parse(dateString);
             double amount = resultSet.getDouble(7);
             LocalDate currentDate = LocalDate.now();
             Transaction transaction = new Transaction();
