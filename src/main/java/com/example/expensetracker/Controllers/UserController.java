@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.prefs.Preferences;
 
 public class UserController {
 
@@ -66,7 +67,4 @@ public class UserController {
             MenuController.loadPage("Views/home.fxml", stage);
         }
     }
-
-
-
 }

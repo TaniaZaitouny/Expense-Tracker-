@@ -49,6 +49,8 @@ public class HomeController implements ObserverController {
     Button dailyStatistics;
     @FXML
     PieChart pieChart;
+    @FXML
+    Label topLabel;
     public void initialize() {
         CheckAutomaticCategoriesThread thread = new CheckAutomaticCategoriesThread();
         thread.registerObserver(this);
@@ -132,6 +134,10 @@ public class HomeController implements ObserverController {
 
         TransactionStrategy defaultStrategy = new DefaultStrategy();
         List<Pair<Pair<String, Number>, String>> topCategories = defaultStrategy.topCategories();
+        if(topCategories.isEmpty()) {
+            topLabel.setText("No Top Categories");
+            return;
+        }
        for(Pair<Pair<String, Number>,String> category : topCategories)
         {
             Pair<String, Number> categoryPair = category.getKey();
@@ -185,7 +191,8 @@ public class HomeController implements ObserverController {
     @Override
     public void getNotified() {
         if(topCategoriesBox != null) {
-
+//            displayTopCategories();
+//            initializeHomeCharts();
         }
     }
 }

@@ -99,7 +99,7 @@ public class ReportsController implements ObserverController {
         pieChart.setLegendVisible(false);
     }
 
-    public void filterReports(ActionEvent event) {
+    public void filterReports() {
         String strategy = filterReport.getValue();
         List<Pair<Pair<String, Number>, String>> topCategories = new ArrayList<>();
         Number totalExpenses = 0.0 , totalIncome = 0.0;
@@ -137,17 +137,12 @@ public class ReportsController implements ObserverController {
         expenseLabel.setText(totalExpenses.toString());
         totalBalance = totalIncome.doubleValue() - totalExpenses.doubleValue();
         balanceLabel.setText(Double.toString(totalBalance));
-//        for (Pair<Pair<String, Number>, String> pair : topCategories) {
-//            Pair<String, Number> categoryAmountPair = pair.getKey();
-//            String categoryType = pair.getValue();
-//            System.out.println(categoryAmountPair.getKey() + " : " + categoryAmountPair.getValue() + " : " + categoryType);
-//        }
     }
 
     @Override
     public void getNotified() {
         if (barChart != null) {
-
+            filterReports();
         }
     }
 }
