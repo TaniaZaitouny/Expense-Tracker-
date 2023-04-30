@@ -3,15 +3,11 @@ package com.example.expensetracker.Controllers;
 import com.example.expensetracker.Models.Transaction;
 import com.example.expensetracker.Strategy.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.chart.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -48,48 +44,54 @@ public class ReportsController implements ObserverController {
         for (Pair<Pair<String, Number>, String> result : results) {
             Pair<String, Number> categoryAmount = result.getKey();
             String name = categoryAmount.getKey();
+            double amount = (double) categoryAmount.getValue();
             String type = result.getValue();
 
-            categoryNames.add(categoryAmount.getKey());
-            XYChart.Data<String, Number> data = new XYChart.Data<>(name, categoryAmount.getValue());
+            categoryNames.add(name);
+            XYChart.Data<String, Number> data = new XYChart.Data<>(name, amount);
+            data.setExtraValue(type);
             series.getData().add(data);
-
-//
-//            if (type.equals("expense")) {
-//                Node node = data.getNode();
-//                if (node != null) {
-//                    node.setStyle("-fx-bar-fill: #ff6961;");
-//                }
-//            } else if (type.equals("income")) {
-//                Node node = data.getNode();
-//                if(node!=null) {
-//                    data.getNode().setStyle("-fx-bar-fill: #77dd77;");
-//                }
-//            }
-
         }
 
         categoryAxis.setCategories(FXCollections.observableArrayList(categoryNames));
 
         barChart.setPrefWidth(600);
-        barChart.setStyle("-fx-bar-fill: #77dd77;");
         barChart.getData().add(series);
 
+        for (XYChart.Series<String, Number> bars : barChart.getData()) {
+            for (XYChart.Data<String, Number> bar : bars.getData()) {
+                String type = (String) bar.getExtraValue();
+                if(type == null) System.out.println("bar " + bar.getXValue());
+                assert type != null;
+                bar.getNode().setStyle(type.equals("expense") ? "-fx-bar-fill: #3A4D8F;" : "-fx-bar-fill: #99b3ff;");
+            }
+        }
     }
 
     //
     private void initializePieChart(List<Pair<Pair<String, Number>, String>> results) {
         pieChart.getData().clear();
         List<PieChart.Data> data = new ArrayList<>(5);
+        List<String> types = new ArrayList<>();
 
         for (Pair<Pair<String, Number>, String> result : results) {
             Pair<String, Number> categoryAmount = result.getKey();
             String categoryName = categoryAmount.getKey();
             Number categoryValue = categoryAmount.getValue();
-            data.add(new PieChart.Data(categoryName, categoryValue.doubleValue()));
+            PieChart.Data slice = new PieChart.Data(categoryName, categoryValue.doubleValue());
+            types.add(result.getValue());
+            data.add(slice);
         }
 
         pieChart.setData(FXCollections.observableArrayList(data));
+
+        int currentSliceIndex = 0;
+        for (PieChart.Data slice : pieChart.getData()) {
+            String type = types.get(currentSliceIndex);
+            if(type == null) System.out.println("pie" + currentSliceIndex);
+            currentSliceIndex += 1;
+            slice.getNode().setStyle(type.equals("expense") ? "-fx-pie-color: #3A4D8F;" : "-fx-pie-color: #99b3ff;");
+        }
     }
 
     @Override
@@ -104,33 +106,32 @@ public class ReportsController implements ObserverController {
         String strategy = filterReport.getValue();
         List<Pair<Pair<String, Number>, String>> topCategories = new ArrayList<>();
         Number totalExpenses = 0.0 , totalIncome = 0.0;
-        Double totalBalance = 0.0;
+        double totalBalance = 0.0;
         switch (strategy) {
-            case "Default":
+            case "Default" -> {
                 TransactionStrategy defaultStrategy = new DefaultStrategy();
                 topCategories = defaultStrategy.topCategories();
                 totalExpenses = defaultStrategy.totalExpense();
                 totalIncome = defaultStrategy.totalIncome();
-                break;
-            case "Daily":
+            }
+            case "Daily" -> {
                 TransactionStrategy dailyStrategy = new DailyStrategy();
                 topCategories = dailyStrategy.topCategories();
                 totalExpenses = dailyStrategy.totalExpense();
                 totalIncome = dailyStrategy.totalIncome();
-                break;
-            case "Weekly":
+            }
+            case "Weekly" -> {
                 TransactionStrategy weeklyStrategy = new WeeklyStrategy();
                 topCategories = weeklyStrategy.topCategories();
                 totalExpenses = weeklyStrategy.totalExpense();
                 totalIncome = weeklyStrategy.totalIncome();
-                break;
-            case "Monthly":
+            }
+            case "Monthly" -> {
                 TransactionStrategy monthlyStrategy = new MonthlyStrategy();
                 topCategories = monthlyStrategy.topCategories();
                 totalExpenses = monthlyStrategy.totalExpense();
                 totalIncome = monthlyStrategy.totalIncome();
-                break;
-
+            }
         }
         initializeBarChart(topCategories);
         initializePieChart(topCategories);
