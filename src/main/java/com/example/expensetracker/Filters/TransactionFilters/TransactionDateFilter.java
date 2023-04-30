@@ -16,19 +16,19 @@ public class TransactionDateFilter implements TransactionFilter
 
     @Override
     public ArrayList<TransactionObject> filter(String filterType) throws SQLException {
-        ResultSet resultSet;
-        String sql = "SELECT * FROM transactions where userId = '" + userId + "' ORDER BY date ASC;";
-        String sql2 = "SELECT * FROM transactions where userId = '" + userId + "' ORDER BY date DESC;";
+        String sql;
+
         ArrayList<TransactionObject> transactions = new ArrayList<>();
         Statement statement = connection.createStatement();
         if(filterType.equals("oldest"))
         {
-            resultSet = statement.executeQuery(sql);
+            sql = "SELECT * FROM transactions where userId = '" + userId + "' ORDER BY date ASC;";
+
         }
         else {
-            resultSet = statement.executeQuery(sql2);
+            sql = "SELECT * FROM transactions where userId = '" + userId + "' ORDER BY date DESC;";
         }
-
+        ResultSet resultSet = statement.executeQuery(sql);
         while (resultSet.next()) {
             transactions.add(new TransactionObject(resultSet.getInt(1), resultSet.getInt(2), resultSet.getDate(3), resultSet.getDouble(4), resultSet.getString(5)));
         }

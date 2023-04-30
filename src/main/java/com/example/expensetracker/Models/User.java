@@ -45,7 +45,7 @@ public class User {
         result.close();
         statement.close();
         return valid;
-    };
+    }
 
     private void saveId(int id)
     {
@@ -68,7 +68,6 @@ public class User {
             result.close();
             statement.close();
             saveId(userId);
-            System.out.println(userId);
             return true;
         }
         result.close();

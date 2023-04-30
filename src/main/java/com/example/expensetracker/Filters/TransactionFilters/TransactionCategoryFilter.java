@@ -1,7 +1,6 @@
 package com.example.expensetracker.Filters.TransactionFilters;
 
 import com.example.expensetracker.Database.DatabaseConnection;
-import com.example.expensetracker.Filters.TransactionFilters.TransactionFilter;
 import com.example.expensetracker.Objects.TransactionObject;
 
 import java.sql.Connection;
@@ -17,6 +16,7 @@ public class TransactionCategoryFilter implements TransactionFilter
 
     @Override
     public ArrayList<TransactionObject> filter(String category) throws SQLException {
+
         String sql = "SELECT * FROM transactions where userId = '" + userId + "' AND category = '" + category + "';";
         ArrayList<TransactionObject> transactions = new ArrayList<>();
         Statement statement = connection.createStatement();

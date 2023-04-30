@@ -20,10 +20,10 @@ import javafx.util.Callback;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.sql.Date;
-import java.util.*;
-import java.util.prefs.BackingStoreException;
 
 
 public class CategoryController {
@@ -71,7 +71,7 @@ public class CategoryController {
     private CategoryObject categoryToUpdate;
     public void initialize() throws SQLException {
         if(categoriesTable != null) {
-            filterCategories(null);
+            filterCategories();
         }
         else
         {
@@ -151,18 +151,18 @@ public class CategoryController {
         MenuController.loadPage("Views/addCategory.fxml", stage);
     }
 
-    public void updateCategory(ActionEvent actionEvent) throws SQLException, BackingStoreException {
+    public void updateCategory() throws SQLException{
         String name = categoryName.getText();
         String type;
         String icon = categoryIcon.getValue();
 
         if(!incomeChoiceButton.isSelected() && !expenseChoiceButton.isSelected()) {
-             messageText.setText("PLease choose a type for category");
+             messageText.setText("PLease Choose A Type For Category !");
             return;
         }
 
         if(name.equals("")) {
-             messageText.setText("PLease choose a name for category");
+             messageText.setText("PLease Choose A Name For Category !");
             return;
         }
 
@@ -177,7 +177,15 @@ public class CategoryController {
 
         if(automatic.isSelected()) {
             String frequencyValue = frequency.getValue();
-            double amountValue = Double.parseDouble(amount.getText());
+            double amountValue;
+            try {
+                amountValue = Double.parseDouble(amount.getText());
+            }
+            catch (NumberFormatException e)
+            {
+                messageText.setText("Please Enter Correct Amount Value !");
+                return;
+            }
             if(categoryNameToUpdate == null) {
                 addCategory(name, type, icon, frequencyValue, amountValue);
             }
@@ -187,8 +195,6 @@ public class CategoryController {
             }
         }
         else {
-            categoryName.setText("");
-            messageText.setText("Category added successfully");
             if(categoryNameToUpdate == null) {
                 addCategory(name, type, icon);
             }
@@ -201,7 +207,7 @@ public class CategoryController {
     private void addCategory(String name, String type, String icon) throws SQLException
     {
         if(category.addCategory(name, type, icon)) {
-            Stage stage = (Stage) addCategoryButton.getScene().getWindow();
+            Stage stage = (Stage) submitButton.getScene().getWindow();
             try {
                 MenuController.loadPage("Views/categories.fxml", stage);
             } catch (IOException e) {
@@ -209,14 +215,14 @@ public class CategoryController {
             }
         }
         else {
-            messageText.setText("Category already exists");
+            messageText.setText("Category Already Exists !");
         }
     }
 
     private void addCategory(String name, String type, String icon, String frequencyValue, double amountValue) throws SQLException
     {
         if(category.addCategory(name, type, icon, frequencyValue, amountValue)) {
-            Stage stage = (Stage) addCategoryButton.getScene().getWindow();
+            Stage stage = (Stage) submitButton.getScene().getWindow();
             try {
                 MenuController.loadPage("Views/categories.fxml", stage);
             } catch (IOException e) {
@@ -224,14 +230,14 @@ public class CategoryController {
             }
         }
         else {
-            messageText.setText("Category already exists");
+            messageText.setText("Category Already Exists !");
         }
     }
 
     private void editCategory(String name, String type, String icon) throws SQLException
     {
         category.updateCategory(categoryToUpdate.categoryName, name, type, icon);
-        Stage stage = (Stage) addCategoryButton.getScene().getWindow();
+        Stage stage = (Stage) submitButton.getScene().getWindow();
         try {
             MenuController.loadPage("Views/categories.fxml", stage);
         } catch (IOException e) {
@@ -242,6 +248,7 @@ public class CategoryController {
 
     private void editCategory(String name, String type, String icon, String frequencyValue, Date lastTransactionDate, double amountValue) throws SQLException
     {
+
         category.updateCategory(categoryToUpdate.categoryName, name, type, icon, frequencyValue, lastTransactionDate, amountValue);
         Stage stage = (Stage) addCategoryButton.getScene().getWindow();
         try {
@@ -313,7 +320,7 @@ public class CategoryController {
     }
 
     @FXML
-    public void showOptions(ActionEvent actionEvent) {
+    public void showOptions() {
         if(automatic.isSelected()) {
             frequencyLabel.setVisible(true);
             frequencyLabel.setManaged(true);
@@ -349,7 +356,7 @@ public class CategoryController {
         }
     }
 
-    public void filterCategories(ActionEvent actionEvent) throws SQLException {
+    public void filterCategories() throws SQLException {
         String filter = filters.getValue();
         switch (filter) {
             case "All" -> {
@@ -394,7 +401,7 @@ public class CategoryController {
         }
     }
 
-    public void filterCategoryTypes(ActionEvent actionEvent) throws SQLException {
+    public void filterCategoryTypes() throws SQLException {
         String filter = filtersType.getValue();
         if(filter == null) return;
         switch (filter) {

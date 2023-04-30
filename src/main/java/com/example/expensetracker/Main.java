@@ -1,13 +1,10 @@
 package com.example.expensetracker;
 
 import com.example.expensetracker.Controllers.MenuController;
-import com.example.expensetracker.Database.DatabaseConnection;
+
 import javafx.application.Application;
 
 import javafx.stage.Stage;
-
-import java.sql.*;
-
 import java.io.IOException;
 import java.util.prefs.Preferences;
 

@@ -1,7 +1,6 @@
 package com.example.expensetracker.Filters.CategoryFilters;
 
 import com.example.expensetracker.Database.DatabaseConnection;
-import com.example.expensetracker.Filters.CategoryFilters.CategoryFilter;
 import com.example.expensetracker.Objects.CategoryObject;
 
 import java.sql.Connection;
