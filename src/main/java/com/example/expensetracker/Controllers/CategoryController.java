@@ -1,5 +1,6 @@
 package com.example.expensetracker.Controllers;
 
+import com.example.expensetracker.Filters.*;
 import com.example.expensetracker.Main;
 import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Objects.CategoryObject;
@@ -24,7 +25,7 @@ import java.util.prefs.BackingStoreException;
 
 public class CategoryController {
     @FXML
-    ChoiceBox<String> filter;
+    ChoiceBox<String> filters;
     @FXML
     Button addCategoryButton;
     @FXML
@@ -61,7 +62,7 @@ public class CategoryController {
     private CategoryObject categoryToUpdate;
     public void initialize() throws SQLException {
         if(categoriesTable != null) {
-            getCategories();
+            filterCategories(null);
         }
         else
         {
@@ -218,9 +219,9 @@ public class CategoryController {
         messageText.setText("Category updated successfully");
     }
 
-    private void getCategories() throws SQLException
+    private void getCategories(CategoryFilter Filter, String filterType) throws SQLException
     {
-        ArrayList<CategoryObject> categories = category.getCategories();
+        ArrayList<CategoryObject> categories = category.getCategories(Filter, filterType);
         categoryColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().categoryName));
         typeColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().categoryType));
         categoriesTable.setItems(FXCollections.observableArrayList(categories));
@@ -307,6 +308,49 @@ public class CategoryController {
             expenseChoiceButton.setStyle("-fx-background-color:  #3A4D8F; -fx-text-fill: #FFFFFF;");
         }
     }
+
+    public void filterCategories(ActionEvent actionEvent) throws SQLException {
+        String filter = filters.getValue();
+        CategoryFilter Filter = null;
+        String filterType = "";
+        switch (filter)
+        {
+            case "All", "Oldest":
+                Filter = new CategoryNormalFilter();
+                filterType = "";
+                break;
+            case "Expense":
+                Filter = new CategoryTypeFilter();
+                filterType = "expense";
+                break;
+            case "Income":
+                Filter = new CategoryTypeFilter();
+                filterType = "income";
+                break;
+            case "Automatic":
+                Filter = new CategoryFrequencyFilter();
+                filterType = "AUTO";
+                break;
+            case "Normal":
+                Filter = new CategoryFrequencyFilter();
+                filterType = "NEVER";
+                break;
+            case "Recent":
+                Filter = new CategoryRecentFilter();
+                filterType = "";
+                break;
+            case "Ascending":
+                Filter = new CategoryAlphabeticalFilter();
+                filterType = "ascending";
+                break;
+            case "Descending":
+                Filter = new CategoryAlphabeticalFilter();
+                filterType = "descending";
+                break;
+        }
+        getCategories(Filter,filterType);
+    }
+
 }
 
 

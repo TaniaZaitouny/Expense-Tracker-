@@ -94,9 +94,8 @@ public class Category {
         statement.close();
     }
 
-    public ArrayList<CategoryObject> getCategories() throws SQLException{
-        CategoryFilter filter = new CategoryNormalFilter();
-        return filter.filter("");
+    public ArrayList<CategoryObject> getCategories(CategoryFilter Filter, String filterType) throws SQLException{
+        return Filter.filter(filterType);
     }
 
 }
