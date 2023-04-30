@@ -59,7 +59,12 @@ public class Transaction {
         return transaction;
 
     }
-
+    public boolean checkCategories() throws SQLException {
+        String sql = "SELECT * FROM categories where userId = '" + userId + "';";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        return resultSet.next();
+    }
 
 
 

@@ -61,11 +61,24 @@ public class TransactionController implements ObserverController {
 
     private TransactionObject transactionToUpdate;
     private static int transactionToUpdateId = 0;
-    public void initialize() throws SQLException, ParseException {
+    public void initialize() throws SQLException {
         CheckAutomaticCategoriesThread thread = new CheckAutomaticCategoriesThread();
         thread.registerObserver(this);
         thread.start();
         if (transactionTable != null) {
+            if(!transaction.checkCategories())
+            {
+                addTransactionButton.setManaged(false);
+                addTransactionButton.setVisible(false);
+                filters.setManaged(false);
+                filters.setVisible(false);
+                return;
+            }
+            addTransactionButton.setManaged(true);
+            addTransactionButton.setVisible(true);
+            filters.setManaged(true);
+            filters.setVisible(true);
+
             filterTransactions();
         }
         else {
@@ -86,7 +99,7 @@ public class TransactionController implements ObserverController {
         }
     }
     @FXML
-    protected void addTransactionPage() throws IOException {
+    protected void addTransactionPage() throws IOException, SQLException {
         transactionToUpdateId = 0;
         Stage stage = (Stage) addTransactionButton.getScene().getWindow();
         MenuController.loadPage("Views/addTransaction.fxml", stage);
