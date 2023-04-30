@@ -25,6 +25,8 @@ import java.util.prefs.BackingStoreException;
 public class CategoryController
 {
     @FXML
+    ChoiceBox<String> filter;
+    @FXML
     Button addCategoryButton;
     @FXML
     ToggleButton incomeChoiceButton;
