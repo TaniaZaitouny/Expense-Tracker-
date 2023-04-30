@@ -5,18 +5,15 @@ import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Objects.CategoryObject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import javafx.util.Callback;
-
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -202,7 +199,6 @@ public class CategoryController
         categoryColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().categoryName));
         typeColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().categoryType));
         categoriesTable.setItems(FXCollections.observableArrayList(categories));
-
         Callback<TableColumn<CategoryObject, Void>, TableCell<CategoryObject, Void>> cellFactory = new Callback<TableColumn<CategoryObject, Void>, TableCell<CategoryObject, Void>>() {
             @Override
 

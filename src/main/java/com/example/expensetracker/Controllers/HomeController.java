@@ -22,16 +22,19 @@ import java.util.Objects;
 public class HomeController {
     @FXML
     private HBox topCategoriesBox;
+
     public void initialize() {
         initializeTopCategories();
     }
    public void initializeTopCategories()
    {
        Transaction transaction = new Transaction();
-       List<Pair<String,Number>> topCategories = transaction.getTopCategories();
-       for(Pair<String, Number>category : topCategories)
+       Transaction.TransactionStrategy defaultStrategy = transaction.new DefaultStrategy();
+       List<Pair<Pair<String, Number>, String>> topCategories = defaultStrategy.topCategories();
+       for(Pair<Pair<String, Number>,String> category : topCategories)
        {
-           String categoryName = category.getKey();
+           Pair<String, Number> categoryPair = category.getKey();
+           String categoryName = categoryPair.getKey();
            Label label = new Label(categoryName);
 
            Image icon = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("Media/coffee.png")));
