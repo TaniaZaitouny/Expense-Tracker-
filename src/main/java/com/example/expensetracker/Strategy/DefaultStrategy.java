@@ -7,7 +7,7 @@ import java.util.List;
 public class DefaultStrategy extends TransactionStrategy{
     @Override
     public List<Pair<Pair<String, Number>, String>> topCategories() {
-        String sql = "SELECT t.category AS category , t.amount AS totalAmount , c.type AS categoryType " +
+        String sql = "SELECT t.category AS category , SUM(t.amount) AS totalAmount , c.type AS categoryType " +
                 "FROM transactions t " +
                 "JOIN categories c ON category = c.categoryName " +
                 "GROUP BY category " +
@@ -17,4 +17,13 @@ public class DefaultStrategy extends TransactionStrategy{
         return pairs;
     }
 
+//    @Override
+//    public Double totalExpense() {
+//        String sql =
+//                "SELECT SUM(t.amount) AS totalExpense " +
+//                "FROM transactions t " +
+//                "JOIN categories c ON t.category = c.categoryName " +
+//                "WHERE c.type = 'expense'";
+//
+//    }
 }

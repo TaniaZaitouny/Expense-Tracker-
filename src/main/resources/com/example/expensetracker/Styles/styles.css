@@ -51,3 +51,27 @@
     -fx-bar-fill: #3A4D8F;
 }
 
+.choice-box {
+    -fx-background-color: white;
+    -fx-border-color: #3A4D8F;
+
+    -fx-border-radius: 5px;
+
+}
+
+.choice-box .label {
+    -fx-text-fill: black;
+
+}
+
+.choice-box .arrow-button {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+
+}
+
+.choice-box .arrow {
+    -fx-background-color: #3A4D8F;
+    -fx-background-radius: 5px;
+
+}
