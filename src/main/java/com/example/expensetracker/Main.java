@@ -14,6 +14,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        prefs.remove("userId");
         int userId = prefs.getInt("userId", 0);
         if(userId == 0) {
             MenuController.loadPage("Views/login.fxml", stage);

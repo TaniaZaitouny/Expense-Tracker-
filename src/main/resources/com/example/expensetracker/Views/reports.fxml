@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.text.Font?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="615.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.ReportsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="615.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.ReportsController">
    <children>
-      <HBox prefHeight="408.0" prefWidth="615.0">
+      <HBox maxHeight="-Infinity" prefHeight="408.0" prefWidth="615.0">
          <children>
             <fx:include source="layout.fxml" />
-            <AnchorPane id="content" prefHeight="400.0" prefWidth="488.0">
+            <AnchorPane id="content" maxHeight="-Infinity" prefHeight="400.0" prefWidth="488.0">
                <children>
                   <VBox prefHeight="408.0" prefWidth="482.0" spacing="3.0">
                      <children>
@@ -121,7 +115,7 @@
 <!--                              </Legend>-->
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="36.0" prefWidth="482.0" spacing="5.0">
+                        <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="36.0" prefWidth="482.0" spacing="5.0">
                            <children>
                               <Circle fill="#3a4d8f" radius="4.0" stroke="TRANSPARENT" strokeType="INSIDE" />
                               <Label prefHeight="19.0" prefWidth="146.0" text="Expense">
