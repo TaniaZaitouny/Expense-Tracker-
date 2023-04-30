@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import java.io.File;
@@ -47,9 +48,13 @@ public class CategoryController {
     @FXML
     CheckBox automatic;
     @FXML
+    Text frequencyLabel;
+    @FXML
     ChoiceBox<String> frequency;
     @FXML
     ComboBox<String> categoryIcon;
+    @FXML
+    Text amountLabel;
     @FXML
     TextField amount;
     @FXML
@@ -90,8 +95,14 @@ public class CategoryController {
                 }
                 if(!categoryToUpdate.frequency.equals("NEVER")) {
                     automatic.setSelected(true);
+                    frequencyLabel.setVisible(true);
+                    frequencyLabel.setManaged(true);
                     frequency.setVisible(true);
+                    frequency.setManaged(true);
+                    amountLabel.setVisible(true);
+                    amountLabel.setManaged(true);
                     amount.setVisible(true);
+                    amount.setManaged(true);
                     frequency.setValue(categoryToUpdate.frequency);
                     amount.setText(String.valueOf(categoryToUpdate.amount));
                 }
@@ -136,8 +147,8 @@ public class CategoryController {
     @FXML
     protected void addCategoryPage() throws IOException {
         categoryNameToUpdate = null;
-        Stage stage = (Stage)addCategoryButton.getScene().getWindow();
-        MenuController.loadPage("Views/addCategory.fxml",stage);
+        Stage stage = (Stage) addCategoryButton.getScene().getWindow();
+        MenuController.loadPage("Views/addCategory.fxml", stage);
     }
 
     public void updateCategory(ActionEvent actionEvent) throws SQLException, BackingStoreException {
@@ -304,14 +315,22 @@ public class CategoryController {
     @FXML
     public void showOptions(ActionEvent actionEvent) {
         if(automatic.isSelected()) {
+            frequencyLabel.setVisible(true);
+            frequencyLabel.setManaged(true);
             frequency.setVisible(true);
             frequency.setManaged(true);
+            amountLabel.setVisible(true);
+            amountLabel.setManaged(true);
             amount.setVisible(true);
             amount.setManaged(true);
         }
         else {
+            frequencyLabel.setVisible(false);
+            frequencyLabel.setManaged(false);
             frequency.setVisible(false);
             frequency.setManaged(false);
+            amountLabel.setVisible(false);
+            amountLabel.setManaged(false);
             amount.setVisible(false);
             amount.setManaged(false);
         }

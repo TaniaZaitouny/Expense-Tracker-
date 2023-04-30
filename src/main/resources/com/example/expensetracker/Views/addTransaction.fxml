@@ -44,7 +44,7 @@
                                         </Text>
                                         <TextField fx:id="transactionAmount"/>
                                         <Button fx:id="submitButton" onAction="#updateTransaction" mnemonicParsing="false" text="Submit" />
-
+                                        <Label fx:id="message" style="-fx-text-fill: red;" />
                                     </children></VBox>
                             </children>
                      <padding>
