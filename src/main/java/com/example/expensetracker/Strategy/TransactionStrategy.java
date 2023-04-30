@@ -50,7 +50,7 @@ public abstract class TransactionStrategy {
             if (resultset.next()) {
                 result = resultset.getDouble("totalExpense");
             } else {
-                result = 0.0; // or whatever default value you want to use
+                result = 0.0;
             }
             statement.close();
         }
