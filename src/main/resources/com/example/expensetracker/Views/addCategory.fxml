@@ -5,6 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="608.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.CategoryController">
 
     <children>
@@ -19,11 +21,11 @@
                                 <VBox maxHeight="338.0" maxWidth="-Infinity" prefHeight="337.0" prefWidth="464.0" spacing="10.0" style="-fx-background-color: #FFFFFF; -fx-padding: 20px; -fx-background-radius: 15px;">
                                     <children>
                                         <HBox prefHeight="27.0" prefWidth="401.0">
-                                            <ToggleButton fx:id="expenseChoiceButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="129.0" stylesheets="@../Styles/styles.css" text="Expense" textFill="#6c756b">
+                                            <ToggleButton fx:id="expenseChoiceButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="129.0" stylesheets="@../Styles/styles.css" text="Expense" textFill="#6c756b" onAction="#changeColors" selected="true">
                                     <font>
                                        <Font size="13.0" />
                                     </font></ToggleButton>
-                                            <ToggleButton fx:id="incomeChoiceButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="122.0" style="-fx-background-color: #E1E5F2; -fx-text-fill: #3A4D8F;" stylesheets="@../Styles/styles.css" text="Income">
+                                            <ToggleButton fx:id="incomeChoiceButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="122.0" style="-fx-background-color: #E1E5F2; -fx-text-fill: #3A4D8F;" stylesheets="@../Styles/styles.css" text="Income" onAction="#changeColors">
                                     <font>
                                        <Font size="13.0" />
                                     </font></ToggleButton>
@@ -41,7 +43,16 @@
                                         </Text>
                                        <ComboBox fx:id="categoryIcon" prefWidth="150.0" />
                                       <CheckBox fx:id="automatic" mnemonicParsing="false" onAction="#showOptions" text="Make automatic" />
-                                      <ChoiceBox fx:id="frequency" prefWidth="150.0" value="Frequency" visible="false" />
+                                      <ChoiceBox fx:id="frequency" prefWidth="150.0" value="Frequency" visible="false" >
+                                          <items>
+                                              <FXCollections fx:factory="observableArrayList">
+                                                  <String fx:value="DAILY"/>
+                                                  <String fx:value="WEEKLY"/>
+                                                  <String fx:value="MONTHLY"/>
+                                                  <String fx:value="YEARLY"/>
+                                              </FXCollections>
+                                          </items>
+                                      </ChoiceBox>
                                         <TextField fx:id="amount" visible="false" />
                               <Label fx:id="messageText" text="Label" />
                                     <Button fx:id="submitButton" mnemonicParsing="false" onAction="#updateCategory" text="Add category">

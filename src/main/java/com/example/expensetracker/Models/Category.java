@@ -4,9 +4,6 @@ import com.example.expensetracker.Database.DatabaseConnection;
 import com.example.expensetracker.Filters.CategoryFilter;
 import com.example.expensetracker.Filters.CategoryNormalFilter;
 import com.example.expensetracker.Objects.CategoryObject;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.util.Pair;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -18,23 +15,22 @@ public class Category {
     DatabaseConnection db  = DatabaseConnection.getInstance();
     Connection connection = db.getConnection();
     Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
-    private int userId = prefs.getInt("userId", 0);
+    private final int userId = prefs.getInt("userId", 0);
 
-    private boolean findCategory(String categoryName) throws SQLException {
-        boolean found= false;
-        String sql = "SELECT * FROM categories WHERE categoryName = ?";
+    private boolean findCategory(String name) throws SQLException {
+        boolean found = false;
+        String sql = "SELECT * FROM categories WHERE categoryName = '" + name + "'";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, categoryName);
-
         ResultSet result = statement.executeQuery();
 
         if (result.next()) {
             found = true;
         }
+
         result.close();
         statement.close();
         return found;
-    };
+    }
 
     public CategoryObject getCategory(String name) throws SQLException {
         String sql = "SELECT * FROM categories where categoryName = '" + name + "';";
@@ -70,18 +66,27 @@ public class Category {
         return true;
     }
 
-    public void deleteCategory(String categoryName) throws SQLException {
-        String sqlQuery = "DELETE FROM transactions WHERE category = '" + categoryName + "';";
-        String sqlQuery2 = "DELETE FROM categories WHERE categoryName = '" + categoryName + "';";
+    public void updateCategory(String categoryToUpdate, String name, String type, String icon) throws SQLException {
+        String sqlQuery = "UPDATE transactions SET category = '" + name +"' WHERE category = '" + categoryToUpdate + "';";
+        String sqlQuery2 = "UPDATE categories SET categoryName = '" + name + "', type = '" + type + "', icon = '" + icon + "', frequency = 'NEVER' WHERE categoryName = '" + categoryToUpdate + "';";
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
         statement.executeUpdate(sqlQuery2);
         statement.close();
     }
 
-    public void updateCategory(String previousName, String newName, String newType) throws SQLException {
-        String sqlQuery = "UPDATE transactions SET category = '" + newName +"' WHERE category = '" + previousName + "';";
-        String sqlQuery2 = "UPDATE categories SET categoryName = '" + newName + "', type = '" + newType + "' WHERE categoryName = '" + previousName + "';";
+    public void updateCategory(String previousName, String name, String type, String icon, String frequency, double amount) throws SQLException {
+        String sqlQuery = "UPDATE transactions SET category = '" + name +"' WHERE category = '" + previousName + "';";
+        String sqlQuery2 = "UPDATE categories SET categoryName = '" + name + "', type = '" + type + "', icon = '" + icon + "', frequency = '" + frequency + "', amount = " + amount +  " WHERE categoryName = '" + previousName + "';";
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(sqlQuery);
+        statement.executeUpdate(sqlQuery2);
+        statement.close();
+    }
+
+    public void deleteCategory(String categoryName) throws SQLException {
+        String sqlQuery = "DELETE FROM transactions WHERE category = '" + categoryName + "';";
+        String sqlQuery2 = "DELETE FROM categories WHERE categoryName = '" + categoryName + "';";
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
         statement.executeUpdate(sqlQuery2);
@@ -105,29 +110,27 @@ public class Category {
             LocalDate currentDate = LocalDate.now();
             Transaction transaction = new Transaction();
             switch (frequency) {
-                case "DAILY":
+                case "DAILY" -> {
                     if (lastTransactionDate.plusDays(1).isBefore(currentDate) || lastTransactionDate.plusDays(1).isEqual(currentDate)) {
                         transaction.addTransaction(currentDate, name, amount);
                     }
-                    break;
-                case "WEEKLY":
+                }
+                case "WEEKLY" -> {
                     if (lastTransactionDate.plusWeeks(1).isBefore(currentDate) || lastTransactionDate.plusWeeks(1).isEqual(currentDate)) {
                         transaction.addTransaction(currentDate, name, amount);
                     }
-                    break;
-                case "MONTHLY":
+                }
+                case "MONTHLY" -> {
                     if (lastTransactionDate.plusMonths(1).isBefore(currentDate) || lastTransactionDate.plusMonths(1).isEqual(currentDate)) {
                         transaction.addTransaction(currentDate, name, amount);
                     }
-                    break;
-                case "YEARLY":
+                }
+                case "YEARLY" -> {
                     if (lastTransactionDate.plusYears(1).isBefore(currentDate) || lastTransactionDate.plusYears(1).isEqual(currentDate)) {
                         transaction.addTransaction(currentDate, name, amount);
                     }
-                    break;
-                default:
-                    System.out.println("Invalid frequency for category: " + name);
-                    break;
+                }
+                default -> System.out.println("Invalid frequency for category: " + name);
             }
         }
         statement.close();
