@@ -105,7 +105,14 @@
                                 <yAxis>
                                   <NumberAxis side="LEFT" />
                                 </yAxis>
+
                               </BarChart>
+<!--                              <Legend layoutX="480.0" layoutY="250.0" prefHeight="80.0" prefWidth="100.0" style="-fx-padding: 10px;">-->
+<!--                                 <items>-->
+<!--                                    <LegendItem text="Expenses" fill="#3A4D8F"/>-->
+<!--                                    <LegendItem text="Income" fill="#77dd77"/>-->
+<!--                                 </items>-->
+<!--                              </Legend>-->
                            </children>
                         </HBox>
                      </children>

@@ -13,6 +13,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.paint.Color;
 import javafx.util.Pair;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,48 +46,54 @@ public class ReportsController implements ObserverController {
         for (Pair<Pair<String, Number>, String> result : results) {
             Pair<String, Number> categoryAmount = result.getKey();
             String name = categoryAmount.getKey();
+            double amount = (double) categoryAmount.getValue();
             String type = result.getValue();
 
-            categoryNames.add(categoryAmount.getKey());
-            XYChart.Data<String, Number> data = new XYChart.Data<>(name, categoryAmount.getValue());
+            categoryNames.add(name);
+            XYChart.Data<String, Number> data = new XYChart.Data<>(name, amount);
+            data.setExtraValue(type);
             series.getData().add(data);
-
-//
-//            if (type.equals("expense")) {
-//                Node node = data.getNode();
-//                if (node != null) {
-//                    node.setStyle("-fx-bar-fill: #ff6961;");
-//                }
-//            } else if (type.equals("income")) {
-//                Node node = data.getNode();
-//                if(node!=null) {
-//                    data.getNode().setStyle("-fx-bar-fill: #77dd77;");
-//                }
-//            }
-
         }
 
         categoryAxis.setCategories(FXCollections.observableArrayList(categoryNames));
 
         barChart.setPrefWidth(600);
-        barChart.setStyle("-fx-bar-fill: #77dd77;");
         barChart.getData().add(series);
 
+        for (XYChart.Series<String, Number> bars : barChart.getData()) {
+            for (XYChart.Data<String, Number> bar : bars.getData()) {
+                String type = (String) bar.getExtraValue();
+                if(type == null) System.out.println("bar " + bar.getXValue());
+                assert type != null;
+                bar.getNode().setStyle(type.equals("expense") ? "-fx-bar-fill: #3A4D8F;" : "-fx-bar-fill: #99b3ff;");
+            }
+        }
     }
 
     //
     private void initializePieChart(List<Pair<Pair<String, Number>, String>> results) {
         pieChart.getData().clear();
         List<PieChart.Data> data = new ArrayList<>(5);
+        List<String> types = new ArrayList<>();
 
         for (Pair<Pair<String, Number>, String> result : results) {
             Pair<String, Number> categoryAmount = result.getKey();
             String categoryName = categoryAmount.getKey();
             Number categoryValue = categoryAmount.getValue();
-            data.add(new PieChart.Data(categoryName, categoryValue.doubleValue()));
+            PieChart.Data slice = new PieChart.Data(categoryName, categoryValue.doubleValue());
+            types.add(result.getValue());
+            data.add(slice);
         }
 
         pieChart.setData(FXCollections.observableArrayList(data));
+
+        int currentSliceIndex = 0;
+        for (PieChart.Data slice : pieChart.getData()) {
+            String type = types.get(currentSliceIndex);
+            if(type == null) System.out.println("pie" + currentSliceIndex);
+            currentSliceIndex += 1;
+            slice.getNode().setStyle(type.equals("expense") ? "-fx-pie-color: #3A4D8F;" : "-fx-pie-color: #99b3ff;");
+        }
     }
 
     @Override
@@ -121,10 +128,5 @@ public class ReportsController implements ObserverController {
         }
         initializeBarChart(topCategories);
         initializePieChart(topCategories);
-        for (Pair<Pair<String, Number>, String> pair : topCategories) {
-            Pair<String, Number> categoryAmountPair = pair.getKey();
-            String categoryType = pair.getValue();
-            System.out.println(categoryAmountPair.getKey() + " : " + categoryAmountPair.getValue() + " : " + categoryType);
-        }
     }
 }

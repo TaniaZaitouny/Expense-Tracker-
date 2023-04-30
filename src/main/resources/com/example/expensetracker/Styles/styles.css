@@ -47,14 +47,9 @@
     -fx-padding: 10px;
 }
 
-.chart-bar {
-    -fx-bar-fill: #3A4D8F;
-}
-
 .choice-box {
     -fx-background-color: white;
     -fx-border-color: #3A4D8F;
-
     -fx-border-radius: 5px;
 
 }
