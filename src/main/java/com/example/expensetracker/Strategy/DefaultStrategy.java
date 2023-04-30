@@ -17,13 +17,26 @@ public class DefaultStrategy extends TransactionStrategy{
         return pairs;
     }
 
-//    @Override
-//    public Double totalExpense() {
-//        String sql =
-//                "SELECT SUM(t.amount) AS totalExpense " +
-//                "FROM transactions t " +
-//                "JOIN categories c ON t.category = c.categoryName " +
-//                "WHERE c.type = 'expense'";
-//
-//    }
+    @Override
+    public Number totalExpense() {
+        String sql =
+                "SELECT SUM(t.amount) AS totalExpense " +
+                "FROM transactions t " +
+                "JOIN categories c ON t.category = c.categoryName " +
+                "WHERE c.type = 'expense'";
+        Number result = executeQuery2(sql);
+
+        return result;
+    }
+    @Override
+    public Number totalIncome() {
+        String sql =
+                "SELECT SUM(t.amount) AS totalExpense " +
+                        "FROM transactions t " +
+                        "JOIN categories c ON t.category = c.categoryName " +
+                        "WHERE c.type = 'income'";
+        Number result = executeQuery2(sql);
+
+        return result;
+    }
 }

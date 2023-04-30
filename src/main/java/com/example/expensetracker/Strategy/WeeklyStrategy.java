@@ -21,4 +21,29 @@ public class WeeklyStrategy extends TransactionStrategy{
         List<Pair<Pair<String,Number>, String>> pairs = executeQuery(sql);
         return pairs;
     }
+
+    @Override
+    public Number totalExpense() {
+        String sql =
+                "SELECT SUM(t.amount) AS totalExpense " +
+                        "FROM transactions t " +
+                        "JOIN categories c ON t.category = c.categoryName " +
+                        "WHERE c.type = 'expense' AND YEAR(t.date) = " + current_year +
+                        " AND WEEK(t.date) = " + current_week ;
+        Number result = executeQuery2(sql);
+
+        return result;
+    }
+    @Override
+    public Number totalIncome() {
+        String sql =
+                "SELECT SUM(t.amount) AS totalExpense " +
+                        "FROM transactions t " +
+                        "JOIN categories c ON t.category = c.categoryName " +
+                        "WHERE c.type = 'income' AND YEAR(t.date) = " + current_year +
+                        " AND MONTH(t.date) = " + current_month ;
+        Number result = executeQuery2(sql);
+
+        return result;
+    }
 }

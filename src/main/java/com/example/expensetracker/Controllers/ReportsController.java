@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.util.Pair;
 
@@ -25,10 +26,12 @@ public class ReportsController implements ObserverController {
     PieChart pieChart;
     @FXML
     ChoiceBox<String> filterReport;
+    @FXML
+    Label selectedStrategy, expenseLabel, incomeLabel, balanceLabel;
 
     //    boolean chartDrawn = false;
     public void initialize() {
-
+        filterReport.setValue("Default");
     }
 
 
@@ -100,31 +103,46 @@ public class ReportsController implements ObserverController {
     public void filterReports(ActionEvent event) {
         String strategy = filterReport.getValue();
         List<Pair<Pair<String, Number>, String>> topCategories = new ArrayList<>();
+        Number totalExpenses = 0.0 , totalIncome = 0.0;
+        Double totalBalance = 0.0;
         switch (strategy) {
             case "Default":
                 TransactionStrategy defaultStrategy = new DefaultStrategy();
                 topCategories = defaultStrategy.topCategories();
+                totalExpenses = defaultStrategy.totalExpense();
+                totalIncome = defaultStrategy.totalIncome();
                 break;
             case "Daily":
                 TransactionStrategy dailyStrategy = new DailyStrategy();
                 topCategories = dailyStrategy.topCategories();
+                totalExpenses = dailyStrategy.totalExpense();
+                totalIncome = dailyStrategy.totalIncome();
                 break;
             case "Weekly":
                 TransactionStrategy weeklyStrategy = new WeeklyStrategy();
                 topCategories = weeklyStrategy.topCategories();
+                totalExpenses = weeklyStrategy.totalExpense();
+                totalIncome = weeklyStrategy.totalIncome();
                 break;
             case "Monthly":
                 TransactionStrategy monthlyStrategy = new MonthlyStrategy();
                 topCategories = monthlyStrategy.topCategories();
+                totalExpenses = monthlyStrategy.totalExpense();
+                totalIncome = monthlyStrategy.totalIncome();
                 break;
 
         }
         initializeBarChart(topCategories);
         initializePieChart(topCategories);
-        for (Pair<Pair<String, Number>, String> pair : topCategories) {
-            Pair<String, Number> categoryAmountPair = pair.getKey();
-            String categoryType = pair.getValue();
-            System.out.println(categoryAmountPair.getKey() + " : " + categoryAmountPair.getValue() + " : " + categoryType);
-        }
+        selectedStrategy.setText(strategy);
+        incomeLabel.setText(totalIncome.toString());
+        expenseLabel.setText(totalExpenses.toString());
+        totalBalance = totalIncome.doubleValue() - totalExpenses.doubleValue();
+        balanceLabel.setText(Double.toString(totalBalance));
+//        for (Pair<Pair<String, Number>, String> pair : topCategories) {
+//            Pair<String, Number> categoryAmountPair = pair.getKey();
+//            String categoryType = pair.getValue();
+//            System.out.println(categoryAmountPair.getKey() + " : " + categoryAmountPair.getValue() + " : " + categoryType);
+//        }
     }
 }

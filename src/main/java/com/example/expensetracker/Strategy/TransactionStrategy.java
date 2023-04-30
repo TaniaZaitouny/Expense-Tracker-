@@ -22,9 +22,9 @@ public abstract class TransactionStrategy {
     DatabaseConnection db = DatabaseConnection.getInstance();
     Connection connection = db.getConnection();
     public abstract List<Pair<Pair<String, Number>,String>> topCategories(); // implemented with 2 different algorithms monthly/weekly
-//    public abstract Double totalExpense();
-//    public abstract Double totalIncome();
-//    public abstract Double totalBalance();
+    public abstract Number totalExpense();
+    public abstract Number totalIncome();
+
     List<Pair<Pair<String,Number>, String>> executeQuery(String sql) {
         List<Pair<Pair<String,Number>, String>> pairs = new ArrayList<>(5);
         try {
@@ -41,8 +41,23 @@ public abstract class TransactionStrategy {
         }
         return pairs;
     }
-//    Double executeQuery2(String sql)
-//    {
-//
-//    }
+    Number executeQuery2(String sql)
+    {
+        Number result;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultset = statement.executeQuery(sql);
+            if (resultset.next()) {
+                result = resultset.getDouble("totalExpense");
+            } else {
+                result = 0.0; // or whatever default value you want to use
+            }
+            statement.close();
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
 }
