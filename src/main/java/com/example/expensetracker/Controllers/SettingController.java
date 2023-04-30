@@ -16,6 +16,8 @@ public class SettingController {
     @FXML
     Button logoutButton;
     @FXML
+    Button setButton;
+    @FXML
     TextField monthlyBudget;
     @FXML
     Label error;
@@ -45,8 +47,12 @@ public class SettingController {
             double monthly = Double.parseDouble(monthlyBudget.getText());
             User u = new User();
             u.updateUser(monthly);
-            error.setText("Monthly Budget Set!");
-            monthlyBudget.setText("");
+            Stage stage = (Stage) setButton.getScene().getWindow();
+            try {
+                MenuController.loadPage("Views/categories.fxml", stage);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
