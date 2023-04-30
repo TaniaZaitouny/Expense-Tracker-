@@ -25,9 +25,6 @@ public class HelloApplication extends Application {
         else {
             MenuController.loadPage("Views/home.fxml", stage);
         }
-
-        DatabaseConnection db = DatabaseConnection.getInstance();
-        Connection connection = db.getConnection();
     }
 
     public static void main(String[] args) {
