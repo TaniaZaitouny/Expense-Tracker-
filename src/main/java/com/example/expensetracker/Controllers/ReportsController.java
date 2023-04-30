@@ -1,16 +1,15 @@
 package com.example.expensetracker.Controllers;
 
 import com.example.expensetracker.Models.Transaction;
-import com.example.expensetracker.Strategy.DefaultStrategy;
-import com.example.expensetracker.Strategy.MonthlyStrategy;
-import com.example.expensetracker.Strategy.TransactionStrategy;
-import com.example.expensetracker.Strategy.WeeklyStrategy;
+import com.example.expensetracker.Strategy.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.paint.Color;
 import javafx.util.Pair;
 
@@ -25,53 +24,15 @@ public class ReportsController implements ObserverController {
     @FXML
     PieChart pieChart;
     @FXML
-    Button monthlyButton;
-    @FXML
-    Button weeklyButton;
-//    boolean chartDrawn = false;
+    ChoiceBox<String> filterReport;
+
+    //    boolean chartDrawn = false;
     public void initialize() {
 
-        TransactionStrategy defaultStrategy = new DefaultStrategy();
-        List<Pair<Pair<String, Number>, String>> topCategories = defaultStrategy.topCategories();
-        initializeBarChart(topCategories);
-        initializePieChart(topCategories);
-        weeklyButton.setOnAction(event-> {
-            Transaction transaction1 = new Transaction();
-            TransactionStrategy weeklyStrategy = new WeeklyStrategy();
-            List<Pair<Pair<String, Number>, String>> topCategories1 = weeklyStrategy.topCategories();
-            initializeBarChart(topCategories1);
-            initializePieChart(topCategories1);
-//            chartDrawn = true;
-
-            System.out.println("Weekly strategy top categories:");
-            for (Pair<Pair<String, Number>, String> pair : topCategories1) {
-                Pair<String, Number> categoryAmountPair = pair.getKey();
-                String categoryType = pair.getValue();
-                System.out.println(categoryAmountPair.getKey() + " : " + categoryAmountPair.getValue() + " : " + categoryType);
-            }
-        });
-        monthlyButton.setOnAction(event->{
-
-            TransactionStrategy monthlyStrategy = new MonthlyStrategy();
-            List<Pair<Pair<String, Number>, String>> topCategories2 = monthlyStrategy.topCategories();
-            initializeBarChart(topCategories2);
-            initializePieChart(topCategories2);
-            System.out.println("Weekly strategy top categories:");
-            for (Pair<Pair<String, Number>, String> pair : topCategories2) {
-                Pair<String, Number> categoryAmountPair = pair.getKey();
-                String categoryType = pair.getValue();
-                System.out.println(categoryAmountPair.getKey() + " : " + categoryAmountPair.getValue() + " : " + categoryType);
-            }
-            monthlyButton.setDisable(true);
-        });
+    }
 
 
-        }
-
-
-
-
-    private void initializeBarChart(List<Pair<Pair<String, Number>,String>> results) {
+    private void initializeBarChart(List<Pair<Pair<String, Number>, String>> results) {
         barChart.getData().clear();
         ((CategoryAxis) barChart.getXAxis()).getCategories().clear();
         Transaction transaction = new Transaction();
@@ -81,7 +42,7 @@ public class ReportsController implements ObserverController {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
 
         List<String> categoryNames = new ArrayList<String>(5);
-        for(Pair<Pair<String, Number>,String>  result : results) {
+        for (Pair<Pair<String, Number>, String> result : results) {
             Pair<String, Number> categoryAmount = result.getKey();
             String name = categoryAmount.getKey();
             String type = result.getValue();
@@ -112,25 +73,58 @@ public class ReportsController implements ObserverController {
         barChart.getData().add(series);
 
     }
-//
-private void initializePieChart(List<Pair<Pair<String, Number>, String>> results) {
-    pieChart.getData().clear();
-    List<PieChart.Data> data = new ArrayList<>(5);
 
-    for (Pair<Pair<String, Number>, String> result : results) {
-        Pair<String, Number> categoryAmount = result.getKey();
-        String categoryName = categoryAmount.getKey();
-        Number categoryValue = categoryAmount.getValue();
-        data.add(new PieChart.Data(categoryName, categoryValue.doubleValue()));
+    //
+    private void initializePieChart(List<Pair<Pair<String, Number>, String>> results) {
+        pieChart.getData().clear();
+        List<PieChart.Data> data = new ArrayList<>(5);
+
+        for (Pair<Pair<String, Number>, String> result : results) {
+            Pair<String, Number> categoryAmount = result.getKey();
+            String categoryName = categoryAmount.getKey();
+            Number categoryValue = categoryAmount.getValue();
+            data.add(new PieChart.Data(categoryName, categoryValue.doubleValue()));
+        }
+
+        pieChart.setData(FXCollections.observableArrayList(data));
     }
-
-    pieChart.setData(FXCollections.observableArrayList(data));
-}
 
     @Override
     public void notify(ArrayList<Object> tableData) {
-        if(barChart != null) {
+        if (barChart != null) {
 
+        }
+    }
+
+
+    public void filterReports(ActionEvent event) {
+        String strategy = filterReport.getValue();
+        List<Pair<Pair<String, Number>, String>> topCategories = new ArrayList<>();
+        switch (strategy) {
+            case "Default":
+                TransactionStrategy defaultStrategy = new DefaultStrategy();
+                topCategories = defaultStrategy.topCategories();
+                break;
+            case "Daily":
+                TransactionStrategy dailyStrategy = new DailyStrategy();
+                topCategories = dailyStrategy.topCategories();
+                break;
+            case "Weekly":
+                TransactionStrategy weeklyStrategy = new WeeklyStrategy();
+                topCategories = weeklyStrategy.topCategories();
+                break;
+            case "Monthly":
+                TransactionStrategy monthlyStrategy = new MonthlyStrategy();
+                topCategories = monthlyStrategy.topCategories();
+                break;
+
+        }
+        initializeBarChart(topCategories);
+        initializePieChart(topCategories);
+        for (Pair<Pair<String, Number>, String> pair : topCategories) {
+            Pair<String, Number> categoryAmountPair = pair.getKey();
+            String categoryType = pair.getValue();
+            System.out.println(categoryAmountPair.getKey() + " : " + categoryAmountPair.getValue() + " : " + categoryType);
         }
     }
 }

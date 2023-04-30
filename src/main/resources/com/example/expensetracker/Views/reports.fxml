@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="615.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.ReportsController">
    <children>
@@ -16,32 +21,81 @@
             <fx:include source="layout.fxml" />
             <AnchorPane id="content" prefHeight="400.0" prefWidth="488.0">
                <children>
-                  <VBox prefHeight="400.0" prefWidth="459.0">
+                  <VBox prefHeight="408.0" prefWidth="482.0" spacing="5.0">
                      <children>
-                        <HBox maxWidth="-Infinity" prefHeight="100.0" prefWidth="464.0">
+                        <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" prefHeight="0.0" prefWidth="462.0">
                            <children>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
+                              <ChoiceBox fx:id="filterReport" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#filterReports" prefHeight="22.0" prefWidth="75.0">
+                                 <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                       <String fx:value="Default" />
+                                       <String fx:value="Daily" />
+                                       <String fx:value="Weekly" />
+                                       <String fx:value="Monthly" />
+                                    </FXCollections>
+                                 </items>
+                              </ChoiceBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox maxWidth="-Infinity" prefHeight="78.0" prefWidth="482.0" spacing="20.0">
+                           <children>
+                              <VBox alignment="TOP_CENTER" prefHeight="63.0" prefWidth="150.0">
                                  <children>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" />
+                                    <Label style="-fx-font-weight: bold;" text="Total Expenses">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="expenseLabel" text="Label">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
                                  </children>
-                              </HBox>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <padding>
+                                    <Insets top="5.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" prefHeight="63.0" prefWidth="150.0">
                                  <children>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" />
+                                    <Label style="-fx-font-weight: bold;" text="Total Income">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets top="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="incomeLabel" text="Label">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
                                  </children>
-                              </HBox>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" prefHeight="63.0" prefWidth="150.0">
                                  <children>
-                                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
-                                       <children>
-                                          <Button fx:id="monthlyButton" mnemonicParsing="false" text="monthly" />
-                                          <Button fx:id="weeklyButton" mnemonicParsing="false" text="weekly" />
-                                       </children></VBox>
+                                    <Label style="-fx-font-weight: bold;" text="Current Balance">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="balanceLabel" text="Label">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
                                  </children>
-                              </HBox>
+                                 <padding>
+                                    <Insets top="5.0" />
+                                 </padding>
+                              </VBox>
                            </children>
                         </HBox>
-                        <HBox maxWidth="-Infinity" prefHeight="300.0" prefWidth="475.0">
+                        <HBox maxWidth="-Infinity" prefHeight="318.0" prefWidth="475.0">
                            <children>
                               <PieChart fx:id="pieChart" />
                               <BarChart fx:id="barChart">
