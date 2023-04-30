@@ -1,6 +1,9 @@
 package com.example.expensetracker.Models;
 
 import com.example.expensetracker.Database.DatabaseConnection;
+import com.example.expensetracker.Filters.TransactionFilter;
+import com.example.expensetracker.Filters.TransactionNormalFilter;
+import com.example.expensetracker.Objects.TransactionObject;
 import javafx.util.Pair;
 
 import java.sql.*;
@@ -61,23 +64,10 @@ public class Transaction {
         statement.close();
     }
 
-    public ArrayList<String[]> getTransactions() throws SQLException
+    public ArrayList<TransactionObject> getTransactions() throws SQLException
     {
-        ArrayList<String[]> transactions = new ArrayList<String[]>();
-        Statement statement = connection.createStatement();
-        String query = "SELECT category, date, amount, id FROM transactions WHERE userId = " + userId;
-//        System.out.println("Executing query: " + query);
-        ResultSet resultSet = statement.executeQuery(query);
-        while (resultSet.next()) {
-            String[] singleTransaction = new String[4];
-            singleTransaction[0] = resultSet.getString(1);
-            singleTransaction[1] = resultSet.getString(2);
-            singleTransaction[2] = resultSet.getString(3);
-            singleTransaction[3] = resultSet.getString(4);
-            transactions.add(singleTransaction);
-        }
-        statement.close();
-        return transactions;
+        TransactionFilter filter = new TransactionNormalFilter();
+        return filter.filter("");
     }
 
 }

@@ -15,7 +15,7 @@ public class CategoryNormalFilter implements CategoryFilter
     Connection connection = db.getConnection();
 
     @Override
-    public ArrayList<CategoryObject> filter(String filterType) throws SQLException {
+    public ArrayList<CategoryObject> filter(String empty) throws SQLException {
         String sql = "SELECT * FROM categories where userId = '" + userId + "';";
         ArrayList<CategoryObject> categories = new ArrayList<>();
         Statement statement = connection.createStatement();

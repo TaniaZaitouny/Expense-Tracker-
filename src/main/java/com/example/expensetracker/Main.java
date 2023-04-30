@@ -11,7 +11,7 @@ import java.sql.*;
 import java.io.IOException;
 import java.util.prefs.Preferences;
 
-public class HelloApplication extends Application {
+public class Main extends Application {
 
     Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
 

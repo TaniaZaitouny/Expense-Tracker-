@@ -36,6 +36,16 @@ public class Category {
         return found;
     };
 
+    public CategoryObject getCategory(String name) throws SQLException {
+        String sql = "SELECT * FROM categories where categoryName = '" + name + "';";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        resultSet.next();
+        CategoryObject category = new CategoryObject(resultSet.getString(1), resultSet.getInt(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getDate(6), resultSet.getDouble(7));
+        statement.close();
+        return category;
+    }
+
     public boolean addCategory(String name, String type, String icon) throws SQLException {
         if(findCategory(name)) {
             return false;

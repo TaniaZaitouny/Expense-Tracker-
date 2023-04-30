@@ -9,7 +9,10 @@ public class TransactionObject
     public int id;
     public int userId;
     public String category;
+    public  TransactionObject()
+    {
 
+    }
     public TransactionObject(int id, int userId, Date date, double amount, String category)
     {
         this.date = date;
