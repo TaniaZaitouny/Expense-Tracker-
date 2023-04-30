@@ -1,6 +1,10 @@
 package com.example.expensetracker.Controllers;
 
 import com.example.expensetracker.Models.Transaction;
+import com.example.expensetracker.Strategy.DefaultStrategy;
+import com.example.expensetracker.Strategy.MonthlyStrategy;
+import com.example.expensetracker.Strategy.TransactionStrategy;
+import com.example.expensetracker.Strategy.WeeklyStrategy;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,14 +30,14 @@ public class ReportsController implements ObserverController {
     Button weeklyButton;
 //    boolean chartDrawn = false;
     public void initialize() {
-        Transaction transaction = new Transaction();
-        Transaction.TransactionStrategy defaultStrategy = transaction.new DefaultStrategy();
+
+        TransactionStrategy defaultStrategy = new DefaultStrategy();
         List<Pair<Pair<String, Number>, String>> topCategories = defaultStrategy.topCategories();
         initializeBarChart(topCategories);
         initializePieChart(topCategories);
         weeklyButton.setOnAction(event-> {
             Transaction transaction1 = new Transaction();
-            Transaction.TransactionStrategy weeklyStrategy = transaction1.new WeeklyStrategy();
+            TransactionStrategy weeklyStrategy = new WeeklyStrategy();
             List<Pair<Pair<String, Number>, String>> topCategories1 = weeklyStrategy.topCategories();
             initializeBarChart(topCategories1);
             initializePieChart(topCategories1);
@@ -47,8 +51,8 @@ public class ReportsController implements ObserverController {
             }
         });
         monthlyButton.setOnAction(event->{
-            Transaction transaction2 = new Transaction();
-            Transaction.TransactionStrategy monthlyStrategy = transaction2.new MonthlyStrategy();
+
+            TransactionStrategy monthlyStrategy = new MonthlyStrategy();
             List<Pair<Pair<String, Number>, String>> topCategories2 = monthlyStrategy.topCategories();
             initializeBarChart(topCategories2);
             initializePieChart(topCategories2);

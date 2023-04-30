@@ -3,6 +3,8 @@ package com.example.expensetracker.Controllers;
 
 import com.example.expensetracker.Main;
 import com.example.expensetracker.Models.Transaction;
+import com.example.expensetracker.Strategy.DefaultStrategy;
+import com.example.expensetracker.Strategy.TransactionStrategy;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -30,8 +32,8 @@ public class HomeController implements ObserverController {
     }
    public void initializeTopCategories()
    {
-       Transaction transaction = new Transaction();
-       Transaction.TransactionStrategy defaultStrategy = transaction.new DefaultStrategy();
+
+       TransactionStrategy defaultStrategy = new DefaultStrategy();
        List<Pair<Pair<String, Number>, String>> topCategories = defaultStrategy.topCategories();
        for(Pair<Pair<String, Number>,String> category : topCategories)
        {
