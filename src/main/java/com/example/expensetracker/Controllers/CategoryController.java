@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -269,19 +270,19 @@ public class CategoryController {
 
             public TableCell<CategoryObject, Void> call(final TableColumn<CategoryObject, Void> param) {
                 final TableCell<CategoryObject, Void> cell = new TableCell<CategoryObject, Void>() {
-                    private final Button editButton = new Button("Edit");
-                    private final Button deleteButton = new Button("Delete");
-
+                    private final Button editButton = new Button("");
+                    private final Button deleteButton = new Button("");
                     {
-                        // Set the icons for the buttons
-                        ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("")));
+                        ImageView editIcon = new ImageView(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("Media/Actions/edit.png"))));
                         editIcon.setFitHeight(16);
                         editIcon.setFitWidth(16);
+                        editButton.setStyle("-fx-background-color: transparent;");
                         editButton.setGraphic(editIcon);
 
-                        ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/path/to/deleteIcon.png")));
+                        ImageView deleteIcon = new ImageView(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("Media/Actions/delete.png"))));
                         deleteIcon.setFitHeight(16);
                         deleteIcon.setFitWidth(16);
+                        deleteButton.setStyle("-fx-background-color: transparent;");
                         deleteButton.setGraphic(deleteIcon);
                     }
 
@@ -289,8 +290,10 @@ public class CategoryController {
                     protected void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
                         if (!empty) {
-                            HBox hb = new HBox();
+                            HBox hb = new HBox(30); // Add spacing between the buttons
+                            hb.setAlignment(Pos.CENTER); // Align the buttons to the left
                             hb.getChildren().addAll(editButton, deleteButton);
+                            hb.setBackground(null); // Remove the background color
                             setGraphic(hb);
                             editButton.setOnAction(event -> {
                                 CategoryObject rowData = getTableRow().getItem();

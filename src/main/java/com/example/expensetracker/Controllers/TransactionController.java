@@ -2,6 +2,7 @@ package com.example.expensetracker.Controllers;
 
 import com.example.expensetracker.Filters.CategoryFilters.*;
 import com.example.expensetracker.Filters.TransactionFilters.*;
+import com.example.expensetracker.Main;
 import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Models.Transaction;
 import com.example.expensetracker.Objects.CategoryObject;
@@ -13,6 +14,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -124,7 +127,8 @@ public class TransactionController implements ObserverController {
             messageText.setText("Please choose a date!");
             return;
         }
-        if(selectedCategory.equals("")) {
+        if(selectedCategory.equals("No Category")) {
+            messageText.setText("Please choose a category!");
             return;
         }
 
@@ -172,6 +176,20 @@ public class TransactionController implements ObserverController {
                 final TableCell<TransactionObject, Void> cell = new TableCell<TransactionObject, Void>() {
                     private final Button editBtn = new Button("Edit");
                     private final Button deleteBtn = new Button("Delete");
+
+                    {
+                        ImageView editIcon = new ImageView(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("Media/Actions/edit.png"))));
+                        editIcon.setFitHeight(16);
+                        editIcon.setFitWidth(16);
+                        editBtn.setStyle("-fx-background-color: transparent;");
+                        editBtn.setGraphic(editIcon);
+
+                        ImageView deleteIcon = new ImageView(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("Media/Actions/delete.png"))));
+                        deleteIcon.setFitHeight(16);
+                        deleteIcon.setFitWidth(16);
+                        deleteBtn.setStyle("-fx-background-color: transparent;");
+                        deleteBtn.setGraphic(deleteIcon);
+                    }
 
                     @Override
                     public void updateItem(Void item, boolean empty) {
