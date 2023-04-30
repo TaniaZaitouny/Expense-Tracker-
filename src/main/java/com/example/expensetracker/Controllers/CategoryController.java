@@ -96,7 +96,7 @@ public class CategoryController {
                 }
             }
 
-            final File folder = new File("src/main/resources/com/example/expensetracker/Media");
+            final File folder = new File("src/main/resources/com/example/expensetracker/Media/Icons/");
             final File[] files = folder.listFiles();
             String fileName, nameWithoutExtension;
             List<String> iconNames = new ArrayList<>();
@@ -119,7 +119,7 @@ public class CategoryController {
                         setGraphic(null);
                     } else {
                         setText(item);
-                        Image image = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("Media/" + item + ".png")));
+                        Image image = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("Media/Icons/" + item + ".png")));
                         imageView.setImage(image);
                         imageView.setFitWidth(32);
                         imageView.setFitHeight(32);

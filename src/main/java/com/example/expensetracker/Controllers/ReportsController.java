@@ -5,9 +5,11 @@ import com.example.expensetracker.Strategy.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -35,11 +37,7 @@ public class ReportsController implements ObserverController {
         barChart.getData().clear();
         ((CategoryAxis) barChart.getXAxis()).getCategories().clear();
         Transaction transaction = new Transaction();
-
-//        List<Pair<String, Number>> results = transaction.getTopCategories();
-
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-
         List<String> categoryNames = new ArrayList<String>(5);
         for (Pair<Pair<String, Number>, String> result : results) {
             Pair<String, Number> categoryAmount = result.getKey();
@@ -52,20 +50,22 @@ public class ReportsController implements ObserverController {
             data.setExtraValue(type);
             series.getData().add(data);
         }
-
         categoryAxis.setCategories(FXCollections.observableArrayList(categoryNames));
-
         barChart.setPrefWidth(600);
         barChart.getData().add(series);
-
+        String type = null;
         for (XYChart.Series<String, Number> bars : barChart.getData()) {
             for (XYChart.Data<String, Number> bar : bars.getData()) {
-                String type = (String) bar.getExtraValue();
-                if(type == null) System.out.println("bar " + bar.getXValue());
+                type = (String) bar.getExtraValue();
+                if (type == null) {
+                    System.out.println("bar " + bar.getXValue());
+                }
                 assert type != null;
                 bar.getNode().setStyle(type.equals("expense") ? "-fx-bar-fill: #3A4D8F;" : "-fx-bar-fill: #99b3ff;");
             }
         }
+        barChart.setLegendVisible(false);
+
     }
 
     //
@@ -92,6 +92,7 @@ public class ReportsController implements ObserverController {
             currentSliceIndex += 1;
             slice.getNode().setStyle(type.equals("expense") ? "-fx-pie-color: #3A4D8F;" : "-fx-pie-color: #99b3ff;");
         }
+        pieChart.setLegendVisible(false);
     }
 
     @Override
