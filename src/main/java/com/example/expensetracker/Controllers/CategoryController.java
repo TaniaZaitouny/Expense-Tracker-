@@ -188,8 +188,12 @@ public class CategoryController {
     private void addCategory(String name, String type, String icon) throws SQLException
     {
         if(category.addCategory(name, type, icon)) {
-            categoryName.setText("");
-            messageText.setText("Category added successfully");
+            Stage stage = (Stage) addCategoryButton.getScene().getWindow();
+            try {
+                MenuController.loadPage("Views/categories.fxml", stage);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         else {
             messageText.setText("Category already exists");
@@ -199,8 +203,12 @@ public class CategoryController {
     private void addCategory(String name, String type, String icon, String frequencyValue, double amountValue) throws SQLException
     {
         if(category.addCategory(name, type, icon, frequencyValue, amountValue)) {
-            categoryName.setText("");
-            messageText.setText("Category added successfully");
+            Stage stage = (Stage) addCategoryButton.getScene().getWindow();
+            try {
+                MenuController.loadPage("Views/categories.fxml", stage);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         else {
             messageText.setText("Category already exists");
@@ -210,16 +218,24 @@ public class CategoryController {
     private void editCategory(String name, String type, String icon) throws SQLException
     {
         category.updateCategory(categoryToUpdate.categoryName, name, type, icon);
-        categoryName.setText("");
-        messageText.setText("Category updated successfully");
+        Stage stage = (Stage) addCategoryButton.getScene().getWindow();
+        try {
+            MenuController.loadPage("Views/categories.fxml", stage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     private void editCategory(String name, String type, String icon, String frequencyValue, double amountValue) throws SQLException
     {
         category.updateCategory(categoryToUpdate.categoryName, name, type, icon, frequencyValue, amountValue);
-        categoryName.setText("");
-        messageText.setText("Category updated successfully");
+        Stage stage = (Stage) addCategoryButton.getScene().getWindow();
+        try {
+            MenuController.loadPage("Views/categories.fxml", stage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void getCategories(CategoryFilter Filter, String filterType) throws SQLException
