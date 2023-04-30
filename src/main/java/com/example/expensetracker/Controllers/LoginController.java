@@ -1,13 +1,9 @@
 package com.example.expensetracker.Controllers;
 
 
-import com.example.expensetracker.HelloApplication;
-import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Models.Login;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,7 +13,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Objects;
 
 public class LoginController {
 

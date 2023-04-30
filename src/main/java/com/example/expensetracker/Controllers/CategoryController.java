@@ -1,17 +1,12 @@
 package com.example.expensetracker.Controllers;
 
-import com.example.expensetracker.HelloApplication;
+import com.example.expensetracker.Main;
 import com.example.expensetracker.Models.Category;
 import javafx.collections.FXCollections;
-import java.util.Collection;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -20,11 +15,9 @@ import javafx.scene.layout.HBox;
 
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import javafx.util.StringConverter;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +110,7 @@ public class CategoryController
                         setGraphic(null);
                     } else {
                         setText(item);
-                        Image image = new Image(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("Media/" + item + ".png")));
+                        Image image = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("Media/" + item + ".png")));
                         imageView.setImage(image);
                         imageView.setFitWidth(32);
                         imageView.setFitHeight(32);
