@@ -1,5 +1,6 @@
 package com.example.expensetracker.Controllers;
 
+import com.example.expensetracker.Filters.CategoryNormalFilter;
 import com.example.expensetracker.Models.Category;
 import com.example.expensetracker.Models.Transaction;
 import com.example.expensetracker.Objects.CategoryObject;
@@ -88,7 +89,7 @@ public class TransactionController {
         Category category = new Category();
 
         try {
-            ArrayList<CategoryObject> results = category.getCategories();
+            ArrayList<CategoryObject> results = category.getCategories(new CategoryNormalFilter(),"");
             ArrayList<String> categories = new ArrayList<>();
             results.forEach(pair -> categories.add(pair.categoryName));
             transactionCategory.setItems(FXCollections.observableList(categories));
@@ -104,7 +105,7 @@ public class TransactionController {
         Category category = new Category();
 
         try {
-            ArrayList<CategoryObject> results = category.getCategories();
+            ArrayList<CategoryObject> results = category.getCategories(new CategoryNormalFilter(),"");
             ArrayList<String> categories = new ArrayList<>();
             results.forEach(pair -> categories.add(pair.categoryName));
             categoryFilter.setItems(FXCollections.observableList(categories));

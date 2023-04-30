@@ -18,13 +18,18 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="375.0" spacing="5.0">
                            <Label prefHeight="44.0" prefWidth="359.0" style="-fx-font-size: 19px; -fx-font-weight: bold;" text="Categories" textFill="#1c1d1e" HBox.hgrow="ALWAYS" />
-                           <ChoiceBox fx:id="filter" prefWidth="110.0" value="Filter By">
+                           <ChoiceBox onAction="#filterCategories" fx:id="filters" prefWidth="110.0" value="All">
                                <items>
                                    <FXCollections fx:factory="observableArrayList">
-                                       <String fx:value="DAILY"/>
-                                       <String fx:value="WEEKLY"/>
-                                       <String fx:value="MONTHLY"/>
-                                       <String fx:value="YEARLY"/>
+                                       <String  fx:value="All"/>
+                                       <String fx:value="Expense"/>
+                                       <String fx:value="Income"/>
+                                       <String fx:value="Automatic"/>
+                                       <String fx:value="Normal"/>
+                                       <String fx:value="Recent"/>
+                                       <String fx:value="Oldest"/>
+                                       <String fx:value="Ascending"/>
+                                       <String fx:value="Descending"/>
                                    </FXCollections>
                                </items>
                            </ChoiceBox>
