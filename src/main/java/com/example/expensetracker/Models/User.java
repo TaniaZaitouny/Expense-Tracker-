@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.prefs.Preferences;
 
-public class Login {
+public class User {
 
     DatabaseConnection connection = DatabaseConnection.getInstance();
 
@@ -106,4 +106,12 @@ public class Login {
         System.out.println("shit"); //???????????????????????
         return false;
     }
+
+    public void updateUser(double amount) throws SQLException {
+        String sql = "UPDATE users SET monthlyBUdget =  " + amount;
+        Statement statement = connection.getConnection().createStatement();
+        statement.executeUpdate(sql);
+        statement.close();
+    }
+
 }

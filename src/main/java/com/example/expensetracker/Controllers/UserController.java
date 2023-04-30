@@ -1,7 +1,7 @@
 package com.example.expensetracker.Controllers;
 
 
-import com.example.expensetracker.Models.Login;
+import com.example.expensetracker.Models.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class LoginController {
+public class UserController {
 
     @FXML private TextField usernameField;
     @FXML private TextField emailField;
@@ -25,7 +25,7 @@ public class LoginController {
     @FXML private Label messageText;
 
 
-   Login login = new Login();
+   User login = new User();
 
     public void loginPage(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) loginButton.getScene().getWindow();
@@ -68,6 +68,7 @@ public class LoginController {
             Scene scene = MenuController.loadPage("Views/home.fxml", stage);
         }
     }
+
 
 
 }

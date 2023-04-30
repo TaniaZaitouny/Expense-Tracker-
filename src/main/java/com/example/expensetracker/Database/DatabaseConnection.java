@@ -47,6 +47,7 @@ public class DatabaseConnection {
                 " username VARCHAR(255), " +
                 " email VARCHAR(255), " +
                 " password VARCHAR(255), " +
+                " monthlyBudget Double NULL, " +
                 " PRIMARY KEY (id))";
         try {
             Statement statement = this.connection.createStatement();
