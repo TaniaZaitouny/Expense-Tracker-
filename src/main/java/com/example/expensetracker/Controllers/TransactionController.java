@@ -304,21 +304,7 @@ public class TransactionController implements ObserverController {
     @Override
     public void getNotified() {
         if(transactionTable != null) {
-            if(filtersType.isVisible()) {
-                try {
-                    filterTransactionTypes();
-                } catch (SQLException e) {
-                    System.out.println("failed to filter after getting notified");
-                }
-            }
-            else {
-                try {
-                    filterTransactions();
-                }
-                catch (SQLException e) {
-                    System.out.println("failed to filter after getting notified");
-                }
-            }
+            new TransactionController();
         }
     }
 }
