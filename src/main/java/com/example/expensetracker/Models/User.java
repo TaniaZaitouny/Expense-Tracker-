@@ -96,13 +96,11 @@ public class User {
                 result.close();
                 statement.close();
                 saveId(userId);
-                System.out.println(userId);
                 statement.close();
                 return true;
             }
         }
         statement.close();
-        System.out.println("shit"); //???????????????????????
         return false;
     }
 
