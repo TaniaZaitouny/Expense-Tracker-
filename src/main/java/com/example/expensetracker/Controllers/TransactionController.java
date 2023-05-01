@@ -57,16 +57,15 @@ public class TransactionController implements ObserverController {
     TableColumn<TransactionObject, Void> actionColumn;
 
     Transaction transaction = new Transaction();
-
     private TransactionObject transactionToUpdate;
     private static int transactionToUpdateId = 0;
+
     public void initialize() throws SQLException {
         CheckAutomaticCategoriesThread thread = new CheckAutomaticCategoriesThread();
         thread.registerObserver(this);
-        thread.run();
+        thread.start();
         if (transactionTable != null) {
-            if(!transaction.checkCategories())
-            {
+            if(!transaction.checkCategories()) {
                 addTransactionButton.setManaged(false);
                 addTransactionButton.setVisible(false);
                 filters.setManaged(false);
@@ -89,7 +88,7 @@ public class TransactionController implements ObserverController {
                 transactionToUpdate = transaction.getTransaction(transactionToUpdateId);
                 pageTitle.setText("Update Transaction");
                 submitButton.setText("Update");
-                transactionAmount.setText(transactionToUpdate.amount + "");
+                transactionAmount.setText(String.valueOf(transactionToUpdate.amount));
                 transactionCategory.setValue(transactionToUpdate.category);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String dateString = dateFormat.format(transactionToUpdate.date);
@@ -97,6 +96,7 @@ public class TransactionController implements ObserverController {
             }
         }
     }
+
     @FXML
     protected void addTransactionPage() throws IOException{
         transactionToUpdateId = 0;
@@ -105,8 +105,7 @@ public class TransactionController implements ObserverController {
     }
 
     @FXML
-    public void initializeCategoryList(ChoiceBox<String> toFill)
-    {
+    public void initializeCategoryList(ChoiceBox<String> toFill) {
         Category category = new Category();
 
         try {
@@ -128,11 +127,11 @@ public class TransactionController implements ObserverController {
         LocalDate date = transactionDate.getValue();
         String selectedCategory = transactionCategory.getValue();
         double amount;
+
         try {
             amount = Double.parseDouble(transactionAmount.getText());
         }
-        catch (NumberFormatException e)
-        {
+        catch (NumberFormatException e) {
             messageText.setText("Please enter correct amount value!");
             return;
         }
@@ -141,6 +140,7 @@ public class TransactionController implements ObserverController {
             messageText.setText("Please choose a date!");
             return;
         }
+
         if(selectedCategory.equals("No Category")) {
             messageText.setText("Please choose a category!");
             return;
@@ -152,28 +152,28 @@ public class TransactionController implements ObserverController {
         else {
             editTransaction(date,selectedCategory,amount);
         }
+
         Stage stage = (Stage) submitButton.getScene().getWindow();
+
         try {
             MenuController.loadPage("Views/transactions.fxml", stage);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void addTransaction(LocalDate date,String selectedCategory,double amount) throws SQLException
-    {
+    public void addTransaction(LocalDate date, String selectedCategory, double amount) throws SQLException {
         transaction.addTransaction(date, selectedCategory, amount);
     }
 
-    public void editTransaction(LocalDate date,String selectedCategory,double amount) throws SQLException
-    {
+    public void editTransaction(LocalDate date, String selectedCategory, double amount) throws SQLException {
         transaction.updateTransaction(transactionToUpdateId, date, selectedCategory, amount);
     }
 
     public void populateTransactions(TransactionFilter Filter, String filterType) throws SQLException {
         transaction = new Transaction();
         ArrayList<TransactionObject> transactions = transaction.getTransactions(Filter, filterType);
-//        hidden field to store id
         TableColumn<TransactionObject, String> idColumn = new TableColumn<>("ID");
         idColumn.setVisible(false);
         idColumn.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().id)));
@@ -182,7 +182,6 @@ public class TransactionController implements ObserverController {
         amountColumn.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().amount)));
         transactionTable.getColumns().add(idColumn);
         transactionTable.setItems(FXCollections.observableArrayList(transactions));
-
 
         Callback<TableColumn<TransactionObject, Void>, TableCell<TransactionObject, Void>> cellFactory = new Callback<>() {
             @Override
@@ -220,7 +219,8 @@ public class TransactionController implements ObserverController {
                                 try {
                                     Stage stage = (Stage) editBtn.getScene().getWindow();
                                     MenuController.loadPage("Views/addTransaction.fxml", stage);
-                                } catch (IOException e) {
+                                }
+                                catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
                             });
@@ -229,7 +229,8 @@ public class TransactionController implements ObserverController {
                                 TransactionObject rowData = getTableRow().getItem();
                                 try {
                                     transaction.deleteTransaction(rowData.id);
-                                } catch (SQLException e) {
+                                }
+                                catch (SQLException e) {
                                     throw new RuntimeException(e);
                                 }
                                 //reload after deleting
@@ -250,8 +251,7 @@ public class TransactionController implements ObserverController {
     }
 
 
-    public void filterTransactions() throws SQLException
-    {
+    public void filterTransactions() throws SQLException {
         String filter = filters.getValue();
         switch (filter) {
             case "All" -> {
@@ -308,14 +308,15 @@ public class TransactionController implements ObserverController {
                 try {
                     filterTransactionTypes();
                 } catch (SQLException e) {
-                    //do something
+                    System.out.println("failed to filter after getting notified");
                 }
             }
             else {
                 try {
                     filterTransactions();
-                } catch (SQLException e) {
-                    //do something
+                }
+                catch (SQLException e) {
+                    System.out.println("failed to filter after getting notified");
                 }
             }
         }

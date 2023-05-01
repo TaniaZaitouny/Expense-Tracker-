@@ -9,8 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class TransactionNormalFilter implements TransactionFilter
-{
+public class TransactionNormalFilter implements TransactionFilter {
     DatabaseConnection db  = DatabaseConnection.getInstance();
     Connection connection = db.getConnection();
 
@@ -23,6 +22,7 @@ public class TransactionNormalFilter implements TransactionFilter
         while (resultSet.next()) {
             transactions.add(new TransactionObject(resultSet.getInt(1), resultSet.getInt(2), resultSet.getDate(3), resultSet.getDouble(4), resultSet.getString(5)));
         }
+        resultSet.close();
         statement.close();
         return transactions;
     }

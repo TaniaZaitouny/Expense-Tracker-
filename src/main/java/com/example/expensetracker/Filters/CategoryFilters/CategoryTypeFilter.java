@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class CategoryTypeFilter implements CategoryFilter {
-
     DatabaseConnection db  = DatabaseConnection.getInstance();
     Connection connection = db.getConnection();
 

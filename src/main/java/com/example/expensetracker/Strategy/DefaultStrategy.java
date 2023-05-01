@@ -4,7 +4,7 @@ import javafx.util.Pair;
 
 import java.util.List;
 
-public class DefaultStrategy extends TransactionStrategy{
+public class DefaultStrategy extends TransactionStrategy {
     @Override
     public List<Pair<Pair<String, Number>, String>> topCategories() {
         String sql = "SELECT t.category AS category , SUM(t.amount) AS totalAmount , c.type AS categoryType " +
@@ -13,8 +13,7 @@ public class DefaultStrategy extends TransactionStrategy{
                 "GROUP BY category " +
                 "ORDER BY totalAmount desc " +
                 "LIMIT 5";
-        List<Pair<Pair<String, Number>, String>> pairs = executeQuery(sql);
-        return pairs;
+        return executeQuery(sql);
     }
 
     @Override
@@ -24,10 +23,10 @@ public class DefaultStrategy extends TransactionStrategy{
                 "FROM transactions t " +
                 "JOIN categories c ON t.category = c.categoryName " +
                 "WHERE c.type = 'expense'";
-        Number result = executeQuery2(sql);
 
-        return result;
+        return executeQuery2(sql);
     }
+
     @Override
     public Number totalIncome() {
         String sql =
@@ -35,8 +34,7 @@ public class DefaultStrategy extends TransactionStrategy{
                         "FROM transactions t " +
                         "JOIN categories c ON t.category = c.categoryName " +
                         "WHERE c.type = 'income'";
-        Number result = executeQuery2(sql);
 
-        return result;
+        return executeQuery2(sql);
     }
 }

@@ -39,6 +39,7 @@ public class Category {
         ResultSet resultSet = statement.executeQuery(sql);
         resultSet.next();
         CategoryObject category = new CategoryObject(resultSet.getString(1), resultSet.getInt(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getDate(6), resultSet.getDouble(7));
+        resultSet.close();
         statement.close();
         return category;
     }
@@ -72,7 +73,8 @@ public class Category {
                 if (dayOfWeek.equals("MONDAY")) {
                     toAddTransaction = true;
                     lastTransactionDate = LocalDate.now();
-                } else {
+                }
+                else {
                     lastTransactionDate = currentDate.with(TemporalAdjusters.previous(DayOfWeek.MONDAY));
                 }
             }
@@ -81,7 +83,8 @@ public class Category {
                 if (dayOfMonth == 1) {
                     toAddTransaction = true;
                     lastTransactionDate = LocalDate.now();
-                } else {
+                }
+                else {
                     lastTransactionDate = currentDate.withDayOfMonth(1);
                 }
             }
@@ -90,7 +93,8 @@ public class Category {
                 if (monthOfYear == Month.JANUARY) {
                     toAddTransaction = true;
                     lastTransactionDate = LocalDate.now();
-                } else {
+                }
+                else {
                     lastTransactionDate = currentDate.withMonth(1).withDayOfMonth(1);
                 }
             }
@@ -117,6 +121,51 @@ public class Category {
     }
 
     public void updateCategory(String previousName, String name, String type, String icon, String frequency, Date lastTransactionDate, double amount) throws SQLException {
+        CategoryObject oldCategory = getCategory(previousName);
+        if(oldCategory.frequency.equals("NEVER")) {
+            boolean toAddTransaction = false;
+            LocalDate currentDate = LocalDate.now();
+            LocalDate lastUpdatedDate = null;
+            switch (frequency) {
+                case "DAILY" -> {
+                    toAddTransaction = true;
+                    lastUpdatedDate = LocalDate.now();
+                }
+                case "WEEKLY" -> {
+                    String dayOfWeek = String.valueOf(currentDate.getDayOfWeek());
+                    if (dayOfWeek.equals("MONDAY")) {
+                        toAddTransaction = true;
+                        lastUpdatedDate = LocalDate.now();
+                    } else {
+                        lastUpdatedDate = currentDate.with(TemporalAdjusters.previous(DayOfWeek.MONDAY));
+                    }
+                }
+                case "MONTHLY" -> {
+                    int dayOfMonth = currentDate.getDayOfMonth();
+                    if (dayOfMonth == 1) {
+                        toAddTransaction = true;
+                        lastUpdatedDate = LocalDate.now();
+                    } else {
+                        lastUpdatedDate = currentDate.withDayOfMonth(1);
+                    }
+                }
+                case "YEARLY" -> {
+                    Month monthOfYear = currentDate.getMonth();
+                    if (monthOfYear == Month.JANUARY) {
+                        toAddTransaction = true;
+                        lastUpdatedDate = LocalDate.now();
+                    } else {
+                        lastUpdatedDate = currentDate.withMonth(1).withDayOfMonth(1);
+                    }
+                }
+            }
+            String sqlQuery = "UPDATE transactions SET category = '" + name +"' WHERE category = '" + previousName + "';";
+            String sqlQuery2 = "UPDATE categories SET categoryName = '" + name + "', type = '" + type + "', icon = '" + icon + "', frequency = '" + frequency + "', lastTransaction = '" + lastUpdatedDate + "', amount = " + amount +  " WHERE categoryName = '" + previousName + "';";
+            if(toAddTransaction) {
+                Transaction transaction = new Transaction();
+                transaction.addTransaction(lastUpdatedDate, name, amount);
+            }
+        }
         String sqlQuery = "UPDATE transactions SET category = '" + name +"' WHERE category = '" + previousName + "';";
         String sqlQuery2 = "UPDATE categories SET categoryName = '" + name + "', type = '" + type + "', icon = '" + icon + "', frequency = '" + frequency + "', lastTransaction = '" + lastTransactionDate + "', amount = " + amount +  " WHERE categoryName = '" + previousName + "';";
         Statement statement = connection.createStatement();
@@ -134,7 +183,7 @@ public class Category {
         statement.close();
     }
 
-    public ArrayList<CategoryObject> getCategories(CategoryFilter Filter, String filterType) throws SQLException{
+    public ArrayList<CategoryObject> getCategories(CategoryFilter Filter, String filterType) throws SQLException {
         return Filter.filter(filterType);
     }
 
@@ -146,11 +195,13 @@ public class Category {
             ResultSet resultset = statement.executeQuery(sql);
             if (resultset.next()) {
                 iconName = resultset.getString("iconName");
-            } else {
+            }
+            else {
                 iconName = "Category";
             }
             statement.close();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return iconName;

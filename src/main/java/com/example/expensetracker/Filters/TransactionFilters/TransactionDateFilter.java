@@ -9,8 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class TransactionDateFilter implements TransactionFilter
-{
+public class TransactionDateFilter implements TransactionFilter {
     DatabaseConnection db  = DatabaseConnection.getInstance();
     Connection connection = db.getConnection();
 
@@ -20,10 +19,8 @@ public class TransactionDateFilter implements TransactionFilter
 
         ArrayList<TransactionObject> transactions = new ArrayList<>();
         Statement statement = connection.createStatement();
-        if(filterType.equals("oldest"))
-        {
+        if(filterType.equals("oldest")) {
             sql = "SELECT * FROM transactions where userId = '" + userId + "' ORDER BY date ASC;";
-
         }
         else {
             sql = "SELECT * FROM transactions where userId = '" + userId + "' ORDER BY date DESC;";
@@ -32,6 +29,7 @@ public class TransactionDateFilter implements TransactionFilter
         while (resultSet.next()) {
             transactions.add(new TransactionObject(resultSet.getInt(1), resultSet.getInt(2), resultSet.getDate(3), resultSet.getDouble(4), resultSet.getString(5)));
         }
+        resultSet.close();
         statement.close();
         return transactions;
     }

@@ -4,16 +4,12 @@ import com.example.expensetracker.Models.Transaction;
 import com.example.expensetracker.Strategy.*;
 import com.example.expensetracker.Threads.CheckAutomaticCategoriesThread;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,18 +25,16 @@ public class ReportsController implements ObserverController {
     @FXML
     Label expenseLabel, incomeLabel, balanceLabel;
 
-    //    boolean chartDrawn = false;
     public void initialize() {
         CheckAutomaticCategoriesThread thread = new CheckAutomaticCategoriesThread();
         thread.registerObserver(this);
-        thread.run();
-        filterReport.setValue("Default");
+        thread.start();
+        //filterReport.setValue("Default");
+        filterReports();
     }
-
 
     public void initializeBarChart(List<Pair<Pair<String, Number>, String>> results) {
         barChart.getData().clear();
-        ((CategoryAxis) barChart.getXAxis()).getCategories().clear();
         Transaction transaction = new Transaction();
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         List<String> categoryNames = new ArrayList<String>(5);
@@ -62,18 +56,13 @@ public class ReportsController implements ObserverController {
         for (XYChart.Series<String, Number> bars : barChart.getData()) {
             for (XYChart.Data<String, Number> bar : bars.getData()) {
                 type = (String) bar.getExtraValue();
-                if (type == null) {
-                    System.out.println("bar " + bar.getXValue());
-                }
-                assert type != null;
+                if(type == null) continue;
                 bar.getNode().setStyle(type.equals("expense") ? "-fx-bar-fill: #3A4D8F;" : "-fx-bar-fill: #99b3ff;");
             }
         }
         barChart.setLegendVisible(false);
-
     }
 
-    //
     private void initializePieChart(List<Pair<Pair<String, Number>, String>> results) {
         pieChart.getData().clear();
         List<PieChart.Data> data = new ArrayList<>(5);
@@ -93,8 +82,8 @@ public class ReportsController implements ObserverController {
         int currentSliceIndex = 0;
         for (PieChart.Data slice : pieChart.getData()) {
             String type = types.get(currentSliceIndex);
-            if (type == null) System.out.println("pie" + currentSliceIndex);
             currentSliceIndex += 1;
+            if(type == null) continue;
             slice.getNode().setStyle(type.equals("expense") ? "-fx-pie-color: #3A4D8F;" : "-fx-pie-color: #99b3ff;");
         }
         pieChart.setLegendVisible(false);
@@ -142,7 +131,7 @@ public class ReportsController implements ObserverController {
     @Override
     public void getNotified() {
         if (barChart != null) {
-            filterReports();
+            new ReportsController();
         }
     }
 }

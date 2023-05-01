@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class CategoryFrequencyFilter implements CategoryFilter {
-
     DatabaseConnection db = DatabaseConnection.getInstance();
     Connection connection = db.getConnection();
 
@@ -19,7 +18,8 @@ public class CategoryFrequencyFilter implements CategoryFilter {
         String sql;
         if (frequency.equals("never")) {
             sql = "SELECT * FROM categories where userId = '" + userId + "' AND frequency = 'NEVER'";
-        } else {
+        }
+        else {
             sql = "SELECT * FROM categories where userId = '" + userId + "' AND frequency != 'NEVER'";
         }
         ArrayList<CategoryObject> categories = new ArrayList<>();
@@ -28,6 +28,7 @@ public class CategoryFrequencyFilter implements CategoryFilter {
         while (resultSet.next()) {
             categories.add(new CategoryObject(resultSet.getString(1), resultSet.getInt(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getDate(6), resultSet.getDouble(7)));
         }
+        resultSet.close();
         statement.close();
         return categories;
     }

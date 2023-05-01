@@ -24,15 +24,15 @@ public class User {
                 sb.append(String.format("%02x", b));
             }
             return sb.toString();
-        } catch (NoSuchAlgorithmException ex) {
+        }
+        catch (NoSuchAlgorithmException ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
-
     private boolean validateAccount(String email) throws SQLException {
-        boolean valid= false;
+        boolean valid = false;
         String sql = "SELECT * FROM users WHERE email = ?";
         PreparedStatement statement = connection.getConnection().prepareStatement(sql);
         statement.setString(1, email);
@@ -47,8 +47,7 @@ public class User {
         return valid;
     }
 
-    private void saveId(int id)
-    {
+    private void saveId(int id) {
         Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
         prefs.putInt("userId", id);
     }
@@ -77,8 +76,7 @@ public class User {
 
     public boolean signup(String username,String email, String password) throws SQLException {
         int userId;
-        if(validateAccount(email))
-        {
+        if(validateAccount(email)) {
             System.out.println("found");
             return false;
         }

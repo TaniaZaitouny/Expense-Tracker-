@@ -21,11 +21,7 @@
                   <VBox prefHeight="400.0" prefWidth="476.0">
                      <children>
                         <HBox fx:id="topCategoriesBox" prefHeight="144.0" prefWidth="476.0" spacing="10.0">
-                           <Label fx:id="topLabel" managed="false" style="-fx-font-weight: bold;" text="Top Categories" visible="false">
-                              <font>
-                                 <Font size="15.0" />
-                              </font>
-                           </Label>
+
                            <padding>
                               <Insets bottom="20.0" left="15.0" right="20.0" top="20.0" />
                            </padding></HBox>

@@ -1,11 +1,8 @@
 package com.example.expensetracker.Database;
 
-import com.example.expensetracker.Models.Category;
-
 import java.sql.*;
 
 public class DatabaseConnection {
-
     private static DatabaseConnection  databaseConnection = null;
     private final Connection connection;
 
@@ -17,7 +14,8 @@ public class DatabaseConnection {
         try {
             connection = DriverManager.getConnection(dbURL, user, password);
             this.createTables();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -25,16 +23,6 @@ public class DatabaseConnection {
     public static DatabaseConnection getInstance() {
         if(databaseConnection == null) {
             databaseConnection = new DatabaseConnection();
-            Category category = new Category();
-//            Thread thread = new Thread(() -> {
-//                try {
-//                    category.checkCategories();
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//            });
-//            thread.start();
-
         }
         return databaseConnection;
     }
@@ -55,7 +43,6 @@ public class DatabaseConnection {
                 " username VARCHAR(255), " +
                 " email VARCHAR(255), " +
                 " password VARCHAR(255), " +
-                " monthlyBudget Double NULL, " +
                 " PRIMARY KEY (id))";
         try {
             Statement statement = this.connection.createStatement();
@@ -63,7 +50,6 @@ public class DatabaseConnection {
             ResultSet resultSet = meta.getTables("expense-tracker", null, "USERS", new String[] {"TABLE"});
             if(!resultSet.next()) {
                 statement.executeUpdate(sql);
-                System.out.println("Created users table in given database...");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -116,6 +102,5 @@ public class DatabaseConnection {
             throw new RuntimeException(e);
         }
     }
-
 
 }

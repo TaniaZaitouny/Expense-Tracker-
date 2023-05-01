@@ -31,13 +31,12 @@ public class MenuController {
     static String transactionStyle = null;
     static String reportsStyle = null;
 
-    public static Scene loadPage(String pageName, Stage stage) throws IOException {
+    public static void loadPage(String pageName, Stage stage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(pageName)));
         Scene scene = new Scene(root);
         stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("Media/Menu/logo.png"))));
         stage.setScene(scene);
         stage.show();
-        return scene;
     }
 
     public void initialize() {
@@ -65,7 +64,6 @@ public class MenuController {
         reportsStyle = "";
         Stage stage = (Stage) categoriesButton.getScene().getWindow();
         MenuController.loadPage("Views/categories.fxml", stage);
-        categoriesButton.setStyle("-fx-background-color: #FFFFFF; -fx-background-radius: 0 0 0 0; -fx-text-fill: #3A4D8F;");
     }
 
     @FXML
@@ -95,7 +93,8 @@ public class MenuController {
         Stage stage = (Stage) logoutButton.getScene().getWindow();
         try {
             MenuController.loadPage("Views/login.fxml", stage);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

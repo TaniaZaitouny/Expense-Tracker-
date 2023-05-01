@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.prefs.Preferences;
 
 public class Main extends Application {
-
     Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
 
     @Override

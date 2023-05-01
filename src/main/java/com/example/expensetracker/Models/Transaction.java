@@ -21,31 +21,28 @@ public class Transaction {
         userId = prefs.getInt("userId", 0);
     }
 
-
-
     public void addTransaction(LocalDate date, String selectedCategory, Double amount) throws SQLException {
-        String sqlQuery = "INSERT INTO transactions(userId,date,amount,category)" +
+        String sqlQuery = "INSERT INTO transactions(userId, date, amount, category)" +
                 "VALUES('" + userId + "','" + date + "','" + amount + "','" + selectedCategory + "')";
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
         statement.close();
     }
-    public void deleteTransaction(int transactionId) throws SQLException{
+    public void deleteTransaction(int transactionId) throws SQLException {
         String sqlQuery = "DELETE FROM transactions WHERE id =" + transactionId;
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
         statement.close();
     }
 
-    public void updateTransaction(int transactionId, LocalDate newDate, String newCategory, Double newAmount) throws SQLException{
+    public void updateTransaction(int transactionId, LocalDate newDate, String newCategory, Double newAmount) throws SQLException {
         String sqlQuery = "UPDATE transactions SET date = '" + newDate + "', amount = '" + newAmount + "', category = '" + newCategory +"' WHERE id = " + transactionId;
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
         statement.close();
     }
 
-    public ArrayList<TransactionObject> getTransactions(TransactionFilter Filter, String filterType) throws SQLException
-    {
+    public ArrayList<TransactionObject> getTransactions(TransactionFilter Filter, String filterType) throws SQLException {
         return Filter.filter(filterType);
     }
 
@@ -55,15 +52,19 @@ public class Transaction {
         ResultSet resultSet = statement.executeQuery(sql);
         resultSet.next();
         TransactionObject transaction = new TransactionObject(resultSet.getInt(1), resultSet.getInt(2), resultSet.getDate(3), resultSet.getDouble(4), resultSet.getString(5));
+        resultSet.close();
         statement.close();
         return transaction;
-
     }
+
     public boolean checkCategories() throws SQLException {
         String sql = "SELECT * FROM categories where userId = '" + userId + "';";
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
-        return resultSet.next();
+        boolean result = resultSet.next();
+        resultSet.close();
+        statement.close();
+        return result;
     }
 
 

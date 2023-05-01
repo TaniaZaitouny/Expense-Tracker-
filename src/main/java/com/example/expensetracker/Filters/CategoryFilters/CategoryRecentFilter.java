@@ -10,9 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class CategoryRecentFilter implements CategoryFilter
-{
-
+public class CategoryRecentFilter implements CategoryFilter {
     DatabaseConnection db  = DatabaseConnection.getInstance();
     Connection connection = db.getConnection();
 
@@ -25,6 +23,7 @@ public class CategoryRecentFilter implements CategoryFilter
         while (resultSet.next()) {
             categories.add(new CategoryObject(resultSet.getString(1), resultSet.getInt(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getDate(6), resultSet.getDouble(7)));
         }
+        resultSet.close();
         statement.close();
         Collections.reverse(categories);
         return categories;

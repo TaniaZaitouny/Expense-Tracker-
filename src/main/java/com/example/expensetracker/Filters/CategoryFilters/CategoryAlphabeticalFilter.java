@@ -9,16 +9,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class CategoryAlphabeticalFilter implements CategoryFilter
-{
+public class CategoryAlphabeticalFilter implements CategoryFilter {
     DatabaseConnection db  = DatabaseConnection.getInstance();
     Connection connection = db.getConnection();
 
     @Override
     public ArrayList<CategoryObject> filter(String order) throws SQLException {
         String sql;
-        if(order.equals("ascending"))
-        {
+        if(order.equals("ascending")) {
             sql = "SELECT * FROM categories where userId = '" + userId + "' ORDER BY categoryName ASC;";
         }
         else {
@@ -30,6 +28,7 @@ public class CategoryAlphabeticalFilter implements CategoryFilter
         while (resultSet.next()) {
             categories.add(new CategoryObject(resultSet.getString(1), resultSet.getInt(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getDate(6), resultSet.getDouble(7)));
         }
+        resultSet.close();
         statement.close();
         return categories;
     }

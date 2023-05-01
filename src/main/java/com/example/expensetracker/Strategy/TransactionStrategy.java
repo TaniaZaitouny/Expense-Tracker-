@@ -16,7 +16,6 @@ public abstract class TransactionStrategy {
     int current_year = calendar.get(Calendar.YEAR);
     int current_month = calendar.get(Calendar.MONTH) + 1;
     int current_week = calendar.get(Calendar.WEEK_OF_YEAR);
-
     DatabaseConnection db = DatabaseConnection.getInstance();
     Connection connection = db.getConnection();
     public abstract List<Pair<Pair<String, Number>,String>> topCategories(); // implemented with 2 different algorithms monthly/weekly
@@ -34,26 +33,26 @@ public abstract class TransactionStrategy {
                 String categoryType = result.getString("categoryType");
                 pairs.add(new Pair<>(new Pair<>(category, totalAmount), categoryType));
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return pairs;
     }
-    Number executeQuery2(String sql)
-    {
+    Number executeQuery2(String sql) {
         Number result;
         try {
             Statement statement = connection.createStatement();
             ResultSet resultset = statement.executeQuery(sql);
             if (resultset.next()) {
                 result = resultset.getDouble("totalExpense");
-            } else {
+            }
+            else {
                 result = 0.0;
             }
             statement.close();
         }
-        catch (SQLException e)
-        {
+        catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return result;

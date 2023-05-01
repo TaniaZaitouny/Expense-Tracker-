@@ -50,59 +50,56 @@ public class HomeController implements ObserverController {
     Button dailyStatistics;
     @FXML
     PieChart pieChart;
-    @FXML
-    Label topLabel;
+
     public void initialize() {
         CheckAutomaticCategoriesThread thread = new CheckAutomaticCategoriesThread();
         thread.registerObserver(this);
-        thread.run();
+        thread.start();
         initializeTopCategories();
     }
-   public void initializeTopCategories()
-   {
-       displayTopCategories();
-       initializeHomeCharts();
-   }
-  public void initializeHomeCharts()
-  {
-      TransactionStrategy dailyStrategy = new DailyStrategy();
-      List<Pair<Pair<String, Number>, String>> topCategories = new ArrayList<>();
-      topCategories = dailyStrategy.topCategories();
-      initializeBarChart(topCategories);
-      initializePieChart(topCategories);
-  }
+
+    public void initializeTopCategories() {
+        displayTopCategories();
+        initializeHomeCharts();
+    }
+
+    public void initializeHomeCharts() {
+        TransactionStrategy dailyStrategy = new DailyStrategy();
+        List<Pair<Pair<String, Number>, String>> topCategories = new ArrayList<>();
+        topCategories = dailyStrategy.topCategories();
+        initializeBarChart(topCategories);
+        initializePieChart(topCategories);
+    }
+
     private void initializeBarChart(List<Pair<Pair<String, Number>, String>> results) {
-            barChart.getData().clear();
-            Transaction transaction = new Transaction();
-            XYChart.Series<String, Number> series = new XYChart.Series<>();
-            List<String> categoryNames = new ArrayList<String>(5);
-            for (Pair<Pair<String, Number>, String> result : results) {
-                Pair<String, Number> categoryAmount = result.getKey();
-                String name = categoryAmount.getKey();
-                double amount = (double) categoryAmount.getValue();
-                String type = result.getValue();
+        barChart.getData().clear();
+        Transaction transaction = new Transaction();
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        List<String> categoryNames = new ArrayList<String>(5);
+        for (Pair<Pair<String, Number>, String> result : results) {
+            Pair<String, Number> categoryAmount = result.getKey();
+            String name = categoryAmount.getKey();
+            double amount = (double) categoryAmount.getValue();
+            String type = result.getValue();
 
-                categoryNames.add(name);
-                XYChart.Data<String, Number> data = new XYChart.Data<>(name, amount);
-                data.setExtraValue(type);
-                series.getData().add(data);
-            }
-            categoryAxis.setCategories(FXCollections.observableArrayList(categoryNames));
-//            barChart.setPrefWidth(600);
-            barChart.getData().add(series);
-            String type = null;
-            for (XYChart.Series<String, Number> bars : barChart.getData()) {
-                for (XYChart.Data<String, Number> bar : bars.getData()) {
-                    type = (String) bar.getExtraValue();
-                    if (type == null) {
-                        System.out.println("bar " + bar.getXValue());
-                    }
-                    assert type != null;
-                    bar.getNode().setStyle(type.equals("expense") ? "-fx-bar-fill: #3A4D8F;" : "-fx-bar-fill: #99b3ff;");
-                }
-            }
-            barChart.setLegendVisible(false);
+            categoryNames.add(name);
+            XYChart.Data<String, Number> data = new XYChart.Data<>(name, amount);
+            data.setExtraValue(type);
+            series.getData().add(data);
+        }
+        categoryAxis.setCategories(FXCollections.observableArrayList(categoryNames));
 
+        barChart.getData().add(series);
+
+        String type = null;
+        for (XYChart.Series<String, Number> bars : barChart.getData()) {
+            for (XYChart.Data<String, Number> bar : bars.getData()) {
+                type = (String) bar.getExtraValue();
+                if(type == null) continue;
+                bar.getNode().setStyle(type.equals("expense") ? "-fx-bar-fill: #3A4D8F;" : "-fx-bar-fill: #99b3ff;");
+            }
+        }
+        barChart.setLegendVisible(false);
     }
     private void initializePieChart(List<Pair<Pair<String, Number>, String>> results) {
         pieChart.getData().clear();
@@ -123,30 +120,19 @@ public class HomeController implements ObserverController {
         int currentSliceIndex = 0;
         for (PieChart.Data slice : pieChart.getData()) {
             String type = types.get(currentSliceIndex);
-            if(type == null) System.out.println("pie" + currentSliceIndex);
             currentSliceIndex += 1;
+            if(type == null) continue;
             slice.getNode().setStyle(type.equals("expense") ? "-fx-pie-color: #3A4D8F;" : "-fx-pie-color: #99b3ff;");
         }
         pieChart.setLegendVisible(false);
     }
 
-    public void displayTopCategories()
-    {
+    public void displayTopCategories() {
         topCategoriesBox.getChildren().clear();
         TransactionStrategy defaultStrategy = new DefaultStrategy();
         List<Pair<Pair<String, Number>, String>> topCategories = defaultStrategy.topCategories();
-        if(topCategories.isEmpty()) {
-            topLabel.setVisible(true);
-            topLabel.setManaged(true);
-            topLabel.setText("No Top Categories");
-            return;
-        }
-        else {
-            topLabel.setVisible(false);
-            topLabel.setManaged(false);
-        }
-       for(Pair<Pair<String, Number>,String> category : topCategories)
-        {
+
+        for(Pair<Pair<String, Number>,String> category : topCategories) {
             Pair<String, Number> categoryPair = category.getKey();
             String categoryName = categoryPair.getKey();
             Category c = new Category();
@@ -170,7 +156,6 @@ public class HomeController implements ObserverController {
             box.setPadding(new Insets(10,0,0,0));
             box.setAlignment(Pos.TOP_CENTER);
 
-            // Add the mouse entered event listener to make the VBox glow
             box.setOnMouseEntered(e -> {
                 DropShadow dropShadow = new DropShadow();
                 dropShadow.setRadius(15);
@@ -181,7 +166,6 @@ public class HomeController implements ObserverController {
                 box.setScaleY(1.1);
             });
 
-            // Add the mouse exited event listener to revert the VBox back to its original style
             box.setOnMouseExited(e -> {
                 box.setEffect(null);
                 box.setScaleX(1.0);
@@ -189,14 +173,12 @@ public class HomeController implements ObserverController {
             });
             topCategoriesBox.getChildren().add(box);
         }
-
     }
 
     @Override
     public void getNotified() {
         if(topCategoriesBox != null) {
-            displayTopCategories();
-            initializeHomeCharts();
+            new HomeController();
         }
     }
 }

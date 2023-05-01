@@ -11,18 +11,23 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.prefs.Preferences;
 
 public class UserController {
 
-    @FXML private TextField usernameField;
-    @FXML private TextField emailField;
-    @FXML private PasswordField passwordField;
-    @FXML private PasswordField validatePasswordField;
-    @FXML private Button loginButton;
-    @FXML private Button signupButton;
-    @FXML private Label messageText;
-
+    @FXML
+    TextField usernameField;
+    @FXML
+    TextField emailField;
+    @FXML
+    PasswordField passwordField;
+    @FXML
+    PasswordField validatePasswordField;
+    @FXML
+    Button loginButton;
+    @FXML
+    Button signupButton;
+    @FXML
+    Label messageText;
 
    User login = new User();
 
@@ -32,7 +37,7 @@ public class UserController {
     }
 
     public void signupPage() throws IOException {
-        Stage stage = (Stage)signupButton.getScene().getWindow();
+        Stage stage = (Stage) signupButton.getScene().getWindow();
         MenuController.loadPage("Views/signup.fxml", stage);
     }
 
@@ -41,14 +46,13 @@ public class UserController {
         String email = emailField.getText();
         String password = passwordField.getText();
         String validatePassword = validatePasswordField.getText();
-        if(username.equals("") || email.equals("") || password.equals("") || !password.equals(validatePassword)){
+        if(username.equals("") || email.equals("") || password.equals("") || !password.equals(validatePassword)) {
             messageText.setText("PLease fill information correctly");
         }
-        else if(!login.signup(username, email, password)){
+        else if(!login.signup(username, email, password)) {
             messageText.setText("Error account is already taken");
         }
-        else
-        {
+        else {
             Stage stage = (Stage) signupButton.getScene().getWindow();
             MenuController.loadPage("Views/home.fxml", stage);
         }
@@ -57,12 +61,11 @@ public class UserController {
     public void login() throws IOException, SQLException {
         String email = emailField.getText();
         String password = passwordField.getText();
-        if(email.equals("") || password.equals("")){
+        if(email.equals("") || password.equals("")) {
             messageText.setText("PLease fill information correctly");
             return;
         }
-        if(login.login(email, password))
-        {
+        if(login.login(email, password)) {
             Stage stage = (Stage) loginButton.getScene().getWindow();
             MenuController.loadPage("Views/home.fxml", stage);
         }
