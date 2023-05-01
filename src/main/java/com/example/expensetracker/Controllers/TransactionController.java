@@ -64,7 +64,7 @@ public class TransactionController implements ObserverController {
     public void initialize() throws SQLException {
         CheckAutomaticCategoriesThread thread = new CheckAutomaticCategoriesThread();
         thread.registerObserver(this);
-        thread.start();
+        thread.run();
         if (transactionTable != null) {
             if(!transaction.checkCategories())
             {

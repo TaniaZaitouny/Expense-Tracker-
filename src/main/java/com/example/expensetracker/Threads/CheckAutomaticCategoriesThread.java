@@ -41,7 +41,7 @@ public class CheckAutomaticCategoriesThread extends Thread {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                String name = resultSet.getString("name");
+                String name = resultSet.getString("categoryName");
                 String frequency = resultSet.getString(5);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String dateString = dateFormat.format(resultSet.getDate(6));
@@ -81,7 +81,6 @@ public class CheckAutomaticCategoriesThread extends Thread {
             }
             resultSet.close();
             statement.close();
-            lock.lock();
             notifyObservers();
         }
         catch (SQLException e) {

@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ReportsController implements ObserverController {
     public void initialize() {
         CheckAutomaticCategoriesThread thread = new CheckAutomaticCategoriesThread();
         thread.registerObserver(this);
-        thread.start();
+        thread.run();
         filterReport.setValue("Default");
     }
 

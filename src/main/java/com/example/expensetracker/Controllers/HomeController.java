@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -40,7 +41,7 @@ import java.util.Objects;
 
 public class HomeController implements ObserverController {
     @FXML
-    private HBox topCategoriesBox;
+    HBox topCategoriesBox;
     @FXML
     BarChart<String, Number> barChart;
     @FXML
@@ -54,7 +55,7 @@ public class HomeController implements ObserverController {
     public void initialize() {
         CheckAutomaticCategoriesThread thread = new CheckAutomaticCategoriesThread();
         thread.registerObserver(this);
-        thread.start();
+        thread.run();
         initializeTopCategories();
     }
    public void initializeTopCategories()
@@ -71,8 +72,7 @@ public class HomeController implements ObserverController {
       initializePieChart(topCategories);
   }
     private void initializeBarChart(List<Pair<Pair<String, Number>, String>> results) {
-
-            ((CategoryAxis) barChart.getXAxis()).getCategories().clear();
+            barChart.getData().clear();
             Transaction transaction = new Transaction();
             XYChart.Series<String, Number> series = new XYChart.Series<>();
             List<String> categoryNames = new ArrayList<String>(5);
@@ -132,6 +132,7 @@ public class HomeController implements ObserverController {
 
     public void displayTopCategories()
     {
+        topCategoriesBox.getChildren().clear();
         TransactionStrategy defaultStrategy = new DefaultStrategy();
         List<Pair<Pair<String, Number>, String>> topCategories = defaultStrategy.topCategories();
         if(topCategories.isEmpty()) {
