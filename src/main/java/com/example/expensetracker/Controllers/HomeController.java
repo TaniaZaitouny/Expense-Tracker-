@@ -129,9 +129,9 @@ public class HomeController implements ObserverController {
         }
         pieChart.setLegendVisible(false);
     }
+
     public void displayTopCategories()
     {
-
         TransactionStrategy defaultStrategy = new DefaultStrategy();
         List<Pair<Pair<String, Number>, String>> topCategories = defaultStrategy.topCategories();
         if(topCategories.isEmpty()) {
@@ -191,14 +191,11 @@ public class HomeController implements ObserverController {
 
     }
 
-
-
-
     @Override
     public void getNotified() {
         if(topCategoriesBox != null) {
-//            displayTopCategories();
-//            initializeHomeCharts();
+            displayTopCategories();
+            initializeHomeCharts();
         }
     }
 }

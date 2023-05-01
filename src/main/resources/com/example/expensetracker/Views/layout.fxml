@@ -18,7 +18,7 @@
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Media/home.png" />
+                        <Image url="@../Media/Menu/home.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -36,7 +36,7 @@
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Media/category.png" />
+                        <Image url="@../Media/Menu/category.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -51,7 +51,7 @@
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Media/transaction.png" />
+                        <Image url="@../Media/Menu/transaction.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -66,7 +66,7 @@
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Media/report.png" />
+                        <Image url="@../Media/Menu/report.png" />
                      </image>
                   </ImageView>
                </graphic>

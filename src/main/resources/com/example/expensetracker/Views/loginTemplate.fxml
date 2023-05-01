@@ -13,7 +13,7 @@
          <children>
             <ImageView fitHeight="135.0" fitWidth="138.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Media/XPense.png" />
+                  <Image url="@../Media/Menu/XPense.png" />
                </image>
             </ImageView>
          </children>
