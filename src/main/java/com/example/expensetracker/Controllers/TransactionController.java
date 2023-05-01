@@ -114,7 +114,9 @@ public class TransactionController implements ObserverController {
             ArrayList<String> categories = new ArrayList<>();
             results.forEach(pair -> categories.add(pair.categoryName));
             toFill.setItems(FXCollections.observableList(categories));
-            toFill.setValue(categories.get(0));
+            if(transactionTable != null) {
+                toFill.setValue(categories.get(0));
+            }
         }
         catch (SQLException e) {
             e.printStackTrace();

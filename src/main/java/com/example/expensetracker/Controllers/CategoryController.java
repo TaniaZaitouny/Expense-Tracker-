@@ -158,12 +158,12 @@ public class CategoryController {
         String icon = categoryIcon.getValue();
 
         if(!incomeChoiceButton.isSelected() && !expenseChoiceButton.isSelected()) {
-             messageText.setText("PLease Choose A Type For Category !");
+             messageText.setText("PLease choose a type!");
             return;
         }
 
         if(name.equals("")) {
-             messageText.setText("PLease Choose A Name For Category !");
+             messageText.setText("PLease choose a name!");
             return;
         }
 
@@ -184,7 +184,7 @@ public class CategoryController {
             }
             catch (NumberFormatException e)
             {
-                messageText.setText("Please Enter Correct Amount Value !");
+                messageText.setText("Please enter a correct amount!");
                 return;
             }
             if(categoryNameToUpdate == null) {

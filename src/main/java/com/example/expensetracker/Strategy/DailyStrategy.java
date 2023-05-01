@@ -13,7 +13,6 @@ public class DailyStrategy extends TransactionStrategy{
     String formattedDate = dateFormat.format(current_date);
     @Override
     public List<Pair<Pair<String, Number>, String>> topCategories() {
-        System.out.println(formattedDate);
         String sql = "SELECT t.category AS category , t.amount AS totalAmount , c.type AS categoryType " +
                 "FROM transactions t " +
                 "JOIN categories c ON category = c.categoryName " +
