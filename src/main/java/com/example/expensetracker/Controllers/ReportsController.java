@@ -27,7 +27,7 @@ public class ReportsController implements ObserverController {
     @FXML
     ChoiceBox<String> filterReport;
     @FXML
-    Label selectedStrategy, expenseLabel, incomeLabel, balanceLabel;
+    Label expenseLabel, incomeLabel, balanceLabel;
 
     //    boolean chartDrawn = false;
     public void initialize() {
@@ -133,7 +133,6 @@ public class ReportsController implements ObserverController {
         }
         initializeBarChart(topCategories);
         initializePieChart(topCategories);
-        selectedStrategy.setText(strategy);
         incomeLabel.setText(totalIncome.toString());
         expenseLabel.setText(totalExpenses.toString());
         totalBalance = totalIncome.doubleValue() - totalExpenses.doubleValue();
