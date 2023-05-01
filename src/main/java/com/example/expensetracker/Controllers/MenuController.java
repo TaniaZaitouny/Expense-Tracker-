@@ -34,7 +34,7 @@ public class MenuController {
     public static Scene loadPage(String pageName, Stage stage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(pageName)));
         Scene scene = new Scene(root);
-        stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("Media/logo.png"))));
+        stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("Media/Menu/logo.png"))));
         stage.setScene(scene);
         stage.show();
         return scene;
