@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="615.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.ReportsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="615.0" stylesheets="@../Styles/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.Controllers.ReportsController">
    <children>
       <HBox maxHeight="-Infinity" prefHeight="408.0" prefWidth="615.0">
          <children>
             <fx:include source="layout.fxml" />
             <AnchorPane id="content" maxHeight="-Infinity" prefHeight="400.0" prefWidth="488.0">
                <children>
-                  <VBox prefHeight="408.0" prefWidth="482.0" spacing="3.0">
+                  <VBox prefHeight="408.0" prefWidth="482.0">
                      <children>
-                        <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" prefHeight="0.0" prefWidth="462.0">
+                        <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" prefHeight="39.0" prefWidth="477.0">
                            <children>
-                              <Label fx:id="selectedStrategy" prefHeight="13.0" prefWidth="397.0" style="-fx-font-weight: bold;">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <ChoiceBox fx:id="filterReport" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#filterReports" prefHeight="22.0" prefWidth="75.0" value="Default">
+                              <ChoiceBox fx:id="filterReport" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#filterReports" prefHeight="28.0" prefWidth="75.0" value="Default">
                                  <items>
                                     <FXCollections fx:factory="observableArrayList">
                                        <String fx:value="Default" />
@@ -39,8 +40,11 @@
                            <VBox.margin>
                               <Insets right="5.0" top="5.0" />
                            </VBox.margin>
+                           <padding>
+                              <Insets right="5.0" top="5.0" />
+                           </padding>
                         </HBox>
-                        <HBox maxWidth="-Infinity" prefHeight="67.0" prefWidth="482.0" spacing="20.0">
+                        <HBox maxWidth="-Infinity" prefHeight="63.0" prefWidth="482.0" spacing="20.0">
                            <children>
                               <VBox alignment="TOP_CENTER" prefHeight="63.0" prefWidth="150.0">
                                  <children>
@@ -95,7 +99,7 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <HBox maxWidth="-Infinity" prefHeight="279.0" prefWidth="475.0">
+                        <HBox maxWidth="-Infinity" prefHeight="284.0" prefWidth="475.0">
                            <children>
                               <PieChart fx:id="pieChart" />
                               <BarChart fx:id="barChart" maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@../Styles/styles.css">
@@ -115,7 +119,7 @@
 <!--                              </Legend>-->
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="36.0" prefWidth="482.0" spacing="5.0">
+                        <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="29.0" prefWidth="482.0" spacing="5.0">
                            <children>
                               <Circle fill="#3a4d8f" radius="4.0" stroke="TRANSPARENT" strokeType="INSIDE" />
                               <Label prefHeight="19.0" prefWidth="146.0" text="Expense">
