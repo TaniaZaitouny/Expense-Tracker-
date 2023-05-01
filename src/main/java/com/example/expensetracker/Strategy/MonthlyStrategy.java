@@ -8,8 +8,6 @@ public class MonthlyStrategy extends TransactionStrategy{
     @Override
     public List<Pair<Pair<String,Number>, String>> topCategories()
     {
-
-        System.out.println(current_month);
         String sql = "SELECT t.category AS category , SUM(t.amount) AS totalAmount , c.type AS categoryType " +
                 "FROM transactions t " +
                 "JOIN categories c ON category = c.categoryName " +

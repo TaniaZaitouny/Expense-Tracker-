@@ -22,7 +22,6 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -99,7 +98,7 @@ public class TransactionController implements ObserverController {
         }
     }
     @FXML
-    protected void addTransactionPage() throws IOException, SQLException {
+    protected void addTransactionPage() throws IOException{
         transactionToUpdateId = 0;
         Stage stage = (Stage) addTransactionButton.getScene().getWindow();
         MenuController.loadPage("Views/addTransaction.fxml", stage);
