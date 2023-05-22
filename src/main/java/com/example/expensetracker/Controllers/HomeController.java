@@ -132,7 +132,7 @@ public class HomeController implements ObserverController {
         TransactionStrategy defaultStrategy = new DefaultStrategy();
         List<Pair<Pair<String, Number>, String>> topCategories = defaultStrategy.topCategories();
 
-        for(Pair<Pair<String, Number>,String> category : topCategories) {
+        for(Pair<Pair<String, Number>, String> category : topCategories) {
             Pair<String, Number> categoryPair = category.getKey();
             String categoryName = categoryPair.getKey();
             Category c = new Category();

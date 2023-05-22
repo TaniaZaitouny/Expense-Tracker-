@@ -11,7 +11,6 @@ import java.sql.Statement;
 import java.util.prefs.Preferences;
 
 public class User {
-
     DatabaseConnection connection = DatabaseConnection.getInstance();
 
     private String hashPassword(String password) {
@@ -100,13 +99,6 @@ public class User {
         }
         statement.close();
         return false;
-    }
-
-    public void updateUser(double amount) throws SQLException {
-        String sql = "UPDATE users SET monthlyBudget =  " + amount;
-        Statement statement = connection.getConnection().createStatement();
-        statement.executeUpdate(sql);
-        statement.close();
     }
 
 }

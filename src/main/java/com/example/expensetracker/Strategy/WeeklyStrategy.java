@@ -37,7 +37,7 @@ public class WeeklyStrategy extends TransactionStrategy {
                         "FROM transactions t " +
                         "JOIN categories c ON t.category = c.categoryName " +
                         "WHERE c.type = 'income' AND YEAR(t.date) = " + current_year +
-                        " AND MONTH(t.date) = " + current_month ;
+                        " AND WEEK(t.date) = " + current_week ;
 
         return executeQuery2(sql);
     }

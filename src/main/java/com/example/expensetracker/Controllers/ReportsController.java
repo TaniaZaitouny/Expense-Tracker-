@@ -49,6 +49,7 @@ public class ReportsController implements ObserverController {
             data.setExtraValue(type);
             series.getData().add(data);
         }
+        categoryAxis.getCategories().clear();
         categoryAxis.setCategories(FXCollections.observableArrayList(categoryNames));
         barChart.setPrefWidth(600);
         barChart.getData().add(series);
