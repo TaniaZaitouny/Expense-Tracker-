@@ -17,7 +17,7 @@ public class DailyStrategy extends TransactionStrategy {
         String sql = "SELECT t.category AS category, SUM(t.amount) AS totalAmount, c.type AS categoryType " +
                 "FROM transactions t " +
                 "JOIN categories c ON category = c.categoryName " +
-                "WHERE t.date = '" + formattedDate + "' " +
+                "WHERE t.date = '" + formattedDate + "' AND c.userId = " + userId + " " +
                 "GROUP BY category " +
                 "ORDER BY totalAmount desc " +
                 "LIMIT 5";
@@ -29,7 +29,7 @@ public class DailyStrategy extends TransactionStrategy {
                 "SELECT SUM(t.amount) AS totalExpense " +
                         "FROM transactions t " +
                         "JOIN categories c ON t.category = c.categoryName " +
-                        "WHERE c.type = 'income' AND t.date = '" + formattedDate + "' " ;
+                        "WHERE c.type = 'income' AND t.date = '" + formattedDate + "'  AND c.userId = " + userId;
 
         return executeQuery2(sql);
     }
@@ -38,7 +38,7 @@ public class DailyStrategy extends TransactionStrategy {
                 "SELECT SUM(t.amount) AS totalExpense " +
                         "FROM transactions t " +
                         "JOIN categories c ON t.category = c.categoryName " +
-                        "WHERE c.type = 'expense' AND t.date = '" + formattedDate + "' " ;
+                        "WHERE c.type = 'expense' AND t.date = '" + formattedDate + "' AND c.userId = " + userId;
 
         return executeQuery2(sql);
     }

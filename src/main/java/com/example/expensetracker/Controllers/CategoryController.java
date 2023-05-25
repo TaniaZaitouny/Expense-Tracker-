@@ -73,7 +73,8 @@ public class CategoryController {
 
     public void initialize() throws SQLException {
         if(categoriesTable != null) {
-            filterCategories();
+           // filterCategories();
+            getCategories(new CategoryNormalFilter(), "");
         }
         else {
             if(categoryNameToUpdate != null) {

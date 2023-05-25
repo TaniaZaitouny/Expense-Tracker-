@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 public abstract class TransactionStrategy {
     Calendar calendar = Calendar.getInstance();
@@ -18,6 +19,8 @@ public abstract class TransactionStrategy {
     int current_week = calendar.get(Calendar.WEEK_OF_YEAR);
     DatabaseConnection db = DatabaseConnection.getInstance();
     Connection connection = db.getConnection();
+    Preferences prefs = Preferences.userRoot().node("com.example.expensetracker");
+    int userId = prefs.getInt("userId", 0);
     public abstract List<Pair<Pair<String, Number>,String>> topCategories(); // implemented with 2 different algorithms monthly/weekly
     public abstract Number totalExpense();
     public abstract Number totalIncome();

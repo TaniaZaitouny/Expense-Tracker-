@@ -12,6 +12,7 @@ public class WeeklyStrategy extends TransactionStrategy {
                 "JOIN categories c ON t.category = c.categoryName " +
                 "WHERE YEAR(t.date) = " + current_year +
                 " AND WEEK(t.date) = " + current_week +
+                " AND c.userId = " + userId +
                 " GROUP BY category " +
                 "ORDER BY totalAmount DESC " +
                 "LIMIT 5";
@@ -25,7 +26,7 @@ public class WeeklyStrategy extends TransactionStrategy {
                         "FROM transactions t " +
                         "JOIN categories c ON t.category = c.categoryName " +
                         "WHERE c.type = 'expense' AND YEAR(t.date) = " + current_year +
-                        " AND WEEK(t.date) = " + current_week ;
+                        " AND WEEK(t.date) = " + current_week + " AND c.userId = " + userId;
 
         return executeQuery2(sql);
     }
@@ -37,7 +38,7 @@ public class WeeklyStrategy extends TransactionStrategy {
                         "FROM transactions t " +
                         "JOIN categories c ON t.category = c.categoryName " +
                         "WHERE c.type = 'income' AND YEAR(t.date) = " + current_year +
-                        " AND WEEK(t.date) = " + current_week ;
+                        " AND WEEK(t.date) = " + current_week + " AND c.userId = " + userId;
 
         return executeQuery2(sql);
     }

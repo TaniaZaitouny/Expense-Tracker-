@@ -10,7 +10,8 @@ public class DefaultStrategy extends TransactionStrategy {
         String sql = "SELECT t.category AS category , SUM(t.amount) AS totalAmount , c.type AS categoryType " +
                 "FROM transactions t " +
                 "JOIN categories c ON category = c.categoryName " +
-                "GROUP BY category " +
+                "WHERE c.userId = " + userId +
+                " GROUP BY category " +
                 "ORDER BY totalAmount desc " +
                 "LIMIT 5";
         return executeQuery(sql);
@@ -22,7 +23,7 @@ public class DefaultStrategy extends TransactionStrategy {
                 "SELECT SUM(t.amount) AS totalExpense " +
                 "FROM transactions t " +
                 "JOIN categories c ON t.category = c.categoryName " +
-                "WHERE c.type = 'expense'";
+                "WHERE c.type = 'expense'  AND c.userId = " + userId;
 
         return executeQuery2(sql);
     }
@@ -33,7 +34,7 @@ public class DefaultStrategy extends TransactionStrategy {
                 "SELECT SUM(t.amount) AS totalExpense " +
                         "FROM transactions t " +
                         "JOIN categories c ON t.category = c.categoryName " +
-                        "WHERE c.type = 'income'";
+                        "WHERE c.type = 'income' AND c.userId = " + userId;
 
         return executeQuery2(sql);
     }
